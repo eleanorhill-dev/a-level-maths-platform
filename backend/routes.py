@@ -86,27 +86,22 @@ def register_routes(app, db, bcrypt):
         return redirect(url_for("login"))
 
 
-    @app.route('/profile/<int:id>', methods=['GET'])
+    @app.route("/profile/<int:id>", methods=["GET"])
     def get_profile(id):
-        user = get_user_from_database(id) 
-        if user:
-            user_data = {
-                'id': user.id,
-                'fname': user.fname,
-                'sname': user.sname,
-                'email': user.email,
-                'uname': user.uname
-            }
-            return jsonify(user_data) 
-        else:
+        # Assuming you fetch user from database using the id
+        user = db.session.query(User).filter_by(id=id).first()  # Or however you fetch user
+
+        if user is None:
             return jsonify({"error": "User not found"}), 404
-        
-    @app.route('/get_user_id', methods=['GET'])
-    def get_user_id():
-        id = session.get("id")
-        if id:
-            return jsonify({"id": id})
-        return jsonify({"error": "User not logged in"}), 401
+
+        # Ensure you're returning data as a dictionary and use keys to access data
+        return jsonify({
+            'id': user.id,  # this is fine if 'user' is an object with an 'id' attribute
+            'fname': user.fname,
+            'sname': user.sname,
+            'email': user.email,
+            'uname': user.uname
+        })
 
 
     @app.route('/api/topics', methods=["GET"])
