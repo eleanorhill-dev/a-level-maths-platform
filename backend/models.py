@@ -23,6 +23,14 @@ class Topic(db.Model):
     description = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'content': self.content
+        }
+
     def __repr__(self):
         return f"Topic: {self.name}"
     

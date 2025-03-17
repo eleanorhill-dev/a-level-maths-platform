@@ -88,15 +88,13 @@ def register_routes(app, db, bcrypt):
 
     @app.route("/profile/<int:id>", methods=["GET"])
     def get_profile(id):
-        # Assuming you fetch user from database using the id
-        user = db.session.query(User).filter_by(id=id).first()  # Or however you fetch user
+        user = db.session.query(User).filter_by(id=id).first()  
 
         if user is None:
             return jsonify({"error": "User not found"}), 404
 
-        # Ensure you're returning data as a dictionary and use keys to access data
         return jsonify({
-            'id': user.id,  # this is fine if 'user' is an object with an 'id' attribute
+            'id': user.id,
             'fname': user.fname,
             'sname': user.sname,
             'email': user.email,
@@ -104,23 +102,25 @@ def register_routes(app, db, bcrypt):
         })
 
 
-    @app.route('/api/topics', methods=["GET"])
-    def api_topics():
-        topics = Topic.query.all()
-        topics_data = [{"id": topic.id, "name": topic.name} for topic in topics]
-        return jsonify(topics_data)
+    from flask import jsonify
+
+    @app.route('/topics', methods=['GET'])
+    def get_topics():
+        topics = Topic.query.all()  
+        return jsonify([topic.to_dict() for topic in topics]) 
 
 
-    @app.route('/api/topic_details/<int:topic_id>', methods=["GET"])
-    def api_topic_details(topic_id):
-        topic = Topic.query.get_or_404(topic_id)
+    @app.route('/topics/<int:topicId>', methods=['GET'])
+    def topic_details_page(topicId):
+        topic = Topic.query.get_or_404(topicId)
         topic_data = {
             "id": topic.id,
             "name": topic.name,
             "description": topic.description,
-            "questions": [{"id": q.id, "text": q.question_text} for q in topic.questions]
+            "content": topic.content 
         }
         return jsonify(topic_data)
+
 
 
     @app.route('/api/quiz/<int:topic_id>', methods=["POST"])

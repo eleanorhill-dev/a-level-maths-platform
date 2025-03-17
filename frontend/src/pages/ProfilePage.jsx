@@ -14,7 +14,7 @@ const ProfilePage = () => {
           throw new Error("User not found");
         }
         const data = await response.json();
-        console.log(data);  // Check the data structure in the console
+        console.log(data); 
         setProfileData(data); 
       } catch (err) {
         setError("Error fetching profile data: " + err.message);
