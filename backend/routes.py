@@ -1,13 +1,17 @@
-from flask import render_template, request, redirect, url_for, session, flash, jsonify
+from flask import render_template, request, redirect, url_for, session, flash, jsonify, g, make_response
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, Topic, Question, Score
 from utils import evaluate_code
 from datetime import datetime
 import subprocess
-
+from functools import wraps
 
 def get_user_by_username(uname):
     user = User.query.filter_by(uname=uname).first() 
+    return user
+
+def get_user_by_id(id):
+    user = User.query.filter_by(id=id).first() 
     return user
 
 def get_user_from_database(id):
@@ -24,10 +28,19 @@ def get_user_from_database(id):
     return None
 
 
+def login_required(func):
+    def wrapper(*args, **kwargs):
+        if not session.get("user_id") and request.endpoint not in ['login', 'register', 'static']:
+            return redirect(url_for('login'))
+        return func(*args, **kwargs)
+    wrapper.__name__ = func.__name__
+    return wrapper
+
 
 def register_routes(app, db, bcrypt):
 
     @app.route('/')
+    @login_required
     def home():
         return app.send_static_file('index.html')
 
@@ -46,11 +59,9 @@ def register_routes(app, db, bcrypt):
         user = get_user_by_username(uname)
 
         if user and bcrypt.check_password_hash(user.pword, pword):
-            session["user_id"] = user.id  
-            return jsonify({
-                "id": user.id,
-                "message": "Login successful"
-            }), 200
+            session["user_id"] = user.id
+            print("Stored in session:", session.get("user_id"))  
+            return jsonify({"id": user.id, "message": "Login successful"}), 200
 
         return jsonify({"message": "Invalid credentials"}), 401
 
@@ -81,58 +92,34 @@ def register_routes(app, db, bcrypt):
             db.session.rollback()
             return jsonify({"message": "Error occurred while registering user", "error": str(e)}), 500
 
-    @app.route("/logout", methods=["POST", "GET"])
+    @app.route("/logout", methods=["POST"])
     def logout():
-        session.pop("user", None)
-        return redirect(url_for("login"))
+        print("Before clearing:", dict(session)) 
+        session.clear()
+        print("After clearing:", dict(session)) 
 
+        response = make_response(jsonify({"message": "Logged out"}))
+        response.set_cookie("session", "", expires=0)
+        return response
 
-    @app.route("/profile/<int:id>", methods=["GET"])
-    def get_profile(id):
-        user = db.session.query(User).filter_by(id=id).first()  
-
-        if user is None:
-            return jsonify({"error": "User not found"}), 404
-
-        return jsonify({
-            'id': user.id,
-            'fname': user.fname,
-            'sname': user.sname,
-            'email': user.email,
-            'uname': user.uname
-        })
-
-
-    from flask import jsonify
-
-    @app.route('/topics', methods=['GET'])
-    def get_topics():
-        topics = Topic.query.all()  
-        return jsonify([topic.to_dict() for topic in topics]) 
-
-
-    @app.route('/topics/<int:topicId>', methods=['GET'])
-    def topic_details_page(topicId):
-        topic = Topic.query.get_or_404(topicId)
-        topic_data = {
-            "id": topic.id,
-            "name": topic.name,
-            "description": topic.description,
-            "content": topic.content 
-        }
-        return jsonify(topic_data)
-
+    
+    @app.route('/profile', methods=['GET'])
+    def profile():
+        user_id = session.get('user_id')  
+        if user_id is None:
+            return 'Unauthorized', 401  
+        
+        user = User.query.get(user_id)
+        return jsonify(user.to_dict())
 
 
     @app.route('/api/quiz/<int:topic_id>', methods=["POST"])
+    @login_required
     def api_quiz(topic_id):
         topic = Topic.query.get_or_404(topic_id)
         questions = Question.query.filter_by(topic_id=topic_id).all()
         user_id = session.get("user_id")
 
-        if not user_id:
-            return jsonify({"error": "You need to log in to take a quiz."}), 403
-        
         score = 0
         feedback = []
 
@@ -173,7 +160,7 @@ def register_routes(app, db, bcrypt):
                 last_score=score
             )
             db.session.add(new_score)
-        
+
         db.session.commit()
 
         return jsonify({
@@ -181,4 +168,5 @@ def register_routes(app, db, bcrypt):
             "total_questions": len(questions),
             "feedback": feedback
         })
+    
 

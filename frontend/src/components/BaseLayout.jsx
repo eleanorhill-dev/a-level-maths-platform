@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../index"; 
+import "../index";
+import { useAuth } from "../AuthContext";
 
-const BaseLayout = ({ children, isLoggedIn }) => {
+const BaseLayout = ({ children }) => {
+  const { isAuthenticated } = useAuth();
+  
   return (
     <div>
       {/* Navbar */}
@@ -24,13 +27,13 @@ const BaseLayout = ({ children, isLoggedIn }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">Home</Link>
+                <Link className="nav-link active" to={isAuthenticated ? "/" : "/login"}>Home</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to="/topics">Topics</Link>
+                <Link className="nav-link active" to={isAuthenticated ? "/topics" : "/login"}>Topics</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to={isLoggedIn ? "/profile" : "/login"}>Profile</Link>
+                <Link className="nav-link active" to={isAuthenticated ? "/profile" : "/login"}>Profile</Link>
               </li>
             </ul>
             <form className="d-flex" role="search">

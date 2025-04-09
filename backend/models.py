@@ -11,24 +11,27 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     uname = db.Column(db.String(100), unique=True, nullable=False)
     pword = db.Column(db.String(100), nullable=False)
-
-    def __repr__(self):
-        return f"User with first name {self.fname} and email {self.email}"
+    
+    def to_dict(self):
+        return {
+            'id' : self.id,
+            'fname' : self.fname,
+            'sname' : self.sname,
+            'email' : self.email,
+            'uname' : self.uname,
+            'pword' : self.pword
+        }
     
 class Topic(db.Model):
     __tablename__ = 'topics'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    content = db.Column(db.Text, nullable=False)
 
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'content': self.content
+            'name': self.name
         }
 
     def __repr__(self):

@@ -31,6 +31,7 @@ const LoginPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(userData),
       });
 
@@ -41,11 +42,11 @@ const LoginPage = () => {
         const data = await response.json();
         console.log("Login successful", data);
 
-
-        console.log("Response Data:", data)
-
         if (data && data.id) {
-          navigate(`/profile/${data.id}`);  
+          
+          sessionStorage.setItem("authToken", "some-random-token");
+
+          navigate("/profile");  
         } else {
           console.error("User ID not found in response");
         }

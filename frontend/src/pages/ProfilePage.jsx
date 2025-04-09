@@ -1,29 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const ProfilePage = () => {
-  const { id } = useParams();  
   const [profileData, setProfileData] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const response = await fetch(`http://localhost:5000/profile/${id}`); 
-        if (!response.ok) {
-          throw new Error("User not found");
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login");
+    } else {
+      const fetchProfile = async () => {
+        try {
+          const response = await fetch('http://localhost:5000/profile', {
+            method: 'GET',
+            credentials: 'include', 
+          });
+      
+          if (response.ok) {
+            const profileData = await response.json();
+            setProfileData(profileData);
+          } else {
+            console.error('Profile fetch failed');
+          }
+        } catch (error) {
+          console.error('Error fetching profile:', error);
         }
-        const data = await response.json();
-        console.log(data); 
-        setProfileData(data); 
-      } catch (err) {
-        setError("Error fetching profile data: " + err.message);
+      };
+
+      fetchProfile(); 
+    }
+  }, [navigate]); 
+
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+  
+      if (response.ok) {
+        sessionStorage.removeItem("authToken");
+        navigate("/login");
+      } else {
+        console.error("Logout failed");
       }
-    };
-
-    fetchProfileData();
-  }, [id]); 
-
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+  
   if (error) {
     return <div>{error}</div>;
   }
@@ -39,6 +69,8 @@ const ProfilePage = () => {
       <p><strong>Last Name:</strong> {profileData.sname}</p>
       <p><strong>Email:</strong> {profileData.email}</p>
       <p><strong>Username:</strong> {profileData.uname}</p>
+
+      <button onClick={handleLogout} className="btn btn-danger">Logout</button>
     </div>
   );
 };
