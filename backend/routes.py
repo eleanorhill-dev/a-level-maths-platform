@@ -1,10 +1,12 @@
-from flask import render_template, request, redirect, url_for, session, flash, jsonify, g, make_response
+from flask import render_template, request, redirect, url_for, session, flash, jsonify, g, make_response, Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User, Topic, Question, Score
+from models import User, Topic, QuizQuestion, QuizScore, ScoreHistory
 from utils import evaluate_code
 from datetime import datetime
 import subprocess
 from functools import wraps
+
+quiz_bp = Blueprint('quiz_bp', __name__)
 
 def get_user_by_username(uname):
     user = User.query.filter_by(uname=uname).first() 
@@ -113,60 +115,94 @@ def register_routes(app, db, bcrypt):
         return jsonify(user.to_dict())
 
 
-    @app.route('/api/quiz/<int:topic_id>', methods=["POST"])
-    @login_required
-    def api_quiz(topic_id):
+    @quiz_bp.route('/<int:topic_id>', methods=['GET'])
+    def get_quiz_questions(topic_id):
         topic = Topic.query.get_or_404(topic_id)
-        questions = Question.query.filter_by(topic_id=topic_id).all()
-        user_id = session.get("user_id")
+        questions = QuizQuestion.query.filter_by(topic_id=topic_id).all()
+        quiz_data = [
+            {
+                "id": question.id,
+                "question_text": question.question_text,
+                "question_type": question.question_type,
+                "options": question.options if question.options else None,
+                "correct_answer": question.correct_answer,
+                "explanation": question.explanation
+            }
+            for question in questions
+        ]
+        return jsonify(quiz_data)
+    
 
-        score = 0
-        feedback = []
+    @quiz_bp.route('/submit', methods=['POST'])
+    def submit_quiz():
+        data = request.get_json()
+        print("Received payload:", data)
 
-        for question in questions:
-            user_answer = request.json.get(str(question.id))
+        user_id = data['userId']
+        topic_id = data['topic_id']
+        answers = data['answers'] 
+        total_questions = len(answers)
+        correct_answers = 0
+        wrong_explanations = []
 
-            if question.question_type == 'multiple-choice':
-                if user_answer == question.correct_answer:
-                    score += 1
-            elif question.question_type == 'code-snippet':
-                test_cases = question.test_cases
-                is_correct, results = evaluate_code(user_answer, test_cases)
+        for answer in answers:
+            print("Checking answer:", answer)
+            question = QuizQuestion.query.get(answer['id'])
+            if not question:
+                continue
+            correct = question.correct_answer.strip()
+            user_ans = answer['answer'].strip()
 
-                if is_correct:
-                    score += 1
-                else:
-                    failed_cases = [
-                        f"Input: {tc['input']} | Expected: {tc['output']} | Got: {res}"
-                        for tc, res in zip(test_cases, results) if not res
-                    ]
-                    feedback.append(f"Question: {question.question_text}\nFailed Cases:\n" + "\n".join(failed_cases))
+            if user_ans == correct:
+                correct_answers += 1
+            else:
+                wrong_explanations.append({
+                    "question": question.question_text,
+                    "your_answer": user_ans,
+                    "correct_answer": correct,
+                    "explanation": question.explanation or "No explanation provided."
+                })
 
-        existing_score = Score.query.filter_by(user_id=user_id, topic_id=topic_id).first()
-        if existing_score:
-            existing_score.attempts += 1
-            existing_score.last_score = score
-            existing_score.last_attempt_date = datetime.utcnow()
-            existing_score.highest_score = max(existing_score.highest_score, score)
-            existing_score.lowest_score = min(existing_score.lowest_score, score)
-            db.session.commit()
+        score = (correct_answers / total_questions) * 100
+
+        quiz_score = QuizScore.query.filter_by(user_id=user_id, topic_id=topic_id).first()
+        if quiz_score:
+            quiz_score.most_recent_score = score
+            quiz_score.highest_score = max(score, quiz_score.highest_score)
+            quiz_score.lowest_score = min(score, quiz_score.lowest_score)
+            quiz_score.average_score = (quiz_score.average_score * quiz_score.total_attempts + score) / (quiz_score.total_attempts + 1)
+            quiz_score.total_attempts += 1
         else:
-            new_score = Score(
+            quiz_score = QuizScore(
                 user_id=user_id,
                 topic_id=topic_id,
-                attempts=1,
+                most_recent_score=score,
                 highest_score=score,
                 lowest_score=score,
-                last_score=score
+                average_score=score,
+                total_attempts=1
             )
-            db.session.add(new_score)
+            db.session.add(quiz_score)
+
+        score_history = ScoreHistory(
+            user_id=user_id,
+            topic_id=topic_id,
+            score=score,
+            date_attempted=datetime.utcnow()
+        )
+        db.session.add(score_history)
 
         db.session.commit()
 
         return jsonify({
+            "message": "Quiz submitted successfully",
             "score": score,
-            "total_questions": len(questions),
-            "feedback": feedback
+            "explanations": wrong_explanations
         })
+
+
+
+        
     
+    app.register_blueprint(quiz_bp, url_prefix='/quiz')
 

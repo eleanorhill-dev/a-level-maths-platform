@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import CodeSnippet from '../components/CodeSnippet'; // Assuming CodeSnippet is in the same directory
+import CodeSnippet from '../components/CodeSnippet'; 
 
 export default function Quadratics() {
     return (

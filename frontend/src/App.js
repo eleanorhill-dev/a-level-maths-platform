@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BaseLayout from "./components/BaseLayout";
 import HomePage from "./pages/HomePage";
@@ -21,6 +21,7 @@ import Differentiation from './pages/Differentiation';
 import Integration from './pages/Integration';
 import ExponentialsAndLogarithms from './pages/ExponentialsAndLogarithms';
 import RequireAuthentication from "./RequireAuthentication";
+import QuizPage from "./pages/QuizPage";
 
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/profile" element={<RequireAuthentication><ProfilePage /></RequireAuthentication>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage /></RequireAuthentication>} />
           <Route path="/topics/algebraic-expressions" element={<RequireAuthentication><AlgebraicExpressions /></RequireAuthentication>} />
           <Route path="/topics/quadratics" element={<RequireAuthentication><Quadratics /></RequireAuthentication>} />
           <Route path="/topics/equations-and-inequalities" element={<RequireAuthentication><EquationsAndInequalities /></RequireAuthentication>} />

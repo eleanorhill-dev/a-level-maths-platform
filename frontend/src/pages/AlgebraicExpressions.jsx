@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import CodeSnippet from '../components/CodeSnippet'; // Assuming CodeSnippet is in the same directory
+import CodeSnippet from '../components/CodeSnippet'; 
 
 export default function AlgebraicExpressions() {
     return (
@@ -78,6 +78,8 @@ print("Factorised Expression:", factorised_expression)`}
 
             <CodeSnippet
                 code={`# Example of Negative and Fractional Indices
+a = 2
+
 negative_index = a**-2
 fractional_index = a**(1/2)
 
@@ -137,7 +139,7 @@ print("Rationalised Expression:", rationalised_expr)`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/algebra-and-functions/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/1" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

@@ -5,7 +5,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { MathComponent } from 'mathjax-react';
 import CodeSnippet from '../components/CodeSnippet';
 
-// Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ScatterController);
 
 export default function TrigonometricIdentitiesAndEquations() {

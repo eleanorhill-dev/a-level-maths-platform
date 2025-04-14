@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";  
+import { useAuth } from "../AuthContext";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
+
+  const { login } = useAuth();
 
   const navigate = useNavigate();
 
@@ -43,9 +46,8 @@ const LoginPage = () => {
         console.log("Login successful", data);
 
         if (data && data.id) {
-          
-          sessionStorage.setItem("authToken", "some-random-token");
-
+          sessionStorage.setItem("userId", data.id);
+          login(true);
           navigate("/profile");  
         } else {
           console.error("User ID not found in response");

@@ -45,6 +45,7 @@ const ProfilePage = () => {
   
       if (response.ok) {
         sessionStorage.removeItem("authToken");
+        logout(false);
         navigate("/login");
       } else {
         console.error("Logout failed");

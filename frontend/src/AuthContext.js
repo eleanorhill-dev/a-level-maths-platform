@@ -5,13 +5,29 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
-    setIsAuthenticated(!!token);
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("http://localhost:5000/profile", {
+          credentials: "include",
+        });
+  
+        if (res.ok) {
+          setIsAuthenticated(true);
+        } else {
+          setIsAuthenticated(false);
+        }
+      } catch (err) {
+        console.error("Auth check failed:", err);
+        setIsAuthenticated(false);
+      }
+    };
+  
+    checkAuth();
   }, []);
-
+  
   const login = (token) => {
     sessionStorage.setItem("authToken", token);
     setIsAuthenticated(true);

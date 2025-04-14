@@ -5,7 +5,7 @@ from extensions import db
 from routes import register_routes
 from flask_bcrypt import Bcrypt
 import os
-from flask_session import Session # type: ignore
+from flask_session import Session
 
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
