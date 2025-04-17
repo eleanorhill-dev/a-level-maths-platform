@@ -138,14 +138,14 @@ def register_routes(app, db, bcrypt):
         data = request.get_json()
         print("Received payload:", data)
 
-        user_id = data['userId']
+        user_id = data['user_id']
         topic_id = data['topic_id']
         answers = data['answers'] 
         total_questions = len(answers)
         correct_answers = 0
         wrong_explanations = []
 
-        for answer in answers:
+        for idx, answer in enumerate(answers):
             print("Checking answer:", answer)
             question = QuizQuestion.query.get(answer['id'])
             if not question:
@@ -157,11 +157,13 @@ def register_routes(app, db, bcrypt):
                 correct_answers += 1
             else:
                 wrong_explanations.append({
+                    "question_number": idx + 1,
                     "question": question.question_text,
                     "your_answer": user_ans,
                     "correct_answer": correct,
                     "explanation": question.explanation or "No explanation provided."
                 })
+
 
         score = (correct_answers / total_questions) * 100
 
@@ -199,6 +201,27 @@ def register_routes(app, db, bcrypt):
             "score": score,
             "explanations": wrong_explanations
         })
+
+
+
+    @app.route('/user_scores/<int:user_id>', methods=['GET'])
+    def get_user_scores(user_id):
+        scores = QuizScore.query.filter_by(user_id=user_id).all()
+        if not scores:
+            return jsonify({"message": "No scores found for this user."})
+
+        score_data = []
+        for score in scores:
+            score_data.append({
+                "topic_id": score.topic_id,
+                "most_recent_score": score.most_recent_score,
+                "highest_score": score.highest_score,
+                "lowest_score": score.lowest_score,
+                "average_score": score.average_score,
+                "total_attempts": score.total_attempts
+            })
+
+        return jsonify({"user_id": user_id, "scores": score_data})
 
 
 

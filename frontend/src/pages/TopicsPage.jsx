@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -31,7 +31,7 @@ const AS_StatisticsMechanics = [
   'Constant Acceleration',
   'Forces and Motion',
   'Variable Acceleration'
-]
+];
 
 const A_Level_Pure = [
   'Algebraic Methods',
@@ -46,7 +46,7 @@ const A_Level_Pure = [
   'Numerical Methods',
   'Integration',
   'Vectors'
-]
+];
 
 const A_Level_StatisticsMechanics = [
   'Regression, Correlation, and Hypothesis Testing',
@@ -57,10 +57,17 @@ const A_Level_StatisticsMechanics = [
   'Projectiles',
   'Applications of Forces',
   'Further Kinematics'
-]
+];
 
 export default function TopicsPage() {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   const handleTopicClick = (topic) => {
     navigate(`/topics/${topic.toLowerCase().replace(/\s+/g, '-')}`);
@@ -95,5 +102,4 @@ export default function TopicsPage() {
       {renderTopicCards(A_Level_StatisticsMechanics, 'A-Level Statistics & Mechanics Topics')}
     </div>
   );
-
 }

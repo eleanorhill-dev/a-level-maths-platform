@@ -59,8 +59,9 @@ const QuizPage = () => {
     const payload = {
       user_id: parseInt(userId),
       topic_id: parseInt(topicId),
-      answers: questions.map((q) => ({
+      answers: questions.map((q, index) => ({
         id: q.id,
+        question_number: index + 1,
         answer: userAnswers[q.id] || "",
       })),
     };
@@ -92,7 +93,7 @@ const QuizPage = () => {
       console.error("Error submitting quiz:", error);
     }
   };
-  
+
 
   if (loading) return <p>Loading quiz...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -102,24 +103,26 @@ const QuizPage = () => {
       <div className="p-4">
         <h2 className="text-xl font-bold mb-4">Quiz Complete!</h2>
         <p className="mb-2">Score: {score}%</p>
-        {explanations.length > 0 && (
-          <>
-            <h3 className="text-lg font-semibold mb-2">Review</h3>
-            <ul className="space-y-4">
-              {explanations.map((exp, index) => (
-                <li key={index} className="bg-gray-100 p-4 rounded shadow">
-                  <p><strong>Q{index + 1}:</strong> {exp.question}</p>
-                  <p><span className="text-red-600">Your Answer:</span> {exp.your_answer}</p>
-                  <p><span className="text-green-600">Correct Answer:</span> {exp.correct_answer}</p>
-                  <p><em>Explanation:</em> {exp.explanation}</p>
-                </li>
-              ))}
-            </ul>
-          </>
+        {score === 100 && (
+          <p className="text-green-600 font-semibold mb-2">🎉 Clean sweep! You nailed every question!</p>
         )}
+        <ul className="space-y-4 list-none">
+        {explanations.map((exp, index) => {
+          const questionNumber = exp.question_number || index + 1;
+          return (
+              <li key={`exp-${exp.question_number || index}`} className="bg-gray-100 p-4 rounded shadow">
+                <p><strong>Q{questionNumber}:</strong> {exp.question}</p>
+                <p><span className="text-red-600">Your Answer:</span> {exp.your_answer}</p>
+                <p><span className="text-green-600">Correct Answer:</span> {exp.correct_answer}</p>
+                <p><em>Explanation:</em> {exp.explanation}</p>
+              </li>
+          );
+        })}
+        </ul>
       </div>
     );
   }
+  
 
   if (questions.length === 0 || !questions[currentIndex]) {
     return <p className="text-red-500">Question not available.</p>;
@@ -140,21 +143,23 @@ const QuizPage = () => {
       <p className="mb-4 whitespace-pre-wrap">{currentQuestion.question_text}</p>
 
       {currentQuestion.question_type === "multiple_choice" ? (
-        <div className="space-y-2 mb-4">
+        <div className="mb-4">
           {currentQuestion.options.map((option, idx) => (
-            <label key={idx} className="block">
-              <input
-                type="radio"
-                name={`answer-${currentIndex}`}
-                value={option}
-                checked={currentAnswer === option}
-                onChange={(e) => handleAnswerChange(e.target.value)}
-                className="mr-2"
-              />
-              {option}
-            </label>
+            <div key={idx} className="mb-2">
+              <label className="block cursor-pointer">
+                <input
+                  type="radio"
+                  name={`answer-${currentIndex}`}
+                  value={option}
+                  checked={currentAnswer === option}
+                  onChange={(e) => handleAnswerChange(e.target.value)}
+                  className="mr-2"
+                />
+                {option}
+              </label>
+            </div>
           ))}
-        </div>
+        </div>      
       ) : (
         <input
           type="text"

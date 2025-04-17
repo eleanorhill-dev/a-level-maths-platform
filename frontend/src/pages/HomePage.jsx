@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("authToken");
+    if (!token) {
+      navigate("/login");
+    }
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-white text-gray-800 p-4">
@@ -25,7 +32,6 @@ const HomePage = () => {
         >
           View Profile
         </button>
-
       </div>
 
       <blockquote className="mt-10 italic text-gray-600 max-w-xl text-center">
