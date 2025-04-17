@@ -4,15 +4,11 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 
 from extensions import db
 from app import create_app
-from models import Topic, QuizQuestion
+from models import Topic, QuizQuestion, QuizScore
 
 app = create_app()
 
 with app.app_context():
-    QuizQuestion.query.delete()
+    QuizScore.query.delete()
     db.session.commit()
-    print("All quiz questions deleted.")
-
-    Topic.query.delete()
-    db.session.commit()
-    print("All topics deleted.")
+    print("All quiz scores deleted.")

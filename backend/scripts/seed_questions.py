@@ -10,84 +10,105 @@ app = create_app()
 
 def seed_questions():
     with app.app_context():
-        topic = Topic.query.filter_by(name="Algebraic Expressions").first()
+        topic = Topic.query.filter_by(name="Quadratics").first()
         if not topic:
-            print("Topic 'Algebraic Expressions' not found. Make sure it exists in the database.")
+            print("Topic 'Quadratics' not found. Make sure it exists in the database.")
             return
         
         print(f"Topic found: {topic.name} (ID: {topic.id})")
 
         questions = [
             {
-                "question_text": "What is the simplified form of the following Python expression?\n\n```python\nexpression = x**3 * x**4\n```",
+                "question_text": "What will the following code output?\n\n"
+                                 "a = 1\n"
+                                 "b = -6\n"
+                                 "c = 9\n"
+                                 "discriminant = b**2 - 4*a*c\n"
+                                 "print(discriminant)",
                 "question_type": "multiple_choice",
-                "options": ["expression = x**7", "expression = x**12", "expression = x**1", "expression = x**34"],
-                "correct_answer": "expression = x**7",
-                "explanation": "The expression simplifies as x^3 * x^4 = x^7."
+                "options": ["0", "3", "36", "-36"],
+                "correct_answer": "0",
+                "explanation": "Discriminant = b² - 4ac = (-6)² - 4*1*9 = 36 - 36 = 0."
             },
             {
-                "question_text": "What is the output of the following Python code?\n\n```python\nfrom sympy import symbols, expand\nx = symbols('x')\nexpression = (x + 2) * (x + 5)\nprint(expand(expression))\n```",
+                "question_text": "What does the following Python function return?\n\n"
+                                 "def discriminant(a, b, c):\n"
+                                 "    return b**2 - 4*a*c\n\n"
+                                 "print(discriminant(1, -2, 1))",
                 "question_type": "multiple_choice",
-                "options": ["x**2 + 10*x + 7", "x*2 + 7*x + 10", "x**7 + 2*x + 10", "x**2 + 7*x + 10"],
-                "correct_answer": "x**2 + 7*x + 10",
-                "explanation": "Expanding the expression gives (x + 2)(x + 5) = x^2 + 7x + 10."
+                "options": ["0", "-2", "2", "4"],
+                "correct_answer": "0",
+                "explanation": "(-2)² - 4*1*1 = 4 - 4 = 0."
             },
             {
-                "question_text": "Which Python function is used to factor an expression\n",
+                "question_text": "What is the correct way to calculate the x-coordinate of the vertex of a parabola using Python?",
                 "question_type": "multiple_choice",
-                "options": ["factor()", "factor_expression()", ".factor_expression", ".factor"],
-                "correct_answer": "factor()",
-                "explanation": "To factor an expression in Python (e.g. x**2 - 9), you must use the SymPy import factor(x**2 - 9), which gives the output (x - 3)*(x + 3)."
+                "options": ["x_vertex = -b / (2 * a)", "x_vertex = b / (2 * a)", "x_vertex = (-b + math.sqrt(b**2 - 4*a*c)) / (2 * a)", "x_vertex = (-b * c) / (2 * a)"],
+                "correct_answer": "x_vertex = -b / (2 * a)",
+                "explanation": "The vertex's x-coordinate of a quadratic is found using -b / (2a)."
             },
             {
-                "question_text": "What is the result of the following line of Python code?\n\n```python\nprint(3**-2)\n```",
+                "question_text": "What will the following code print?\n\n"
+                                 "from sympy import symbols, Eq, solve\n"
+                                 "x = symbols('x')\n"
+                                 "equation = Eq(x**2 + 2*x + 1, 0)\n"
+                                 "print(solve(equation, x))",
                 "question_type": "multiple_choice",
-                "options": ["-1/3", "-9", "-1/9", "1/9"],
-                "correct_answer": "1/9",
-                "explanation": "3 to the power of -2 gives a result of 1/9."
+                "options": ["[-1]", "[1]", "[-1, -1]", "[-2, 2]"],
+                "correct_answer": "[-1]",
+                "explanation": "The equation x² + 2x + 1 = 0 factors to (x + 1)² = 0 → x = -1."
             },
             {
-                "question_text": "What is the result of the following Python code?\n\n```python\nfrom sympy import sqrt\nsurd_expression = sqrt(120)\nprint(surd_expression.simplify())\n```",
+                "question_text": "Given the function f(x) = (x - 1)**2 + 2, what does the graph's vertex represent in Python plotting?",
                 "question_type": "multiple_choice",
-                "options": ["3*sqrt(20)", "6*sqrt(20)", "2*sqrt(30)", "10*sqrt(12)"],
-                "correct_answer": "2*sqrt(30)",
-                "explanation": "Simplifying sqrt(120) gives sqrt(4)*sqrt(30), which equates to 2*sqrt(30)."
+                "options": ["The minimum point (1, 2)", "The maximum point (1, 2)", "The y-intercept", "The axis of symmetry"],
+                "correct_answer": "The minimum point (1, 2)",
+                "explanation": "In the form (x - h)² + k, the vertex is at (h, k), which here is (1, 2)."
             },
             {
-                "question_text": "What is the output of the following Python code?\n\n```python\nfrom sympy import symbols, expand\nx = symbols('x')\nexpression = ((x + 2)**2)\nprint(expand(expression))\n```",
+                "question_text": "What type of roots does the quadratic equation `2x² + 4x + 5 = 0` have?",
                 "question_type": "multiple_choice",
-                "options": ["x**2 + 4", "x**2 + 4*x + 4", "4*x + 4", "x**4 + 2*x + 4"],
-                "correct_answer": "x**2 + 4*x + 4",
-                "explanation": "Expanding (x + 2)**2 gives (x + 2) * (x + 2), which then expands to x**2 + 4*x + 4."
+                "options": ["One real root", "Two real roots", "No real roots", "It cannot be solved"],
+                "correct_answer": "No real roots",
+                "explanation": "Discriminant = 4² - 4×2×5 = 16 - 40 = -24 → discriminant < 0 → no real roots."
             },
             {
-                "question_text": "Which of the following is a correct simplified version of (x^3 * x^2) / x?\n",
+                "question_text": "What would the Python code output for this equation?\n\n"
+                                 "```from sympy import solve, symbols\nx = symbols('x')\nprint(solve(x**2 - 5*x + 6, x))```",
                 "question_type": "multiple_choice",
-                "options": ["x**5", "x**6", "x**4", "x**2"],
-                "correct_answer": "x**4",
-                "explanation": "x^3 * x^2 = x^5, and x^5 / x = x^4."
+                "options": ["[2, 3]", "[3, 2]", "[1, 6]", "[-2, -3]"],
+                "correct_answer": "[2, 3]",
+                "explanation": "x² - 5x + 6 = 0 factors to (x - 2)(x - 3) → x = 2, 3."
             },
-
             {
-                "question_text": "Fill in the blank to correctly expand the expression:\n\n```python\nfrom sympy import symbols, expand\nx = symbols('x')\nexpression = (x + 2) * (x + 3)\nexpanded_expression = __________________(expression)\nprint(expanded_expression)\n```",
+                "question_text": "Fill in the blank to complete the square using Python:\n\n"
+                                 "```from sympy import symbols, expand\n"
+                                 "x = symbols('x')\n"
+                                 "expression = (x - 3)**2 + 4\n"
+                                 "expanded = __________(expression)\n"
+                                 "print(expanded)```",
                 "question_type": "fill_in_the_blank",
                 "options": None,
                 "correct_answer": "expand",
-                "explanation": "To expand an expression in Python, use the SymPy import expand()."
+                "explanation": "To expand a completed square expression, use SymPy's expand() function."
             },
             {
-                "question_text": "Fill in the blank to complete the equation if the output of the code is 9:\n\n```python\na = 27 ** (_________)\nprint(a)\n```",
+                "question_text": "Fill in the blank to compute the discriminant of a quadratic in Python:\n\n"
+                                 "```a = 1\nb = 2\nc = 3\nd = b**2 - ___ * a * c\nprint(d)```",
                 "question_type": "fill_in_the_blank",
                 "options": None,
-                "correct_answer": "1/3",
-                "explanation": "27 to the power of 1/3 gives an output of 9."
+                "correct_answer": "4",
+                "explanation": "The standard discriminant formula is b² - 4ac."
             },
             {
-                "question_text": "Fill in the blank to correctly rationalise the denominator:\n\n```python\nfrom sympy import sqrt, Rational\nexpr = ___________(1, sqrt(2))\nrationalised_expr = expr * (sqrt(2)/sqrt(2))\nprint(rationalised_expr)\n```",
+                "question_text": "Fill in the blank to define a quadratic equation in Python:\n\n"
+                                 "```from sympy import Eq, symbols\n"
+                                 "x = symbols('x')\n"
+                                 "equation = Eq(x**2 + 5*x + 6, ___)```",
                 "question_type": "fill_in_the_blank",
                 "options": None,
-                "correct_answer": "Rational",
-                "explanation": "To rationalise a denominator in Python, use the SymPy import Rational()."
+                "correct_answer": "0",
+                "explanation": "Quadratic equations are set equal to 0 when solving."
             }
         ]
 
@@ -105,7 +126,7 @@ def seed_questions():
 
         try:
             db.session.commit()
-            print(f"{len(questions)} questions added to the 'Algebraic Expressions' topic.")
+            print(f"{len(questions)} questions added to the 'Quadratics' topic.")
         except Exception as e:
             db.session.rollback()
             print(f"Error during commit: {e}")

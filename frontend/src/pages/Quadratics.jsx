@@ -68,6 +68,7 @@ def f(x):
 
 # Generate x values
 x_vals = np.linspace(-2, 6, 400)
+# Pass x values into the function to produce y values
 y_vals = f(x_vals)
 
 # Plot the graph
@@ -96,6 +97,7 @@ def f_vertex(x):
 
 # Generate x values
 x_vals = np.linspace(-1, 3, 400)
+# Pass x values into the function to produce y values
 y_vals = f_vertex(x_vals)
 
 # Plot the graph
@@ -185,7 +187,7 @@ plt.show()`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/quadratics/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/2" variant="success">Take Quiz</Button>
             </div>
         </div>
     );
