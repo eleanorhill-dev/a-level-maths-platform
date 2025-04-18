@@ -105,9 +105,30 @@ class ScoreHistory(db.Model):
 
     def to_dict(self):
         return {
-            'is': self.id,
+            'id': self.id,
             'user_id': self.user_id,
             'topic_id': self.topic_id,
             'score': self.score,
             'date_attempted': self.date_attempted
         }
+    
+
+class UserAchievement(db.Model):
+    __tablename__ = 'user_achievements'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text)
+    date_earned = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'user_id': self.user_id,
+            'name': self.name,
+            'description': self.description,
+            'date_earned': self.date_earned
+        }
+
+    user = db.relationship('User', backref='achievements')

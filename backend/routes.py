@@ -5,8 +5,10 @@ from utils import evaluate_code
 from datetime import datetime
 import subprocess
 from functools import wraps
+from services.analytics_service import *
 
 quiz_bp = Blueprint('quiz_bp', __name__)
+analytics_bp = Blueprint('analytics_bp', __name__)
 
 def get_user_by_username(uname):
     user = User.query.filter_by(uname=uname).first() 
@@ -222,10 +224,33 @@ def register_routes(app, db, bcrypt):
             })
 
         return jsonify({"user_id": user_id, "scores": score_data})
+    
+
+
+
+    @analytics_bp.route('/', methods=['GET'])
+    def get_broad_analytics():
+        user_id = session.get('user_id')
+
+        if not user_id:
+            return jsonify({'error': 'User not logged in'}), 401
+        
+        analytics = {
+            "highest_scoring_topic": get_highest_scoring_topic(user_id),
+            "lowest_scoring_topic": get_lowest_scoring_topic(user_id),
+            "average_score": get_average_score_across_all_topics(user_id),
+            "total_quizzes_taken": get_total_quizzes_taken(user_id),
+            "most_improved_topic": get_most_improved_topic(user_id),
+            "activity_heatmap": get_activity_heatmap(user_id),
+            "badges": get_progress_badges(user_id)
+        }
+
+        return jsonify(analytics)
 
 
 
         
     
     app.register_blueprint(quiz_bp, url_prefix='/quiz')
+    app.register_blueprint(analytics_bp, url_prefix='/analytics')
 

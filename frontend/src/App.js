@@ -22,6 +22,7 @@ import Integration from './pages/Integration';
 import ExponentialsAndLogarithms from './pages/ExponentialsAndLogarithms';
 import RequireAuthentication from "./RequireAuthentication";
 import QuizPage from "./pages/QuizPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/profile" element={<RequireAuthentication><ProfilePage /></RequireAuthentication>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage /></RequireAuthentication>} />
           <Route path="/topics/algebraic-expressions" element={<RequireAuthentication><AlgebraicExpressions /></RequireAuthentication>} />
           <Route path="/topics/quadratics" element={<RequireAuthentication><Quadratics /></RequireAuthentication>} />
