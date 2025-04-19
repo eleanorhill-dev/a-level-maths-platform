@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/ui/Button"; 
+import CodeSnippet from '../components/CodeSnippet';
 
 const QuizPage = () => {
   const { topicId } = useParams();
@@ -25,6 +26,7 @@ const QuizPage = () => {
         if (!res.ok) throw new Error("Failed to fetch questions");
 
         const data = await res.json();
+        console.log("Fetched questions:", data);
         setQuestions(data);
       } catch (error) {
         console.error("Failed to load questions:", error);
@@ -140,7 +142,12 @@ const QuizPage = () => {
       <h2 className="text-xl font-semibold mb-2">
         Question {currentIndex + 1} of {questions.length}
       </h2>
-      <p className="mb-4 whitespace-pre-wrap">{currentQuestion.question_text}</p>
+      <p className="mb-2 whitespace-pre-wrap">{currentQuestion.question_text}</p>
+      {currentQuestion.code_snippet && (
+        <div className="mb-4">
+          <CodeSnippet code={currentQuestion.code_snippet} />
+        </div>
+      )}
 
       {currentQuestion.question_type === "multiple_choice" ? (
         <div className="mb-4">

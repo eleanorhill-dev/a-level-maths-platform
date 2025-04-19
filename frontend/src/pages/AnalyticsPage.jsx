@@ -123,8 +123,8 @@ const AnalyticsPage = () => {
     <div>
       <h2>Your Analytics</h2>
       <ul>
-        <li><strong>Highest Scoring Topic:</strong> {analytics.highest_scoring_topic?.topic}</li>
-        <li><strong>Lowest Scoring Topic:</strong> {analytics.lowest_scoring_topic?.topic}</li>
+        <li><strong>Highest Scoring Topic:</strong> {analytics.highest_scoring_topic?.topic || "N/A"}</li>
+        <li><strong>Lowest Scoring Topic:</strong> {analytics.lowest_scoring_topic?.topic || "N/A"}</li>
         <li><strong>Average Score:</strong> {analytics.average_score.toFixed(2)}%</li>
         <li><strong>Total Quizzes Taken:</strong> {analytics.total_quizzes_taken}</li>
         <li><strong>Most Improved Topic:</strong> {analytics.most_improved_topic?.topic || "N/A"}</li>

@@ -126,6 +126,7 @@ def register_routes(app, db, bcrypt):
                 "id": question.id,
                 "question_text": question.question_text,
                 "question_type": question.question_type,
+                "code_snippet": question.code_snippet or "",
                 "options": question.options if question.options else None,
                 "correct_answer": question.correct_answer,
                 "explanation": question.explanation
