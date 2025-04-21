@@ -130,7 +130,7 @@ plt.show()`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/graphs-and-transformations/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/4" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

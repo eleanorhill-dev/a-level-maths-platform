@@ -105,7 +105,7 @@ assert not all(x % 2 == 0 for x in [2, 4, 6, 7])  # 7 is odd`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/algebraic-methods/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/7" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

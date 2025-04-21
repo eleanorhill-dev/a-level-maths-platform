@@ -151,21 +151,32 @@ const QuizPage = () => {
 
       {currentQuestion.question_type === "multiple_choice" ? (
         <div className="mb-4">
-          {currentQuestion.options.map((option, idx) => (
-            <div key={idx} className="mb-2">
-              <label className="block cursor-pointer">
-                <input
-                  type="radio"
-                  name={`answer-${currentIndex}`}
-                  value={option}
-                  checked={currentAnswer === option}
-                  onChange={(e) => handleAnswerChange(e.target.value)}
-                  className="mr-2"
-                />
-                {option}
-              </label>
-            </div>
-          ))}
+          {currentQuestion.options.map((option, idx) => {
+            const isImage = typeof option === "string" && option.match(/\.(png|jpg|jpeg|svg)$/i);
+            return (
+              <div key={idx} className="mb-4">
+                <label className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name={`answer-${currentIndex}`}
+                    value={option}
+                    checked={currentAnswer === option}
+                    onChange={(e) => handleAnswerChange(e.target.value)}
+                    className="mr-2"
+                  />
+                  {isImage ? (
+                    <img
+                      src={`/quiz_images/${option}`}
+                      alt={`Option ${idx + 1}`}
+                      className="w-32 h-auto border rounded shadow"
+                    />
+                  ) : (
+                    <span>{option}</span>
+                  )}
+                </label>
+              </div>
+            );
+          })}
         </div>      
       ) : (
         <input
