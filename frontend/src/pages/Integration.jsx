@@ -7,8 +7,8 @@ export default function Integration() {
         <div className="container mt-4">
             <h2>Integration</h2>
 
-            <h4>Integrating x^n</h4>
-            <p>For the integral of x^n, we apply the power rule:</p>
+            <h4>Integrating xⁿ</h4>
+            <p>For the integral of xⁿ, we apply the power rule:</p>
             <CodeSnippet
                 code={`import numpy as np
 import matplotlib.pyplot as plt
@@ -193,7 +193,7 @@ plt.show()` }
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/integration/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/13" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

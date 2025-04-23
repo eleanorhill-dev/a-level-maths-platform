@@ -1,10 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import CodeSnippet from '../components/CodeSnippet';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function TrigonometricRatios() {
 
@@ -95,7 +92,7 @@ Angle C: 127.98°`} language="text" />
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/binomial-expansion/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/9" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

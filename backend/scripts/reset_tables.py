@@ -9,12 +9,9 @@ from models import Topic, QuizQuestion, QuizScore, ScoreHistory
 app = create_app()
 
 with app.app_context():
-    # Delete all quiz questions
-    QuizQuestion.query.delete()
-    print("All quiz questions deleted.")
-
-    # Delete all score history entries
-    ScoreHistory.query.delete()
-    print("All score history entries deleted.")
+    topics_to_delete = Topic.query.filter(Topic.id > 14).all()
+    for topic in topics_to_delete:
+        db.session.delete(topic)
+    print("All duplicate topics deleted.")
 
     db.session.commit()

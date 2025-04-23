@@ -1,11 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ScatterController } from 'chart.js';
-import { MathComponent } from 'mathjax-react';
 import CodeSnippet from '../components/CodeSnippet';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, ScatterController);
 
 export default function TrigonometricIdentitiesAndEquations() {
     
@@ -101,7 +97,7 @@ print(simplify(identity))`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/trigonometric-identities-and-equations/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/10" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

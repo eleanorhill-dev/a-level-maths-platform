@@ -94,6 +94,7 @@ print(expanded)`}
 
             <h4>Binomial Estimation</h4>
             <p>Binomial estimation approximates expressions using the first few terms:</p>
+            <p>In the example below, the series() function from sympy is used to approximate expressions as a power series in terms of x, near x = 0. The series (x, 0, 3) tells Python: "Give me the expansion up to x², and include the next order term to show what's left".</p>
             <CodeSnippet
                 code={`from sympy import symbols, expand
 
@@ -110,7 +111,7 @@ print(approx)`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/binomial-expansion/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/8" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

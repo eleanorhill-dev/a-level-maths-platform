@@ -123,7 +123,7 @@ print("Resultant Vector (Force + Velocity):", resultant)`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/vectors/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/11" variant="success">Take Quiz</Button>
             </div>
         </div>
     );
