@@ -1,11 +1,13 @@
 from flask import render_template, request, redirect, url_for, session, flash, jsonify, g, make_response, Blueprint
 from werkzeug.security import generate_password_hash, check_password_hash
-from models import User, Topic, QuizQuestion, QuizScore, ScoreHistory
+from models import User, Topic, QuizQuestion, QuizScore, ScoreHistory, UserAchievement
 from utils import evaluate_code
-from datetime import datetime
+from datetime import datetime, timedelta
 import subprocess
 from functools import wraps
 from services.analytics_service import *
+import re
+from sqlalchemy import func
 
 quiz_bp = Blueprint('quiz_bp', __name__)
 analytics_bp = Blueprint('analytics_bp', __name__)
@@ -148,13 +150,17 @@ def register_routes(app, db, bcrypt):
         correct_answers = 0
         wrong_explanations = []
 
+        def normalize_answer(ans):
+                return re.sub(r"\s+", "", ans)
+
         for idx, answer in enumerate(answers):
             print("Checking answer:", answer)
             question = QuizQuestion.query.get(answer['id'])
             if not question:
                 continue
-            correct = question.correct_answer.strip()
-            user_ans = answer['answer'].strip()
+            correct = normalize_answer(question.correct_answer)
+            user_ans = normalize_answer(answer['answer'])
+
 
             if user_ans == correct:
                 correct_answers += 1
@@ -198,12 +204,16 @@ def register_routes(app, db, bcrypt):
         db.session.add(score_history)
 
         db.session.commit()
+        award_details = []
+        check_and_award_achievements(user_id, topic_id, score, award_details)
 
         return jsonify({
             "message": "Quiz submitted successfully",
             "score": score,
-            "explanations": wrong_explanations
+            "explanations": wrong_explanations,
+            "awarded_achievements": award_details
         })
+        
 
 
 
@@ -247,6 +257,112 @@ def register_routes(app, db, bcrypt):
         }
 
         return jsonify(analytics)
+
+
+
+    def check_and_award_achievements(user_id, topic_id, score, award_details):
+
+        def award(name, description):
+            exists = UserAchievement.query.filter_by(user_id=user_id, name=name).first()
+            if not exists:
+                new_achievement = UserAchievement(
+                    user_id=user_id,
+                    name=name,
+                    description=description,
+                    date_earned=datetime.utcnow()
+                )
+                db.session.add(new_achievement)
+                db.session.commit()
+                print(f"Awarded achievement: {new_achievement.name}")
+
+                award_details.append({
+                    "name": name,
+                    "description": description
+                })
+
+        history = ScoreHistory.query.filter_by(user_id=user_id).order_by(ScoreHistory.date_attempted).all()
+        scores = [h.score for h in history]
+        topic_attempts = db.session.query(ScoreHistory.topic_id).filter_by(user_id=user_id).distinct().count()
+        topic_specific_attempts = ScoreHistory.query.filter_by(user_id=user_id, topic_id=topic_id).count()
+        topics_total = Topic.query.count()
+
+        today = datetime.utcnow().date()
+        dates_attempted = set(h.date_attempted.date() for h in history)
+
+        # First quiz
+        if len(history) == 1:
+            award("First Quiz!", "Completed your first quiz!")
+
+        # Quiz counts
+        if len(history) >= 5:
+            award("Practice Makes Progress", "Completed 5 quizzes total.")
+        if len(history) >= 10:
+            award("Double Digits", "Completed 10 quizzes total.")
+        if len(history) >= 25:
+            award("Persistent Learner", "Completed 25 quizzes total.")
+        if len(history) >= 50:
+            award("Marathon Mind", "Completed 50 quizzes total.")
+
+        # Perfect Score
+        if score == 100:
+            award("Perfect Score", "Scored 100% on a quiz!")
+
+        # High Flyer (90%+ on 5 quizzes)
+        if len([s for s in scores if s >= 90]) >= 5:
+            award("High Flyer", "Scored 90%+ on 5 quizzes.")
+
+        # Consistent Ace (3 in a row over 80%)
+        for i in range(len(scores) - 2):
+            if all(s >= 80 for s in scores[i:i+3]):
+                award("Consistent Ace", "Scored 80%+ on 3 quizzes in a row.")
+                break
+
+        # Comeback King/Queen (Improved by 30% over lowest)
+        if len(scores) >= 2:
+            min_score = min(scores)
+            if score - min_score >= 30:
+                award("Comeback King/Queen", "Improved your score by 30% from your lowest.")
+
+        # Bounce Back (after two <50%)
+        if len(scores) >= 3:
+            if scores[-3] < 50 and scores[-2] < 50 and scores[-1] > scores[-2]:
+                award("Bounce Back", "Improved after two tough quizzes!")
+
+        # Topic variety
+        if topic_attempts >= 5:
+            award("Explorer", "Tried 5 different topics.")
+        if topic_attempts >= 10:
+            award("Globetrotter", "Tried 10 different topics.")
+
+        # Master of One
+        if topic_specific_attempts >= 10:
+            topic_name = Topic.query.get(topic_id).name
+            award("Master of One", f"Completed 10 quizzes on {topic_name}.")
+
+        # Well Rounded
+        if topic_attempts == topics_total:
+            award("Well Rounded", "Attempted a quiz from every topic.")
+
+        # Streak achievements
+        def check_streak(days):
+            for i in range(len(dates_attempted) - days + 1):
+                streak = sorted(dates_attempted)[i:i + days]
+                if all(streak[j] == streak[0] + timedelta(days=j) for j in range(days)):
+                    return True
+            return False
+
+        if check_streak(3):
+            award("3-Day Streak", "Completed a quiz 3 days in a row.")
+        if check_streak(5):
+            award("5-Day Streak", "Completed a quiz 5 days in a row.")
+        if check_streak(7):
+            award("7-Day Warrior", "Completed a quiz 7 days in a row.")
+
+        # First Improvement
+        topic_scores = [h.score for h in history if h.topic_id == topic_id]
+        if len(topic_scores) >= 2 and topic_scores[-1] > topic_scores[-2]:
+            award("First Improvement", "Improved your score on a topic quiz!")
+
 
 
 

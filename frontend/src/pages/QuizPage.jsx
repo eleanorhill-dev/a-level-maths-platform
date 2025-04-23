@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Button from "../components/ui/Button"; 
-import CodeSnippet from '../components/CodeSnippet';
+import Button from "../components/ui/Button";
+import CodeSnippet from "../components/CodeSnippet";
+import { toast } from "sonner";
 
 const QuizPage = () => {
   const { topicId } = useParams();
@@ -12,6 +13,8 @@ const QuizPage = () => {
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [score, setScore] = useState(null);
   const [explanations, setExplanations] = useState([]);
+  const [awardedAchievements, setAwardedAchievements] = useState([]);
+  const [showPopUp, setShowPopUp] = useState(false);
   const [error, setError] = useState(null);
 
   const userId = sessionStorage.getItem("userId");
@@ -26,7 +29,6 @@ const QuizPage = () => {
         if (!res.ok) throw new Error("Failed to fetch questions");
 
         const data = await res.json();
-        console.log("Fetched questions:", data);
         setQuestions(data);
       } catch (error) {
         console.error("Failed to load questions:", error);
@@ -38,6 +40,17 @@ const QuizPage = () => {
 
     fetchQuestions();
   }, [topicId]);
+
+  useEffect(() => {
+    if (showPopUp && awardedAchievements.length > 0) {
+      awardedAchievements.forEach((achievement) => {
+        toast.success(`🏆 Achievement Unlocked: ${achievement.name}`, {
+          description: achievement.description || "You earned a new achievement!",
+          duration: 5000,
+        });
+      });
+    }
+  }, [showPopUp, awardedAchievements]);
 
   const handleNext = () => {
     if (questions.length === 0 || currentIndex >= questions.length) return;
@@ -64,12 +77,10 @@ const QuizPage = () => {
       answers: questions.map((q, index) => ({
         id: q.id,
         question_number: index + 1,
-        answer: userAnswers[q.id] || "",
+        answer: (userAnswers[q.id] || "").replace(/\s+/g, ""),
       })),
     };
-  
-    console.log("Submitting quiz with payload:", payload);
-  
+
     try {
       const res = await fetch("http://localhost:5000/quiz/submit", {
         method: "POST",
@@ -77,17 +88,16 @@ const QuizPage = () => {
         credentials: "include",
         body: JSON.stringify(payload),
       });
-  
-      console.log("Response status:", res.status);
-  
-      if (!res.ok) {
-        console.error("Failed to submit quiz:", await res.text());
-        throw new Error("Failed to submit quiz");
-      }
-  
+
+      if (!res.ok) throw new Error("Failed to submit quiz");
+
       const data = await res.json();
-      console.log("Received data:", data);
-  
+
+      if (data.awarded_achievements && data.awarded_achievements.length > 0) {
+        setAwardedAchievements(data.awarded_achievements);
+        setShowPopUp(true);
+      }
+
       setScore(data.score);
       setExplanations(data.explanations || []);
       setQuizCompleted(true);
@@ -95,7 +105,6 @@ const QuizPage = () => {
       console.error("Error submitting quiz:", error);
     }
   };
-
 
   if (loading) return <p>Loading quiz...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
@@ -106,25 +115,39 @@ const QuizPage = () => {
         <h2 className="text-xl font-bold mb-4">Quiz Complete!</h2>
         <p className="mb-2">Score: {score}%</p>
         {score === 100 && (
-          <p className="text-green-600 font-semibold mb-2">🎉 Clean sweep! You nailed every question!</p>
+          <p className="text-green-600 font-semibold mb-2">
+            🎉 Clean sweep! You nailed every question!
+          </p>
         )}
         <ul className="space-y-4 list-none">
-        {explanations.map((exp, index) => {
-          const questionNumber = exp.question_number || index + 1;
-          return (
-              <li key={`exp-${exp.question_number || index}`} className="bg-gray-100 p-4 rounded shadow">
-                <p><strong>Q{questionNumber}:</strong> {exp.question}</p>
-                <p><span className="text-red-600">Your Answer:</span> {exp.your_answer}</p>
-                <p><span className="text-green-600">Correct Answer:</span> {exp.correct_answer}</p>
-                <p><em>Explanation:</em> {exp.explanation}</p>
+          {explanations.map((exp, index) => {
+            const questionNumber = exp.question_number || index + 1;
+            return (
+              <li
+                key={`exp-${exp.question_number || index}`}
+                className="bg-gray-100 p-4 rounded shadow"
+              >
+                <p>
+                  <strong>Q{questionNumber}:</strong> {exp.question}
+                </p>
+                <p>
+                  <span className="text-red-600">Your Answer:</span>{" "}
+                  {exp.your_answer}
+                </p>
+                <p>
+                  <span className="text-green-600">Correct Answer:</span>{" "}
+                  {exp.correct_answer}
+                </p>
+                <p>
+                  <em>Explanation:</em> {exp.explanation}
+                </p>
               </li>
-          );
-        })}
+            );
+          })}
         </ul>
       </div>
     );
   }
-  
 
   if (questions.length === 0 || !questions[currentIndex]) {
     return <p className="text-red-500">Question not available.</p>;
@@ -132,10 +155,6 @@ const QuizPage = () => {
 
   const currentQuestion = questions[currentIndex];
   const currentAnswer = userAnswers[currentQuestion.id] || "";
-
-  console.log("Current Index:", currentIndex);
-  console.log("Current Question:", currentQuestion);
-  console.log("User Answers:", userAnswers);
 
   return (
     <div className="p-4">
@@ -150,20 +169,21 @@ const QuizPage = () => {
       )}
 
       {currentQuestion.question_type === "multiple_choice" ? (
-        <div className="mb-4">
+        <div className="mb-4 space-y-4">
           {currentQuestion.options.map((option, idx) => {
-            const isImage = typeof option === "string" && option.match(/\.(png|jpg|jpeg|svg)$/i);
+            const isImage =
+              typeof option === "string" && option.match(/\.(png|jpg|jpeg|svg)$/i);
             return (
-              <div key={idx} className="mb-4">
-                <label className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name={`answer-${currentIndex}`}
-                    value={option}
-                    checked={currentAnswer === option}
-                    onChange={(e) => handleAnswerChange(e.target.value)}
-                    className="mr-2"
-                  />
+              <div key={idx} className="flex items-start space-x-2">
+                <input
+                  type="radio"
+                  name={`answer-${currentIndex}`}
+                  value={option}
+                  checked={currentAnswer === option}
+                  onChange={(e) => handleAnswerChange(e.target.value)}
+                  className="mt-1"
+                />
+                <label htmlFor={`answer-${idx}`} className="cursor-pointer">
                   {isImage ? (
                     <img
                       src={`/quiz_images/${option}`}
@@ -177,7 +197,7 @@ const QuizPage = () => {
               </div>
             );
           })}
-        </div>      
+        </div>
       ) : (
         <input
           type="text"

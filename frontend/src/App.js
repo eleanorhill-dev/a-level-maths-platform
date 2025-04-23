@@ -23,12 +23,14 @@ import ExponentialsAndLogarithms from './pages/ExponentialsAndLogarithms';
 import RequireAuthentication from "./RequireAuthentication";
 import QuizPage from "./pages/QuizPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import { Toaster } from "sonner";
 
 
 const App = () => {
   return (
     <Router>
       <BaseLayout>
+      <Toaster richColors />
         <Routes>
           <Route path="/" element={<RequireAuthentication><HomePage /></RequireAuthentication>} />
           <Route path="/topics" element={<RequireAuthentication><TopicsPage /></RequireAuthentication>} />
