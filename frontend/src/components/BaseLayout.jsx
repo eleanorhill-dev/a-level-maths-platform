@@ -12,7 +12,14 @@ const BaseLayout = ({ children }) => {
       {/* Navbar */}
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">MathsUncoded</Link>
+          <Link className="navbar-brand d-flex align-items-center" to="/">
+            <img
+              src="/main_images/logo2.png"
+              alt="MathsUncoded Logo"
+              style={{ height: "40px", width: "auto" }}
+              className="me-2"
+            />
+          </Link>
           <button
             className="navbar-toggler"
             type="button"

@@ -6,9 +6,14 @@ body, html {
   }
   
   .min-h-screen {
-    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* This centers the content vertically */
+    align-items: center;     /* This centers the content horizontally */
+    height: 100vh;           /* Ensure the height takes up the full screen */
+    padding-bottom: 70px;
   }
-  
+
   .flex {
     display: flex;
   }
@@ -59,6 +64,15 @@ body, html {
   
   .mb-6 {
     margin-bottom: 1.5rem;
+  }
+
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;  /* Ensures it stays above other content */
+    background-color: #ffffff;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Optional shadow for visibility */
   }
   
   input[type="text"], input[type="password"] {

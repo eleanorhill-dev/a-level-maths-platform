@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -12,17 +12,12 @@ const RegisterForm = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleShowPassword = () => {
@@ -32,160 +27,156 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const userData = {
-      fname: formData.fname,
-      sname: formData.sname,
-      email: formData.email,
-      uname: formData.uname,
-      pword: formData.pword,
-    };
+    if (formData.pword !== formData.confirmPword) {
+      setErrorMessage("Passwords do not match.");
+      return;
+    }
 
     try {
       const response = await fetch("http://localhost:5000/register", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fname: formData.fname,
+          sname: formData.sname,
+          email: formData.email,
+          uname: formData.uname,
+          pword: formData.pword,
+        }),
       });
 
       if (response.ok) {
-        console.log("Registration successful");
-        navigate("/login");  
+        navigate("/login");
       } else {
         const errorText = await response.text();
-        console.error("Error:", errorText);
-        setErrorMessage("An error occurred during registration.");
+        setErrorMessage(errorText || "Registration failed.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      setErrorMessage("An error occurred.");
+      setErrorMessage("An unexpected error occurred.");
     }
   };
 
-  
-  
-
   return (
-    <div className="container">
-      <h2>Register</h2>
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-      <form onSubmit={handleSubmit}>
-        {/* First Name */}
-        <div className="mb-3">
-          <label htmlFor="fname" className="form-label">
-            First Name
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="fname"
-            name="fname"
-            value={formData.fname}
-            onChange={handleChange}
-            required
+    <div className="d-flex min-h-screen justify-content-center align-items-center vh-100">
+      <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "450px" }}>
+        <div className="text-center mb-3">
+          <img
+            src="/main_images/logo.png"
+            alt="MathsUncoded Logo"
+            style={{ maxHeight: "60px", width: "auto" }}
+            className="mb-3"
           />
+          <h4 className="fw-bold">Create your account</h4>
         </div>
 
-        {/* Surname */}
-        <div className="mb-3">
-          <label htmlFor="sname" className="form-label">
-            Surname
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="sname"
-            name="sname"
-            value={formData.sname}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        {errorMessage && (
+          <div className="alert alert-danger">{errorMessage}</div>
+        )}
 
-        {/* Email */}
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input
-            type="email"
-            className="form-control"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-2">
+            <input
+              type="text"
+              name="fname"
+              className="form-control"
+              placeholder="First name"
+              value={formData.fname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Username */}
-        <div className="mb-3">
-          <label htmlFor="uname" className="form-label">
-            Username
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="uname"
-            name="uname"
-            value={formData.uname}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="mb-2">
+            <input
+              type="text"
+              name="sname"
+              className="form-control"
+              placeholder="Surname"
+              value={formData.sname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Password */}
-        <div className="mb-3">
-          <label htmlFor="pword" className="form-label">
-            Password
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            className="form-control"
-            id="pword"
-            name="pword"
-            value={formData.pword}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="mb-2">
+            <input
+              type="text"
+              name="email"
+              className="form-control"
+              placeholder="Email address"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Confirm Password */}
-        <div className="mb-3">
-          <label htmlFor="confirmPword" className="form-label">
-            Confirm Password
-          </label>
-          <input
-            type={showPassword ? "text" : "password"}
-            className="form-control"
-            id="confirmPword"
-            name="confirmPword"
-            value={formData.confirmPword}
-            onChange={handleChange}
-            required
-          />
-        </div>
+          <div className="mb-2">
+            <input
+              type="text"
+              name="uname"
+              className="form-control"
+              placeholder="Username"
+              value={formData.uname}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Show Password Checkbox */}
-        <div className="form-check">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="showPassword"
-            checked={showPassword}
-            onChange={handleShowPassword}
-          />
-          <label className="form-check-label" htmlFor="showPassword">
-            Show Password
-          </label>
-        </div>
+          <div className="mb-2">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="pword"
+              className="form-control"
+              placeholder="Password"
+              value={formData.pword}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-        {/* Register Button */}
-        <button type="submit" className="btn btn-primary mt-3">
-          Register
-        </button>
-      </form>
+          <div className="mb-2">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="confirmPword"
+              className="form-control"
+              placeholder="Confirm password"
+              value={formData.confirmPword}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="form-check mb-3">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="showPassword"
+              checked={showPassword}
+              onChange={handleShowPassword}
+            />
+            <label className="form-check-label" htmlFor="showPassword">
+              Show password
+            </label>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-[#E07A5F] text-white font-semibold py-2 rounded-lg hover:bg-[#d16c56] transition duration-200"
+          >
+            Register
+          </button>
+        </form>
+
+        <div className="forgot-register">
+          <button
+            type="button"
+            onClick={() => navigate("/login")}
+            className="text-[#81B29A] hover:underline"
+          >
+            Already got an account? Login here
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
