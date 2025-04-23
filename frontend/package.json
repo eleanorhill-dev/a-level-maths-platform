@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
+    "canvas-confetti": "^1.9.3",
     "chart.js": "^4.4.8",
     "codemirror": "^5.65.19",
     "mathjax-react": "^2.0.1",

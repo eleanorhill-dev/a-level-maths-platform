@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Button from "../components/ui/Button";
 import CodeSnippet from "../components/CodeSnippet";
 import { toast } from "sonner";
+import confetti from "canvas-confetti";
 
 const QuizPage = () => {
   const { topicId } = useParams();
@@ -18,6 +19,14 @@ const QuizPage = () => {
   const [error, setError] = useState(null);
 
   const userId = sessionStorage.getItem("userId");
+
+  const fireConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };  
 
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -97,6 +106,10 @@ const QuizPage = () => {
         setAwardedAchievements(data.awarded_achievements);
         setShowPopUp(true);
       }
+
+      if (data.score === 100) {
+        fireConfetti();
+      }      
 
       setScore(data.score);
       setExplanations(data.explanations || []);
