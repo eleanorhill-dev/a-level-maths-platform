@@ -8,13 +8,12 @@ const BaseLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
-  // Function to determine if a link is active
   const isActive = (path) => location.pathname === path;
 
   return (
     <div>
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-navbar">
         <div className="container-fluid">
           <Link className="navbar-brand d-flex align-items-center" to="/">
             <img

@@ -14,12 +14,11 @@ const ProfilePage = () => {
   const [learningGoal, setLearningGoal] = useState(0);
   const [profilePic, setProfilePic] = useState(null);
   const [progress, setProgress] = useState(0);
-  const [isPasswordChanging, setIsPasswordChanging] = useState(false); // Track if password change form is visible
+  const [isPasswordChanging, setIsPasswordChanging] = useState(false);
   const navigate = useNavigate();
   const { logout } = useAuth();
   const defaultProfileImage = '/main_images/default_avatar.webp';
 
-  // Presaved avatar images
   const avatarOptions = [
     '/avatars/avatar1.webp',
     '/avatars/avatar2.webp',
@@ -46,7 +45,7 @@ const ProfilePage = () => {
             method: 'GET',
             credentials: 'include',
           });
-
+  
           if (response.ok) {
             const data = await response.json();
             setProfileData(data);
@@ -56,11 +55,18 @@ const ProfilePage = () => {
               email: data.email,
               uname: data.uname,
             });
-            
+  
             setProfilePic(data.profile_pic || null);
             setLearningGoal(data.learning_goal || 0);
             setProgress(data.quizzes_completed_this_month || 0);
-
+  
+            // Add quiz-related stats
+            setQuizStats({
+              totalQuizzesTaken: data.total_quizzes_taken || 0,
+              highestScore: data.highest_score || 0,
+              mostImprovedTopic: data.most_improved_topic || "N/A",
+            });
+  
           } else {
             console.error('Profile fetch failed');
           }
@@ -68,25 +74,25 @@ const ProfilePage = () => {
           console.error('Error fetching profile:', error);
         }
       };
-
+  
       fetchProfile();
     }
   }, [navigate]);
 
   const handleAvatarSelect = async (selectedAvatarUrl) => {
     try {
-      console.log("Selected avatar URL:", selectedAvatarUrl);  // Debugging input
+      console.log("Selected avatar URL:", selectedAvatarUrl); 
   
       const response = await fetch('http://localhost:5000/update-avatar', {
         method: 'POST',
         body: JSON.stringify({ avatarUrl: selectedAvatarUrl }),
-        credentials: 'include',  // Ensure cookies are sent
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
       });
   
-      console.log("Response status:", response.status);  // Debugging response
+      console.log("Response status:", response.status);
   
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
@@ -160,7 +166,7 @@ const ProfilePage = () => {
       });
       if (response.ok) {
         alert("Password changed successfully");
-        setIsPasswordChanging(false); // Hide input fields after successful change
+        setIsPasswordChanging(false);
       } else {
         alert("Error changing password");
       }
@@ -214,135 +220,156 @@ const ProfilePage = () => {
   return (
     <div className="profile-container">
       <h1>Profile</h1>
-      <div className="profile-header">
-        <div className="profile-img-wrapper">
-          <img
-            src={profilePic || defaultProfileImage}
-            alt="Profile"
-            className="profile-img"
-          />
-        </div>
-
-        <div className="section-card profile-info">
-          <h3>Account Info</h3>
-          {['First Name', 'Surname', 'Email', 'Username'].map((label, i) => {
-            const fieldKey = ['fname', 'sname', 'email', 'uname'][i];
-            return (
-              <div key={fieldKey} className="editable-field">
-                {editingField === fieldKey ? (
-                  <>
-                    <div className="input-container">
-                      <input
-                        type="text"
-                        value={userInfo[fieldKey] || ''}
-                        onChange={e => handleInputChange(fieldKey, e.target.value)}
-                        className="input-field"
-                      />
-                      <button onClick={() => saveField(fieldKey)} className="edit-icon-button save-btn">
-                        💾
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <p><strong>{label}:</strong> {userInfo[fieldKey]}</p>
-                    <button onClick={() => setEditingField(fieldKey)} className="edit-icon-button edit-btn">
-                      ✏️
-                    </button>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <div className = "section-card avatar-section">
-        <h3>Select Avatar</h3>
-        <div className="avatar-options-container">
-          <div className="avatar-options">
-            {avatarOptions.map((avatarUrl, index) => (
+  
+      <div className="profile-dashboard">
+        {/* Left Column */}
+        <div className="profile-column">
+          {/* Profile Picture */}
+          <div className="profile-header">
+            <div className="profile-img-wrapper">
               <img
-                key={index}
-                src={avatarUrl}
-                alt={`Avatar ${index + 1}`}
-                className="avatar-option"
-                onClick={() => handleAvatarSelect(avatarUrl)}
-                style={{ border: profilePic === avatarUrl ? '2px solid #00f' : '' }}
+                src={profilePic || defaultProfileImage}
+                alt="Profile"
+                className="profile-img"
               />
-            ))}
+            </div>
+          </div>
+  
+          {/* Account Info */}
+          <div className="section-card profile-info">
+            <h3>Account Info</h3>
+            {['First Name', 'Surname', 'Email', 'Username'].map((label, i) => {
+              const fieldKey = ['fname', 'sname', 'email', 'uname'][i];
+              return (
+                <div key={fieldKey} className="editable-field">
+                  {editingField === fieldKey ? (
+                    <>
+                      <div className="input-container">
+                        <input
+                          type="text"
+                          value={userInfo[fieldKey] || ''}
+                          onChange={e => handleInputChange(fieldKey, e.target.value)}
+                          className="input-field"
+                        />
+                        <button onClick={() => saveField(fieldKey)} className="edit-icon-button save-btn">
+                          💾
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p><strong>{label}:</strong> {userInfo[fieldKey]}</p>
+                      <button onClick={() => setEditingField(fieldKey)} className="edit-icon-button edit-btn">
+                        ✏️
+                      </button>
+                    </>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+
+          {/* Change Password Section */}
+          <div className="section-card change-password">
+            <h3>Change Password</h3>
+            <button onClick={() => setIsPasswordChanging(!isPasswordChanging)} className="btn btn-primary">
+              {isPasswordChanging ? 'Cancel' : 'Change Password'}
+            </button>
+  
+            {isPasswordChanging && (
+              <div className="change-password-inputs">
+                <input
+                  type="password"
+                  placeholder="Current password"
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="New password"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <input
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmNewPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                />
+                <button onClick={handlePasswordChange} class = "btn btn-primary">Update Password</button>
+              </div>
+            )}
+          </div>
+  
+        </div>
+  
+        {/* Right Column */}
+        <div className="profile-column">
+          {/* Avatar Selection */}
+          <div className="section-card avatar-section">
+            <h3>Select Avatar</h3>
+            <div className="avatar-options-container">
+              <div className="avatar-options">
+                {avatarOptions.map((avatarUrl, index) => (
+                  <img
+                    key={index}
+                    src={avatarUrl}
+                    alt={`Avatar ${index + 1}`}
+                    className="avatar-option"
+                    onClick={() => handleAvatarSelect(avatarUrl)}
+                    style={{ border: profilePic === avatarUrl ? '2px solid #00f' : '' }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+
+          {/* Learning Goal & Progress */}
+          <div className="section-card learning-goal">
+            <h3>Learning Goal</h3>
+            <div className="progress-ring">
+              <svg className="circular-progress" width="150" height="150">
+                <circle className="circle-bg" cx="75" cy="75" r="60" />
+                <circle
+                  className="circle"
+                  cx="75"
+                  cy="75"
+                  r="60"
+                  strokeDasharray={376}
+                  strokeDashoffset={learningGoal ? 376 - (progress / learningGoal) * 376 : 376}
+                />
+              </svg>
+              <div className="progress-text">{`${progress} / ${learningGoal}`}</div>
+            </div>
+  
+            <input
+              type="number"
+              value={learningGoal}
+              min={1}
+              onChange={(e) => {
+                const val = parseInt(e.target.value, 10);
+                if (!isNaN(val) && val >= 1) {
+                  setLearningGoal(val);
+                }
+              }}
+            />
+            <button onClick={handleLearningGoalChange} className="btn btn-primary">Update Goal</button>
+          </div>
+  
+          
+  
+          {/* Account Actions (Logout & Delete) */}
+          <div className="account-actions">
+            <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
+            <button className="btn btn-danger" onClick={handleAccountDeletion}>Delete Account</button>
           </div>
         </div>
-      </div>
-
-      <div className="section-card learning-goal">
-        <h3>Learning Goal</h3>
-        <div className="progress-ring">
-          <svg className="circular-progress" width="150" height="150">
-            <circle className="circle-bg" cx="75" cy="75" r="60" />
-            <circle
-              className="circle"
-              cx="75"
-              cy="75"
-              r="60"
-              strokeDasharray={376}  // 2πr
-              strokeDashoffset={learningGoal ? 376 - (progress / learningGoal) * 376 : 376}
-            />
-          </svg>
-          <div className="progress-text">{`${progress} / ${learningGoal}`}</div>
-        </div>
-
-        <input
-          type="number"
-          value={learningGoal}
-          min={1}
-          onChange={(e) => {
-            const val = parseInt(e.target.value, 10);
-            if (!isNaN(val) && val >= 1) {
-              setLearningGoal(val);
-            }
-          }}
-        />
-        <button onClick={handleLearningGoalChange}>Update Goal</button>
-      </div>
-
-      <div className="section-card change-password">
-        <h3>Change Password</h3>
-        <button onClick={() => setIsPasswordChanging(!isPasswordChanging)}>
-          {isPasswordChanging ? 'Cancel' : 'Change Password'}
-        </button>
-
-        {isPasswordChanging && (
-          <div className="change-password-inputs">
-            <input
-              type="password"
-              placeholder="Current password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="New password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Confirm new password"
-              value={confirmNewPassword}
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
-            />
-            <button onClick={handlePasswordChange}>Update Password</button>
-          </div>
-        )}
-      </div>
-
-      <div className="account-actions">
-        <button onClick={handleLogout} className="btn btn-secondary">Logout</button>
-        <button className="btn btn-danger" onClick={handleAccountDeletion}>Delete Account</button>
       </div>
     </div>
   );
+  
 };
 
 export default ProfilePage;

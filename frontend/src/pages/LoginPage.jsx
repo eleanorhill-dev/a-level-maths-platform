@@ -63,14 +63,12 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-[#F4F1DE] px-4 bg-pattern">
-      {/* Logo above the form */}
       <img
         src="/main_images/logo.png"
         alt="MathsUncoded Logo"
         className="login-logo"
       />
   
-      {/* Login form container */}
       <div className="login-form-container">
         <div className="text-center mb-3">
           <h4 className="login-form-title">Login</h4>

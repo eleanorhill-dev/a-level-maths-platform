@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import '../styles/TopicsPage.css';
 
 const AS_Pure = [
   'Algebraic Expressions',
@@ -61,6 +62,7 @@ const A_Level_StatisticsMechanics = [
 
 export default function TopicsPage() {
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
@@ -73,18 +75,19 @@ export default function TopicsPage() {
     navigate(`/topics/${topic.toLowerCase().replace(/\s+/g, '-')}`);
   };
 
-  const renderTopicCards = (topics, categoryTitle) => {
+  const renderTopicCards = (topics, categoryTitle, className) => {
+    const filteredTopics = topics.filter((topic) => 
+      topic.toLowerCase().includes(searchQuery.toLowerCase())
+    );
     return (
-      <div className="container mt-4">
-        <h1>{categoryTitle}</h1>
+      <div className={`container mt-5 ${className}`}>
+        <h2 className="section-title">{categoryTitle}</h2>
         <div className="row">
-          {topics.map((topic) => (
-            <div key={topic} className="col-md-4 mb-3">
-              <Card className="shadow-sm">
-                <Card.Body>
-                  <Button onClick={() => handleTopicClick(topic)} variant="primary" className="w-100">
-                    {topic}
-                  </Button>
+          {filteredTopics.map((topic) => (
+            <div key={topic} className="col-md-4 mb-4">
+              <Card className="topic-card">
+                <Card.Body onClick={() => handleTopicClick(topic)}>
+                  <h5>{topic}</h5>
                 </Card.Body>
               </Card>
             </div>
@@ -95,11 +98,20 @@ export default function TopicsPage() {
   };
 
   return (
-    <div>
-      {renderTopicCards(AS_Pure, 'AS Pure Topics')}
-      {renderTopicCards(AS_StatisticsMechanics, 'AS Statistics & Mechanics Topics')}
-      {renderTopicCards(A_Level_Pure, 'A-Level Pure Topics')}
-      {renderTopicCards(A_Level_StatisticsMechanics, 'A-Level Statistics & Mechanics Topics')}
+    <div className="topics-page">
+      <div className="container mt-4">
+        <input
+          type="text"
+          placeholder="Search Topics"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="form-control"
+        />
+      </div>
+      {renderTopicCards(AS_Pure, 'AS Pure Topics', 'as-pure')}
+      {renderTopicCards(AS_StatisticsMechanics, 'AS Statistics & Mechanics Topics', 'as-statistics-mechanics')}
+      {renderTopicCards(A_Level_Pure, 'A-Level Pure Topics', 'a-level-pure')}
+      {renderTopicCards(A_Level_StatisticsMechanics, 'A-Level Statistics & Mechanics Topics', 'a-level-statistics-mechanics')}
     </div>
   );
 }

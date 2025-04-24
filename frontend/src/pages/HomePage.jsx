@@ -38,19 +38,17 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-      {/* Hero Section */}
       <section className="hero-section text-center">
         <h1 className="hero-title">Welcome to MathsUncoded</h1>
         <p className="hero-description">
           Build your skills, track your progress, and master A-Level Maths — one concept at a time.
         </p>
         <div className="hero-buttons">
-          <button className="btn-primary" onClick={() => navigate("/topics")}>Explore Topics</button>
+          <button className="btn-secondary" onClick={() => navigate("/topics")}>Explore Topics</button>
           <button className="btn-secondary" onClick={() => navigate("/profile")}>Go to Profile</button>
         </div>
       </section>
 
-      {/* Feature Cards */}
       <section className="features-section">
         <div className="feature-cards">
           {features.map((feature, index) => (
@@ -63,7 +61,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Quote Section */}
       <section className="quote-section">
         <blockquote className="quote-text">
           “Pure mathematics is, in its way, the poetry of logical ideas.” — Albert Einstein

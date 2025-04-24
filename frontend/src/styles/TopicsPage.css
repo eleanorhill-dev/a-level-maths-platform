@@ -1,0 +1,91 @@
+
+body, .topics-page {
+    background-color: #F4F1DE;
+    min-height: 100vh;
+  }
+  
+
+  .search-bar {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 10px;
+  }
+  
+  .search-bar input {
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  
+  .section-title {
+    color: #2E4057;
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  
+  .topic-card {
+    background-color: #BF9264; 
+    color: #FFFFFF;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .topic-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(129, 178, 154, 0.4); 
+  }
+  
+  .topic-card h5 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .as-pure .topic-card {
+    background-color: #A76F3C;
+    color: white;
+  }
+  
+  .as-statistics-mechanics .topic-card {
+    background-color: #4F5F4C;
+    color: white;
+  }
+  
+  .a-level-pure .topic-card {
+    background-color: #7A9B60;
+    color: white;
+  }
+  
+  .a-level-statistics-mechanics .topic-card {
+    background-color: #D6D77C;
+    color: #333;
+  }
+  
+  
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .col-md-4 {
+    flex: 1 1 calc(33.33% - 1.5rem);
+    max-width: calc(33.33% - 1.5rem);
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    .col-md-4 {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+  }
+  
