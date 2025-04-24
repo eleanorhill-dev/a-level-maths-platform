@@ -1,5 +1,30 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaCode, FaChartLine, FaPuzzlePiece, FaUserCheck } from "react-icons/fa";
+import '../styles/HomePage.css';
+
+const features = [
+  {
+    icon: <FaPuzzlePiece size={32} />,
+    title: "Master Every Topic",
+    description: "Deep-dive into bite-sized A-Level Maths concepts — theory, examples, and code-powered practice.",
+  },
+  {
+    icon: <FaChartLine size={32} />,
+    title: "Track Your Progress",
+    description: "Instant feedback, quiz history, analytics and more to help you improve efficiently.",
+  },
+  {
+    icon: <FaCode size={32} />,
+    title: "Learn Through Code",
+    description: "See how maths and Python blend together for an interactive, modern learning experience.",
+  },
+  {
+    icon: <FaUserCheck size={32} />,
+    title: "Personalised Learning",
+    description: "Your profile keeps tabs on performance and suggests areas to focus next.",
+  },
+];
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -12,31 +37,38 @@ const HomePage = () => {
   }, [navigate]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-50 to-white text-gray-800 p-4">
-      <h1 className="text-4xl font-bold mb-4">Welcome to MathsUncoded 🧠</h1>
-      <p className="text-lg mb-8 text-center max-w-md">
-        Build your skills, track your progress, and master A-Level Maths — one concept at a time.
-      </p>
+    <div className="home-page">
+      {/* Hero Section */}
+      <section className="hero-section text-center">
+        <h1 className="hero-title">Welcome to MathsUncoded</h1>
+        <p className="hero-description">
+          Build your skills, track your progress, and master A-Level Maths — one concept at a time.
+        </p>
+        <div className="hero-buttons">
+          <button className="btn-primary" onClick={() => navigate("/topics")}>Explore Topics</button>
+          <button className="btn-secondary" onClick={() => navigate("/profile")}>Go to Profile</button>
+        </div>
+      </section>
 
-      <div className="flex gap-4 flex-wrap justify-center">
-        <button
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition"
-          onClick={() => navigate("/topics")}
-        >
-          Go to Topics
-        </button>
+      {/* Feature Cards */}
+      <section className="features-section">
+        <div className="feature-cards">
+          {features.map((feature, index) => (
+            <div key={index} className="feature-card">
+              <div className="feature-icon">{feature.icon}</div>
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-description">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-        <button
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition"
-          onClick={() => navigate("/profile")}
-        >
-          View Profile
-        </button>
-      </div>
-
-      <blockquote className="mt-10 italic text-gray-600 max-w-xl text-center">
-        “Pure mathematics is, in its way, the poetry of logical ideas.” — Albert Einstein
-      </blockquote>
+      {/* Quote Section */}
+      <section className="quote-section">
+        <blockquote className="quote-text">
+          “Pure mathematics is, in its way, the poetry of logical ideas.” — Albert Einstein
+        </blockquote>
+      </section>
     </div>
   );
 };

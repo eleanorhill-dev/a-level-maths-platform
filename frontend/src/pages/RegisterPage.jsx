@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import '../styles/RegisterPage.css';
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -58,94 +59,87 @@ const RegisterForm = () => {
 
   return (
     <div className="d-flex min-h-screen justify-content-center align-items-center vh-100">
-      <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "450px" }}>
+      <div className="card">
         <div className="text-center mb-3">
-          <img
-            src="/main_images/logo.png"
-            alt="MathsUncoded Logo"
-            style={{ maxHeight: "60px", width: "auto" }}
-            className="mb-3"
-          />
+          <img src="/main_images/logo.png" alt="MathsUncoded Logo" className="mb-3" />
           <h4 className="fw-bold">Create your account</h4>
         </div>
-
-        {errorMessage && (
-          <div className="alert alert-danger">{errorMessage}</div>
-        )}
-
+  
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+  
         <form onSubmit={handleSubmit}>
-          <div className="mb-2">
+          <div className="mb-1">
             <input
               type="text"
               name="fname"
-              className="form-control"
+              className="w-full"
               placeholder="First name"
               value={formData.fname}
               onChange={handleChange}
               required
             />
           </div>
-
-          <div className="mb-2">
+  
+          <div className="mb-1">
             <input
               type="text"
               name="sname"
-              className="form-control"
+              className="w-full"
               placeholder="Surname"
               value={formData.sname}
               onChange={handleChange}
               required
             />
           </div>
-
-          <div className="mb-2">
+  
+          <div className="mb-1">
             <input
               type="text"
               name="email"
-              className="form-control"
+              className="w-full"
               placeholder="Email address"
               value={formData.email}
               onChange={handleChange}
               required
             />
           </div>
-
-          <div className="mb-2">
+  
+          <div className="mb-1">
             <input
               type="text"
               name="uname"
-              className="form-control"
+              className="w-full"
               placeholder="Username"
               value={formData.uname}
               onChange={handleChange}
               required
             />
           </div>
-
-          <div className="mb-2">
+  
+          <div className="mb-1">
             <input
               type={showPassword ? "text" : "password"}
               name="pword"
-              className="form-control"
+              className="w-full"
               placeholder="Password"
               value={formData.pword}
               onChange={handleChange}
               required
             />
           </div>
-
-          <div className="mb-2">
+  
+          <div className="mb-1">
             <input
               type={showPassword ? "text" : "password"}
               name="confirmPword"
-              className="form-control"
+              className="w-full"
               placeholder="Confirm password"
               value={formData.confirmPword}
               onChange={handleChange}
               required
             />
           </div>
-
+  
           <div className="form-check mb-3">
             <input
               type="checkbox"
@@ -158,27 +152,22 @@ const RegisterForm = () => {
               Show password
             </label>
           </div>
-
-          <button
-            type="submit"
-            className="w-full bg-[#E07A5F] text-white font-semibold py-2 rounded-lg hover:bg-[#d16c56] transition duration-200"
-          >
-            Register
-          </button>
+  
+          <div className = "centered-button">
+            <button type="submit">Register</button>
+          </div>
         </form>
-
-        <div className="forgot-register">
-          <button
-            type="button"
-            onClick={() => navigate("/login")}
-            className="text-[#81B29A] hover:underline"
-          >
+  
+        <div className="forgot-register mt-3 text-center">
+          <button type="button" onClick={() => navigate("/login")}>
             Already got an account? Login here
           </button>
         </div>
       </div>
     </div>
   );
+  
+  
 };
 
 export default RegisterForm;

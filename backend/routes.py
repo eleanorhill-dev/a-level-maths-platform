@@ -3,11 +3,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from models import User, Topic, QuizQuestion, QuizScore, ScoreHistory, UserAchievement
 from utils import evaluate_code
 from datetime import datetime, timedelta
-import subprocess
 from functools import wraps
 from services.analytics_service import *
 import re
 from sqlalchemy import func
+from flask_cors import cross_origin
 
 quiz_bp = Blueprint('quiz_bp', __name__)
 analytics_bp = Blueprint('analytics_bp', __name__)
@@ -35,6 +35,7 @@ def get_user_from_database(id):
 
 
 def login_required(func):
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if not session.get("user_id") and request.endpoint not in ['login', 'register', 'static']:
             return redirect(url_for('login'))
@@ -99,6 +100,7 @@ def register_routes(app, db, bcrypt):
             return jsonify({"message": "Error occurred while registering user", "error": str(e)}), 500
 
     @app.route("/logout", methods=["POST"])
+    @login_required
     def logout():
         print("Before clearing:", dict(session)) 
         session.clear()
@@ -110,16 +112,165 @@ def register_routes(app, db, bcrypt):
 
     
     @app.route('/profile', methods=['GET'])
+    @login_required
     def profile():
-        user_id = session.get('user_id')  
+        user_id = session.get('user_id')
         if user_id is None:
-            return 'Unauthorized', 401  
-        
+            return 'Unauthorized', 401
+
         user = User.query.get(user_id)
-        return jsonify(user.to_dict())
+
+        # Calculate quizzes completed this month
+        now = datetime.utcnow()
+        start_of_month = datetime(now.year, now.month, 1)
+        quizzes_this_month = ScoreHistory.query.filter(
+            ScoreHistory.user_id == user_id,
+            ScoreHistory.date_attempted >= start_of_month
+        ).count()
+
+        return jsonify({
+            'fname': user.fname,
+            'sname': user.sname,
+            'email': user.email,
+            'uname': user.uname,
+            'profile_pic': user.profile_pic or "/main_images/default_avatar.webp",
+            'learning_goal': user.learning_goal or 0,
+            'quizzes_completed_this_month': quizzes_this_month
+        })
+        
+
+
+    @app.route('/update-avatar', methods=['POST'])
+    @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    def update_avatar():
+        print("Session data:", session)
+        if 'user_id' not in session:
+            return jsonify({'error': 'Not logged in'}), 401
+
+        user = User.query.get(session['user_id'])
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+
+        data = request.get_json()
+        if not data or 'avatarUrl' not in data:
+            return jsonify({'error': 'No avatar URL provided'}), 400
+
+        user.profile_pic = data['avatarUrl']
+        db.session.commit()
+
+        return jsonify({'success': True})
+
+
+    @app.route('/update-profile', methods=['POST'])
+    @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    def update_profile():
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({"error": "User not authenticated"}), 401
+
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        data = request.get_json()
+
+        allowed_fields = ['fname', 'sname', 'email', 'uname']
+        updated = False
+
+        for field in allowed_fields:
+            if field in data:
+                setattr(user, field, data[field])
+                updated = True
+
+        if updated:
+            db.session.commit()
+            return jsonify({"message": "Profile updated successfully!"}), 200
+        else:
+            return jsonify({"error": "No valid fields to update"}), 400
+
+
+
+    @app.route('/set-learning-goal', methods=['POST'])
+    @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    @login_required
+    def set_learning_goal():
+        if 'user_id' not in session:
+            return jsonify({'error': 'Not logged in'}), 401
+
+        data = request.get_json()
+        goal = data.get('learningGoal')
+
+        if goal is None or not isinstance(goal, int) or goal < 1:
+            return jsonify({'error': 'Invalid goal'}), 400
+
+        user = User.query.get(session['user_id'])
+        user.learning_goal = goal
+        db.session.commit()
+
+        return jsonify({'message': 'Learning goal updated successfully'}), 200
+
+
+
+    @app.route('/change-password', methods=['POST'])
+    @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    @login_required
+    def change_password():
+        if 'user_id' not in session:
+            return jsonify({'error': 'Not logged in'}), 401
+
+        data = request.get_json()
+        current_password = data.get('currentPassword')
+        new_password = data.get('newPassword')
+
+        if not current_password or not new_password:
+            return jsonify({'error': 'Please provide both current and new password'}), 400
+
+        user = User.query.get(session['user_id'])
+        
+        if not check_password_hash(user.password, current_password):
+            return jsonify({'error': 'Current password is incorrect'}), 400
+        
+        user.password = generate_password_hash(new_password)
+        db.session.commit()
+
+        return jsonify({'message': 'Password changed successfully'}), 200
+
+
+
+    @app.route('/delete-account', methods=['DELETE'])
+    @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    def delete_account():
+        if 'user_id' not in session:
+            return jsonify({"error": "Unauthorized"}), 401
+
+        user_id = session['user_id']
+
+        try:
+            user = User.query.get(user_id)
+
+            if user:
+                ScoreHistory.query.filter_by(user_id=user_id).delete()
+                UserAchievement.query.filter_by(user_id=user_id).delete()
+                QuizScore.query.filter_by(user_id=user_id).delete()
+                
+                db.session.delete(user)
+                db.session.commit()
+
+                session.pop('user_id', None)
+
+                return jsonify({"message": "Account and all associated data deleted successfully"}), 200
+            else:
+                return jsonify({"error": "User not found"}), 404
+
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error deleting account: {e}")
+            return jsonify({"error": "Error deleting account"}), 500
+
 
 
     @quiz_bp.route('/<int:topic_id>', methods=['GET'])
+    @login_required
     def get_quiz_questions(topic_id):
         topic = Topic.query.get_or_404(topic_id)
         questions = QuizQuestion.query.filter_by(topic_id=topic_id).all()
@@ -139,6 +290,7 @@ def register_routes(app, db, bcrypt):
     
 
     @quiz_bp.route('/submit', methods=['POST'])
+    @login_required
     def submit_quiz():
         data = request.get_json()
         print("Received payload:", data)
@@ -218,6 +370,7 @@ def register_routes(app, db, bcrypt):
 
 
     @app.route('/user_scores/<int:user_id>', methods=['GET'])
+    @login_required
     def get_user_scores(user_id):
         scores = QuizScore.query.filter_by(user_id=user_id).all()
         if not scores:
@@ -240,6 +393,7 @@ def register_routes(app, db, bcrypt):
 
 
     @analytics_bp.route('/', methods=['GET'])
+    @login_required
     def get_broad_analytics():
         user_id = session.get('user_id')
 
@@ -365,8 +519,6 @@ def register_routes(app, db, bcrypt):
 
 
 
-
-        
     
     app.register_blueprint(quiz_bp, url_prefix='/quiz')
     app.register_blueprint(analytics_bp, url_prefix='/analytics')

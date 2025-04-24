@@ -1,3 +1,4 @@
+/* Global styles */
 body, html {
     margin: 0;
     padding: 0;
@@ -8,12 +9,12 @@ body, html {
   .min-h-screen {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* This centers the content vertically */
-    align-items: center;     /* This centers the content horizontally */
-    height: 100vh;           /* Ensure the height takes up the full screen */
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     padding-bottom: 70px;
   }
-
+  
   .flex {
     display: flex;
   }
@@ -65,49 +66,10 @@ body, html {
   .mb-6 {
     margin-bottom: 1.5rem;
   }
-
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;  /* Ensures it stays above other content */
-    background-color: #ffffff;
-    width: 100%;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  /* Optional shadow for visibility */
-  }
-  
-  input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e1e1e1;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  input:focus {
-    outline: none;
-    border: 1px solid #81b29a;
-    box-shadow: 0 0 8px rgba(129, 178, 154, 0.4);
-  }
-  
-  button[type="submit"] {
-    background-color: #e07a5f;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    width: 100%;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #d16c56;
-  }
   
   .forgot-register {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 15px;
     font-size: 0.9rem;
     width: 100%;
@@ -126,8 +88,36 @@ body, html {
     text-decoration: underline;
   }
   
-  
-  .fas {
-    cursor: pointer;
+  button[type="submit"] {
+    background-color: #e07a5f;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    width: 100% !important;
+    border-radius: 8px;
+    transition: background-color 0.3s;
   }
   
+  button[type="submit"]:hover {
+    background-color: #d16c56;
+  }
+  
+  input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e1e1e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  input:focus {
+    outline: none;
+    border: 1px solid #81b29a;
+    box-shadow: 0 0 8px rgba(129, 178, 154, 0.4);
+  }
+  
+  .form-check {
+    margin-bottom: 1rem;
+  }

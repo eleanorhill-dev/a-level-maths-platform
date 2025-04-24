@@ -11,6 +11,8 @@ class User(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     uname = db.Column(db.String(100), unique=True, nullable=False)
     pword = db.Column(db.String(100), nullable=False)
+    profile_pic = db.Column(db.String(255), nullable=True, default=None)
+    learning_goal = db.Column(db.Integer, nullable=True, default=0)
     
     def to_dict(self):
         return {
@@ -19,7 +21,9 @@ class User(db.Model):
             'sname' : self.sname,
             'email' : self.email,
             'uname' : self.uname,
-            'pword' : self.pword
+            'pword' : self.pword,
+            'profile_pic': self.profile_pic or "/main_images/default_avatar.webp",
+            'learning_goal': self.learning_goal
         }
     
 class Topic(db.Model):

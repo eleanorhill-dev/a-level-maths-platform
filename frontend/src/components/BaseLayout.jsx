@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index";
 import { useAuth } from "../AuthContext";
 
 const BaseLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  
+  const location = useLocation();
+
+  // Function to determine if a link is active
+  const isActive = (path) => location.pathname === path;
+
   return (
     <div>
       {/* Navbar */}
@@ -34,16 +38,36 @@ const BaseLayout = ({ children }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" to={isAuthenticated ? "/" : "/login"}>Home</Link>
+                <Link
+                  className={`nav-link ${isActive("/") ? "active" : ""}`}
+                  to={isAuthenticated ? "/" : "/login"}
+                >
+                  Home
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to={isAuthenticated ? "/topics" : "/login"}>Topics</Link>
+                <Link
+                  className={`nav-link ${isActive("/topics") ? "active" : ""}`}
+                  to={isAuthenticated ? "/topics" : "/login"}
+                >
+                  Topics
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to={isAuthenticated ? "/profile" : "/login"}>Profile</Link>
+                <Link
+                  className={`nav-link ${isActive("/profile") ? "active" : ""}`}
+                  to={isAuthenticated ? "/profile" : "/login"}
+                >
+                  Profile
+                </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to={isAuthenticated ? "/analytics" : "/login"}>Analytics</Link>
+                <Link
+                  className={`nav-link ${isActive("/analytics") ? "active" : ""}`}
+                  to={isAuthenticated ? "/analytics" : "/login"}
+                >
+                  Analytics
+                </Link>
               </li>
             </ul>
           </div>

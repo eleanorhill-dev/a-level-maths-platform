@@ -6,6 +6,7 @@ from routes import register_routes
 from flask_bcrypt import Bcrypt
 import os
 from flask_session import Session
+from routes import quiz_bp, analytics_bp
 
 def create_app():
     app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -26,6 +27,7 @@ def create_app():
     db.init_app(app)
     migrate = Migrate(app,db)
     CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+
 
     register_routes(app, db, bcrypt)
 

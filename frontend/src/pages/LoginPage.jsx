@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import '../styles/LoginPage.css';
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({
@@ -66,85 +67,85 @@ const LoginPage = () => {
       <img
         src="/main_images/logo.png"
         alt="MathsUncoded Logo"
-        style={{ maxHeight: "200px", width: "auto" }}
-        className="mb-6"
+        className="login-logo"
       />
-
+  
       {/* Login form container */}
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+      <div className="login-form-container">
         <div className="text-center mb-3">
-          <h4 className="text-lg font-semibold">Login</h4>
+          <h4 className="login-form-title">Login</h4>
         </div>
         <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81B29A]"
-          />
-        </div>
-
-        <div>
-          <input
-            type={showPassword ? "text" : "password"}
-            id="password"
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#81B29A]"
-          />
-        </div>
-
-        <div className="form-check mb-3">
-          <input
-            type="checkbox"
-            className="form-check-input"
-            id="showPassword"
-            checked={showPassword}
-            onChange={handleShowPassword}
-          />
-          <label className="form-check-label" htmlFor="showPassword">
-            Show password
-          </label>
-        </div>
-
-        <div className="forgot-register">
+          <div>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+              className="input-field"
+            />
+          </div>
+  
+          <div>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+              className="input-field"
+            />
+          </div>
+  
+          <div className="form-check mb-3">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="showPassword"
+              checked={showPassword}
+              onChange={handleShowPassword}
+            />
+            <label className="show-password-label" htmlFor="showPassword">
+              Show password
+            </label>
+          </div>
+  
+          <div className="forgot-register">
+            <button
+              type="button"
+              onClick={() => navigate("/forgot-password")}
+              className="text-[#81B29A] hover:underline"
+            >
+              Forgot password?
+            </button>
+          </div>
+  
+          <div className="centered-button">
+          <button
+            type="submit"
+          >
+            Log In
+          </button>
+          </div>
+        </form>
+  
+        <div className="forgot-register mt-3 text-center">
           <button
             type="button"
-            onClick={() => navigate("/forgot-password")}
-            className="text-[#81B29A] hover:underline"
+            onClick={() => navigate("/register")}
+            className="register-link"
           >
-            Forgot password?
+            Not got an account? Register here
           </button>
         </div>
-
-        <button
-          type="submit"
-          className="w-full bg-[#E07A5F] text-white font-semibold py-2 rounded-lg hover:bg-[#d16c56] transition duration-200"
-        >
-          Log In
-        </button>
-      </form>
-
-      <div className="forgot-register mt-3 text-center">
-        <button
-          type="button"
-          onClick={() => navigate("/register")}
-          className="text-[#81B29A] hover:underline"
-        >
-          Not got an account? Register here
-        </button>
       </div>
     </div>
-  </div>
-);
+  );
 
 };
 
