@@ -1,4 +1,4 @@
-/* General Styling for Topic Details */
+
 .topic-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -6,10 +6,6 @@
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #fefefe;
-}
-
-.content-container {
-    padding-top: 80px; /* This will ensure content doesn't get hidden under the navbar */
 }
 
 .topic-container h2 {
@@ -45,7 +41,6 @@
     color: #16a085;
 }
 
-/* Code Snippet Styling */
 .CodeSnippet {
     background-color: #2c3e50;
     color: #ecf0f1;
@@ -65,7 +60,7 @@
 }
 
 .CodeSnippet-output {
-    background-color: #f5f9f6; /* soft greenish-white */
+    background-color: #f5f9f6; 
     color: #2c3e50;
     padding: 18px 20px;
     border-radius: 8px;
@@ -73,7 +68,7 @@
     font-size: 1.05rem;
     font-family: 'Fira Code', 'Courier New', Courier, monospace;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-    border-left: 5px solid #6abf69; /* soft sage green */
+    border-left: 5px solid #6abf69; 
     position: relative;
 }
 
@@ -83,7 +78,7 @@
     top: -14px;
     left: 12px;
     background-color: #f5f9f6;
-    color: #388e3c; /* earthy green */
+    color: #388e3c;
     font-size: 0.85rem;
     font-weight: bold;
     padding: 2px 6px;
@@ -91,7 +86,6 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Image Styling */
 .topic-container img {
     max-width: 100%;
     border-radius: 12px;
@@ -104,7 +98,6 @@
     transform: scale(1.02);
 }
 
-/* Buttons Styling */
 .topic-container button {
     padding: 10px 22px;
     font-size: 1rem;
@@ -139,12 +132,10 @@
     background-color: #2ecc71;
 }
 
-/* Layout adjustments for buttons */
 .mt-4 {
     margin-top: 40px;
 }
 
-/* Responsive Styling */
 @media (max-width: 768px) {
     .topic-container {
         padding: 20px 10px;

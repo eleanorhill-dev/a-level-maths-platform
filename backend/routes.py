@@ -120,7 +120,6 @@ def register_routes(app, db, bcrypt):
 
         user = User.query.get(user_id)
 
-        # Calculate quizzes completed this month
         now = datetime.utcnow()
         start_of_month = datetime(now.year, now.month, 1)
         quizzes_this_month = ScoreHistory.query.filter(
@@ -297,22 +296,24 @@ def register_routes(app, db, bcrypt):
 
         user_id = data['user_id']
         topic_id = data['topic_id']
-        answers = data['answers'] 
+        original_answers = {answer['id']: answer['answer'] for answer in data['original_answers']}
+        answers = data['answers']
+        
         total_questions = len(answers)
         correct_answers = 0
         wrong_explanations = []
 
         def normalize_answer(ans):
-                return re.sub(r"\s+", "", ans)
+            return re.sub(r"\s+", "", ans)
 
         for idx, answer in enumerate(answers):
             print("Checking answer:", answer)
             question = QuizQuestion.query.get(answer['id'])
             if not question:
                 continue
+            
             correct = normalize_answer(question.correct_answer)
             user_ans = normalize_answer(answer['answer'])
-
 
             if user_ans == correct:
                 correct_answers += 1
@@ -320,11 +321,10 @@ def register_routes(app, db, bcrypt):
                 wrong_explanations.append({
                     "question_number": idx + 1,
                     "question": question.question_text,
-                    "your_answer": user_ans,
-                    "correct_answer": correct,
+                    "your_answer": original_answers.get(answer['id'], ""), 
+                    "correct_answer": question.correct_answer, 
                     "explanation": question.explanation or "No explanation provided."
                 })
-
 
         score = (correct_answers / total_questions) * 100
 

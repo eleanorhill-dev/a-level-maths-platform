@@ -164,7 +164,7 @@ plt.show()`}
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/topics/circles/quiz" variant="success">Take Quiz</Button>
+                <Button href="/quiz/6" variant="success">Take Quiz</Button>
             </div>
         </div>
     );

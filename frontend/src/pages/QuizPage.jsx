@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Button from "../components/ui/Button";
+import { useNavigate } from "react-router-dom";
 import CodeSnippet from "../components/CodeSnippet";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
+import "../styles/QuizPage.css";
+
 
 const QuizPage = () => {
   const { topicId } = useParams();
@@ -17,6 +19,7 @@ const QuizPage = () => {
   const [awardedAchievements, setAwardedAchievements] = useState([]);
   const [showPopUp, setShowPopUp] = useState(false);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   const userId = sessionStorage.getItem("userId");
 
@@ -83,10 +86,15 @@ const QuizPage = () => {
     const payload = {
       user_id: parseInt(userId),
       topic_id: parseInt(topicId),
+      original_answers: questions.map((q, index) => ({
+        id: q.id,
+        question_number: index + 1,
+        answer: (userAnswers[q.id] || ""),
+      })),
       answers: questions.map((q, index) => ({
         id: q.id,
         question_number: index + 1,
-        answer: (userAnswers[q.id] || "").replace(/\s+/g, ""),
+        answer: (userAnswers[q.id] || "").replace(/\s+/g, ""), 
       })),
     };
 
@@ -124,39 +132,33 @@ const QuizPage = () => {
 
   if (quizCompleted) {
     return (
-      <div className="p-4">
-        <h2 className="text-xl font-bold mb-4">Quiz Complete!</h2>
-        <p className="mb-2">Score: {score}%</p>
-        {score === 100 && (
-          <p className="text-green-600 font-semibold mb-2">
-            🎉 Clean sweep! You nailed every question!
-          </p>
-        )}
+      <div className="quiz-container quiz-complete">
+        <div className="quiz-summary-header">
+          <h2 className="quiz-complete-title">Quiz Complete!</h2>
+          <p className="quiz-score">Score: {score}%</p>
+          <button onClick={() => navigate('/topics')} className="quiz-nav-btn">
+            Return to Topics
+          </button>
+          <button onClick={() => navigate('/analytics')} className="quiz-nav-btn">
+            View Analytics
+          </button>
+        </div>
         <ul className="space-y-4 list-none">
-          {explanations.map((exp, index) => {
-            const questionNumber = exp.question_number || index + 1;
-            return (
-              <li
-                key={`exp-${exp.question_number || index}`}
-                className="bg-gray-100 p-4 rounded shadow"
-              >
-                <p>
-                  <strong>Q{questionNumber}:</strong> {exp.question}
-                </p>
-                <p>
-                  <span className="text-red-600">Your Answer:</span>{" "}
-                  {exp.your_answer}
-                </p>
-                <p>
-                  <span className="text-green-600">Correct Answer:</span>{" "}
-                  {exp.correct_answer}
-                </p>
-                <p>
-                  <em>Explanation:</em> {exp.explanation}
-                </p>
-              </li>
-            );
-          })}
+        {explanations.map((exp, index) => {
+          const questionNumber = exp.question_number || index + 1;
+          return (
+            <li key={`exp-${exp.question_number || index}`} className="explanation-card">
+              <p><strong>Q{questionNumber}:</strong> {exp.question}</p>
+              <p><span className="incorrect">Your Answer:</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>{exp.your_answer}</span>
+              </p>
+              <p><span className="correct">Correct Answer:</span>
+                <span style={{ whiteSpace: "pre-wrap" }}>{exp.correct_answer}</span>
+              </p>
+              <p><em>Explanation:</em> {exp.explanation}</p>
+            </li>
+          );
+        })}
         </ul>
       </div>
     );
@@ -170,62 +172,67 @@ const QuizPage = () => {
   const currentAnswer = userAnswers[currentQuestion.id] || "";
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-semibold mb-2">
+    <div className="quiz-container">
+      <h2 className="quiz-header">
         Question {currentIndex + 1} of {questions.length}
       </h2>
-      <p className="mb-2 whitespace-pre-wrap">{currentQuestion.question_text}</p>
+      <p className="quiz-question">{currentQuestion.question_text}</p>
+  
       {currentQuestion.code_snippet && (
         <div className="mb-4">
           <CodeSnippet code={currentQuestion.code_snippet} />
         </div>
       )}
-
+  
       {currentQuestion.question_type === "multiple_choice" ? (
-        <div className="mb-4 space-y-4">
+        <div className="quiz-options">
           {currentQuestion.options.map((option, idx) => {
             const isImage =
               typeof option === "string" && option.match(/\.(png|jpg|jpeg|svg)$/i);
+        
             return (
-              <div key={idx} className="flex items-start space-x-2">
+              <label key={idx} className="quiz-option">
                 <input
                   type="radio"
                   name={`answer-${currentIndex}`}
                   value={option}
                   checked={currentAnswer === option}
                   onChange={(e) => handleAnswerChange(e.target.value)}
-                  className="mt-1"
+                  className="hidden"
                 />
-                <label htmlFor={`answer-${idx}`} className="cursor-pointer">
-                  {isImage ? (
-                    <img
-                      src={`/quiz_images/${option}`}
-                      alt={`Option ${idx + 1}`}
-                      className="w-32 h-auto border rounded shadow"
-                    />
-                  ) : (
-                    <span>{option}</span>
-                  )}
-                </label>
-              </div>
+                {isImage ? (
+                  <img
+                    src={`/quiz_images/${option}`}
+                    alt={`Option ${idx + 1}`}
+                    className="quiz-option-image"
+                  />
+                ) : (
+                  <span>{option}</span>
+                )}
+              </label>
             );
           })}
         </div>
       ) : (
         <input
           type="text"
-          className="border rounded p-2 w-full mb-4"
+          className="quiz-input"
           placeholder="Type your answer here"
           value={currentAnswer}
           onChange={(e) => handleAnswerChange(e.target.value)}
         />
       )}
-
-      <Button onClick={handleNext} disabled={!currentAnswer}>
+  
+      <button
+        className="quiz-submit-btn"
+        onClick={handleNext}
+        disabled={!currentAnswer}
+      >
         {currentIndex === questions.length - 1 ? "Submit Quiz" : "Next Question"}
-      </Button>
+      </button>
     </div>
   );
+  
 };
 
 export default QuizPage;
