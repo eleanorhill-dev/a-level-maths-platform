@@ -44,6 +44,97 @@ def login_required(func):
     return wrapper
 
 
+
+def get_analytics_data(user_id):
+    # Total quizzes
+    total_quizzes_taken = db.session.query(ScoreHistory).filter_by(user_id=user_id).count()
+    print("Total quizzes:", total_quizzes_taken)
+
+    # Average score
+    average_score = db.session.query(func.avg(ScoreHistory.score)).filter_by(user_id=user_id).scalar() or 0
+    average_score = round(average_score, 2)
+    print("Average score:", average_score)
+
+    # Highest scoring topic
+    highest = db.session.query(Topic.name, QuizScore.average_score) \
+        .join(QuizScore, QuizScore.topic_id == Topic.id) \
+        .filter(QuizScore.user_id == user_id) \
+        .order_by(QuizScore.average_score.desc()).first()
+
+    highest_scoring_topic = {
+        'name': highest[0] if highest else 'N/A',
+        'score': round(highest[1], 2) if highest else 'N/A'
+    }
+    print("Highest scoring topic:", highest_scoring_topic)
+
+    # Lowest scoring topic
+    lowest = db.session.query(Topic.name, QuizScore.average_score) \
+        .join(QuizScore, QuizScore.topic_id == Topic.id) \
+        .filter(QuizScore.user_id == user_id) \
+        .order_by(QuizScore.average_score.asc()).first()
+
+    lowest_scoring_topic = {
+        'name': lowest[0] if lowest else 'N/A',
+        'score': round(lowest[1], 2) if lowest else 'N/A'
+    }
+    print("Lowest scoring topic:", lowest_scoring_topic)
+
+    # Most attempted topic
+    most_attempted = db.session.query(Topic.name, func.count(ScoreHistory.id).label('attempts')) \
+        .join(Topic, Topic.id == ScoreHistory.topic_id) \
+        .filter(ScoreHistory.user_id == user_id) \
+        .group_by(Topic.name) \
+        .order_by(func.count(ScoreHistory.id).desc()) \
+        .first()
+
+    most_attempted_topic = {
+        'name': most_attempted[0] if most_attempted else 'N/A',
+        'attempts': most_attempted[1] if most_attempted else 0
+    }
+    print("Most attempted topic:", most_attempted_topic)
+
+    # Achievements
+    achievements = db.session.query(UserAchievement.name, UserAchievement.description, UserAchievement.date_earned) \
+        .filter_by(user_id=user_id).all()
+
+    achievement_list = [
+        {'name': a.name, 'description': a.description, 'date_earned': a.date_earned.strftime('%Y-%m-%d')}
+        for a in achievements
+    ]
+    print("Achievements:", achievement_list)
+
+    # Current streak (number of distinct days)
+    streak_dates = db.session.query(
+        func.date(ScoreHistory.date_attempted)
+    ).filter(ScoreHistory.user_id == user_id) \
+     .group_by(func.date(ScoreHistory.date_attempted)) \
+     .order_by(func.date(ScoreHistory.date_attempted).desc()).all()
+
+    current_streak = len(streak_dates)
+    print("Current streak:", current_streak)
+
+    # Areas to focus
+    areas_raw = db.session.query(Topic.name) \
+        .join(QuizScore, QuizScore.topic_id == Topic.id) \
+        .filter(QuizScore.user_id == user_id, QuizScore.average_score < 50) \
+        .group_by(Topic.name).having(func.max(QuizScore.average_score) < 50) \
+        .all()
+
+    areas_to_focus = [a.name for a in areas_raw]
+    print("Areas to focus on:", areas_to_focus)
+
+    return {
+        'total_quizzes_taken': total_quizzes_taken,
+        'average_score': average_score,
+        'highest_scoring_topic': highest_scoring_topic,
+        'lowest_scoring_topic': lowest_scoring_topic,
+        'most_attempted_topic': most_attempted_topic,
+        'achievements': achievement_list,
+        'current_streak': current_streak,
+        'areas_to_focus': areas_to_focus
+    }
+
+
 def register_routes(app, db, bcrypt):
 
     @app.route('/')
@@ -392,25 +483,34 @@ def register_routes(app, db, bcrypt):
 
 
 
-    @analytics_bp.route('/', methods=['GET'])
-    @login_required
-    def get_broad_analytics():
-        user_id = session.get('user_id')
-
+    @app.route('/api/analytics', methods=['GET'])
+    def get_analytics():
+        user_id = session.get('user_id') 
         if not user_id:
-            return jsonify({'error': 'User not logged in'}), 401
-        
-        analytics = {
-            "highest_scoring_topic": get_highest_scoring_topic(user_id),
-            "lowest_scoring_topic": get_lowest_scoring_topic(user_id),
-            "average_score": get_average_score_across_all_topics(user_id),
-            "total_quizzes_taken": get_total_quizzes_taken(user_id),
-            "most_improved_topic": get_most_improved_topic(user_id),
-            "activity_heatmap": get_activity_heatmap(user_id),
-            "badges": get_progress_badges(user_id)
-        }
+            return jsonify({'error': 'User not authenticated'}), 401
 
-        return jsonify(analytics)
+        analytics_data = get_analytics_data(user_id)
+        
+        if not analytics_data:
+            return jsonify({'error': 'No analytics data found for this user'}), 404
+
+        return jsonify(analytics_data)
+
+
+
+    @app.route('/api/achievements', methods=['GET'])
+    def get_user_achievements():
+        user_id = session.get('user_id')
+        if not user_id:
+            return jsonify({'error': 'User not authenticated'}), 401
+
+        achievements = db.session.query(UserAchievement).filter_by(user_id=user_id).all()
+        
+        return jsonify([{
+            'name': achievement.name,
+            'description': achievement.description,
+            'date_earned': achievement.date_earned
+        } for achievement in achievements])
 
 
 

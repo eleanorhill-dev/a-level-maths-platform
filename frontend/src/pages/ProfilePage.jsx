@@ -60,7 +60,6 @@ const ProfilePage = () => {
             setLearningGoal(data.learning_goal || 0);
             setProgress(data.quizzes_completed_this_month || 0);
   
-            // Add quiz-related stats
             setQuizStats({
               totalQuizzesTaken: data.total_quizzes_taken || 0,
               highestScore: data.highest_score || 0,

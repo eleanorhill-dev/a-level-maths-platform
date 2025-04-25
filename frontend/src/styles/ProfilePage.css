@@ -19,6 +19,13 @@
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  color: var(--profile-bg);
+  justify-content: center;
+  align-items: center; 
+  height: 100%;
 }
 
 .profile-dashboard {
