@@ -1,15 +1,13 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function BinomialExpansion() {
     
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Binomial Expansion</h2>
 
             <h4>Pascal's Triangle</h4>
@@ -33,13 +31,13 @@ for row in triangle:
             
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`[1]
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`[1]
 [1, 1]
 [1, 2, 1]
 [1, 3, 3, 1]
 [1, 4, 6, 4, 1]`} language="text" />
-
+            </div>
             
 
 
@@ -56,8 +54,9 @@ print(f"Binomial Coefficient: {binomial_coeff}")`}
             />
 
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Binomial Coefficient: 10`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Binomial Coefficient: 10`} language="text" />
+            </div>
 
 
 
@@ -73,8 +72,10 @@ print(expand(expr))`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`x**4 + 4*x**3*y + 6*x**2*y**2 + 4*x*y**3 + y**4`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`x**4 + 4*x**3*y + 6*x**2*y**2 + 4*x*y**3 + y**4`} language="text" />
+            </div>
+
 
             <h4>Solving Binomial Problems</h4>
             <p>Apply the binomial expansion to solve specific problems:</p>
@@ -89,8 +90,9 @@ print(expanded)`}
             />
 
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`x**3 + 6*x**2 + 12*x + 8`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`x**3 + 6*x**2 + 12*x + 8`} language="text" />
+            </div>
 
             <h4>Binomial Estimation</h4>
             <p>Binomial estimation approximates expressions using the first few terms:</p>
@@ -106,8 +108,9 @@ print(approx)`}
             />
 
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`1 + 5*x + 10*x**2 + O(x**3)`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`1 + 5*x + 10*x**2 + O(x**3)`} language="text" />
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

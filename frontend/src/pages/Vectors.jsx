@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function Vectors() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Vectors</h2>
 
             <h4>Vectors</h4>
@@ -22,10 +23,10 @@ print("Vector B:", vector_b)`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Vector A: [3 4]
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Vector A: [3 4]
 Vector B: [-2  5]`} language="text" />
-
+            </div>
 
 
             <h4>Representing Vectors</h4>
@@ -51,9 +52,9 @@ plt.show()`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/vectors1.png" alt="Vectors Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/vectors1.png" alt="Vectors Graph"></img></p>
+            </div>
 
 
             <h4>Magnitude and Direction</h4>
@@ -74,9 +75,10 @@ print("Magnitude of Vector B:", magnitude_b)`}
 
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Magnitude of Vector A: 5.0
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Magnitude of Vector A: 5.0
 Magnitude of Vector B: 5.385164807134504`} language="text" />
+            </div>
 
 
             <h4>Solving Geometric Problems</h4>
@@ -98,10 +100,10 @@ print("Angle between Vectors (degrees):", angle_deg)`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Dot Product: 14
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Dot Product: 14
 Angle between Vectors (degrees): 58.67130713219583`} language="text" />
-
+            </div>
 
 
             <h4>Modelling with Vectors</h4>
@@ -118,8 +120,9 @@ print("Resultant Vector (Force + Velocity):", resultant)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Resultant Vector (Force + Velocity): [15 23]`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Resultant Vector (Force + Velocity): [15 23]`} language="text" />
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function GraphsAndTransformations() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Graphs and Transformations</h2>
 
             <h4>Cubic Graphs</h4>
@@ -27,8 +28,9 @@ plt.show()`}
                 language="python"
             />
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/cubicgraph.png" alt="Cubic Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/cubicgraph.png" alt="Cubic Graph"></img></p>
+            </div>
 
 
             <h4>Quartic Graphs</h4>
@@ -52,8 +54,9 @@ plt.show()`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/quarticgraph.png" alt="Quartic Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/quarticgraph.png" alt="Quartic Graph"></img></p>
+            </div>
 
 
             <h4>Reciprocal Graphs</h4>
@@ -76,8 +79,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/reciprocalgraph.png" alt="Reciprocal Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/reciprocalgraph.png" alt="Reciprocal Graph"></img></p>
+            </div>
 
 
             <h4>Points of Intersection</h4>
@@ -98,8 +102,9 @@ print("Solutions:", solutions)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Solutions: [(-1, 1), (3, 9)]`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Solutions: [(-1, 1), (3, 9)]`} language="text" />
+            </div>
 
 
             <h4>Graph Transformations</h4>
@@ -124,8 +129,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/graphtransformations.png" alt="Transformations Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/graphtransformations.png" alt="Transformations Graph"></img></p>
+            </div>
 
 
             <div className="mt-4">

@@ -329,34 +329,39 @@ const ProfilePage = () => {
           {/* Learning Goal & Progress */}
           <div className="section-card learning-goal">
             <h3>Learning Goal</h3>
-            <div className="progress-ring">
-              <svg className="circular-progress" width="150" height="150">
-                <circle className="circle-bg" cx="75" cy="75" r="60" />
-                <circle
-                  className="circle"
-                  cx="75"
-                  cy="75"
-                  r="60"
-                  strokeDasharray={376}
-                  strokeDashoffset={learningGoal ? 376 - (progress / learningGoal) * 376 : 376}
+            <div className="goal-container">
+              <div className="progress-ring">
+                <svg className="circular-progress" width="150" height="150">
+                  <circle className="circle-bg" cx="75" cy="75" r="60" />
+                  <circle
+                    className="circle"
+                    cx="75"
+                    cy="75"
+                    r="60"
+                    strokeDasharray={376}
+                    strokeDashoffset={learningGoal ? 376 - (progress / learningGoal) * 376 : 376}
+                  />
+                </svg>
+                <div className="progress-text">{`${progress} / ${learningGoal}`}</div>
+              </div>
+              <div className="goal-form">
+                <input
+                  className="goal-input"
+                  type="number"
+                  value={learningGoal}
+                  min={1}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value, 10);
+                    if (!isNaN(val) && val >= 1) {
+                      setLearningGoal(val);
+                    }
+                  }}
                 />
-              </svg>
-              <div className="progress-text">{`${progress} / ${learningGoal}`}</div>
+                <button onClick={handleLearningGoalChange} className="btn btn-primary goal-btn">Update</button>
+              </div>
             </div>
-  
-            <input
-              type="number"
-              value={learningGoal}
-              min={1}
-              onChange={(e) => {
-                const val = parseInt(e.target.value, 10);
-                if (!isNaN(val) && val >= 1) {
-                  setLearningGoal(val);
-                }
-              }}
-            />
-            <button onClick={handleLearningGoalChange} className="btn btn-primary">Update Goal</button>
           </div>
+
   
           
   

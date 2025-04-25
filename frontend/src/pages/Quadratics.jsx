@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet'; 
+import '../styles/TopicDetailsPage.css';
 
 export default function Quadratics() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Quadratics</h2>
             
             <h4>Solving Quadratic Equations</h4>
@@ -29,8 +30,9 @@ print("Root 2:", root2)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Root 1: 2.0\nRoot 2: 1.0`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Root 1: 2.0\nRoot 2: 1.0`} language="text" />
+            </div>
 
             <h4>Completing the Square</h4>
             <p>Completing the square is a method of solving quadratic equations or transforming them into vertex form. It involves rewriting the equation in the form <em>(x - p)² = q</em>.</p>
@@ -51,8 +53,9 @@ print("Solutions:", solutions)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Solutions: [4, 2]`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Solutions: [4, 2]`} language="text" />
+            </div>
 
             <h4>Functions</h4>
             <p>Quadratic functions are of the form <em>f(x) = ax² + bx + c</em>. They graph as parabolas, and their properties (such as vertex and axis of symmetry) can be determined by manipulating the equation.</p>
@@ -81,8 +84,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/quadraticgraph1.png" alt="Quadratic Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/quadraticgraph1.png" alt="Quadratic Graph"></img></p>
+            </div>
 
             <h4>Quadratic Graphs</h4>
             <p>The graph of a quadratic function is a parabola. The vertex form of the quadratic equation is <em>f(x) = a(x - h)² + k</em>, where <em>(h, k)</em> is the vertex of the parabola.</p>
@@ -110,8 +114,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/quadraticgraph2.png" alt="Quadratic Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/quadraticgraph2.png" alt="Quadratic Graph"></img></p>
+            </div>
 
 
             <h4>The Discriminant</h4>
@@ -141,8 +146,9 @@ print("Discriminant Result:", result)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Discriminant Result: Two real roots`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Discriminant Result: Two real roots`} language="text" />
+            </div>
 
             <h4>Modelling with Quadratics</h4>
             <p>Quadratic equations can be used to model real-world problems, such as projectile motion or the area of a rectangle. For example, the equation of a projectile's height over time can be modeled by a quadratic function.</p>
@@ -171,19 +177,10 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/quadraticgraph3.png" alt="Quadratic Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/quadraticgraph3.png" alt="Quadratic Graph"></img></p>
+            </div>
 
-
-            <h3>Summary</h3>
-            <p>In this topic, we covered:</p>
-            <ul>
-                <li>Solving quadratic equations using the quadratic formula</li>
-                <li>Completing the square to solve quadratics</li>
-                <li>Working with quadratic functions and graphing them</li>
-                <li>Understanding the discriminant and its role in determining the nature of roots</li>
-                <li>Modelling real-world scenarios with quadratic equations</li>
-            </ul>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

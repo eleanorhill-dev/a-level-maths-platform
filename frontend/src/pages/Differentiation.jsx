@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function Differentiation() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Differentiation</h2>
 
             <h4>Gradients of Curves</h4>
@@ -40,8 +41,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/differentiation1.png" alt="Gradient of curve"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/differentiation1.png" alt="Gradient of curve"></img></p>
+            </div>
 
             <h4>Finding the Derivative</h4>
             <p>The derivative of a function gives us the rate of change of the function at any point. We can calculate the derivative using rules like the power rule, product rule, etc.</p>
@@ -60,8 +62,9 @@ print("Derivative:", f_prime)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Derivative: 3*x**2 + 10*x + 2`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Derivative: 3*x**2 + 10*x + 2`} language="text" />
+            </div>
 
 
             <h4>Differentiating x^n</h4>
@@ -81,8 +84,9 @@ print("Derivative:", f_prime)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Derivative: 4*x**3`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Derivative: 4*x**3`} language="text" />
+            </div>
 
 
             <h4>Differentiating Quadratics</h4>
@@ -102,8 +106,9 @@ print("Derivative:", f_prime)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Derivative: 6*x + 4`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Derivative: 6*x + 4`} language="text" />
+            </div>
 
 
             <h4>Differentiating Functions with Two or More Terms</h4>
@@ -123,8 +128,9 @@ print("Derivative:", f_prime)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Derivative: 3*x**2 + 4*x + 5`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Derivative: 3*x**2 + 4*x + 5`} language="text" />
+            </div>
 
 
             <h4>Gradients, Tangent, and Normal</h4>
@@ -172,8 +178,9 @@ plt.show()
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/differentiation2.png" alt="Tangent and Normal"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/differentiation2.png" alt="Tangent and Normal"></img></p>
+            </div>
 
             <h4>Increasing and Decreasing Functions</h4>
             <p>To determine where a function is increasing or decreasing, examine the sign of its derivative. If the derivative is positive, the function is increasing; if negative, the function is decreasing.</p>
@@ -202,8 +209,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/differentiation3.png" alt="Increasing and Decreasing"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/differentiation3.png" alt="Increasing and Decreasing"></img></p>
+            </div>
 
             <p>In the graph above, we can see that the function is decreasing on the interval [-3,0] and increasing on the interval [0,3].</p>
 

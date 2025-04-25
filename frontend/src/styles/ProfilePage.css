@@ -42,6 +42,14 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.section-card h3 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--profile-bg);
+}
+
+
 .profile-header {
   display: flex;
   justify-content: center;
@@ -223,4 +231,41 @@
 
 .goal-progress input:focus {
   border-color: var(--accent-color);
+}
+
+
+.goal-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.goal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.goal-input {
+  padding: 10px 16px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1.1rem;
+  background-color: var(--input-bg);
+  text-align: center;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.goal-input:focus {
+  outline: none;
+  background-color: var(--input-focus-bg);
+  border-color: var(--accent-color);
+}
+
+.goal-btn {
+  width: 100%;
+  min-width: 120px;
 }

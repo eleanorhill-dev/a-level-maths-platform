@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet'; 
+import '../styles/TopicDetailsPage.css';
+
 
 export default function AlgebraicExpressions() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Algebraic Expressions</h2>
             <h4>Index Laws</h4>
             <p>The index laws (also known as exponent rules) are important for simplifying expressions with exponents. Here are the key rules:</p>
@@ -32,8 +34,9 @@ print("Quotient Rule result:", quotient_rule)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Product Rule result: 32\nQuotient Rule result: 4`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Product Rule result: 32\nQuotient Rule result: 4`} language="text" />
+            </div>
 
             <h4>Expanding Brackets</h4>
             <p>Expanding brackets involves distributing each term in one bracket across the terms in another bracket. The distributive property is applied here.</p>
@@ -50,8 +53,9 @@ print("Expanded Expression:", expanded_expression)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Expanded Expression: x**2 + 5*x + 6`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Expanded Expression: x**2 + 5*x + 6`} language="text" />
+            </div>
 
             <h4>Factorising</h4>
             <p>Factorising involves rewriting an expression as a product of factors. For example, the expression <em>x<sup>2</sup> + 5x + 6</em> can be factorised.</p>
@@ -66,8 +70,9 @@ print("Factorised Expression:", factorised_expression)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Factorised Expression: (x + 2)*(x + 3)`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Factorised Expression: (x + 2)*(x + 3)`} language="text" />
+            </div>
 
             <h4>Negative and Fractional Indices</h4>
             <p>Negative and fractional indices are another way of expressing powers and roots:</p>
@@ -88,8 +93,9 @@ print("Fractional Index result:", fractional_index)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Negative Index result: 0.25\nFractional Index result: 1.4142135623730951`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Negative Index result: 0.25\nFractional Index result: 1.4142135623730951`} language="text" />
+            </div>
 
             <h4>Surds</h4>
             <p>A surd is an expression involving a square root, cube root, etc., that cannot be simplified to a rational number. Simplifying surds involves extracting perfect squares or cubes when possible.</p>
@@ -106,8 +112,9 @@ print("Simplified Surd:", simplified_surd)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Simplified Surd: 5*sqrt(2)`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Simplified Surd: 5*sqrt(2)`} language="text" />
+            </div>
 
             <h4>Rationalising Denominators</h4>
             <p>Rationalising the denominator involves eliminating square roots (or other irrational numbers) from the denominator by multiplying both the numerator and denominator by the appropriate value.</p>
@@ -124,18 +131,9 @@ print("Rationalised Expression:", rationalised_expr)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Rationalised Expression: sqrt(2)/2`} language="text" />
-
-            <h3>Summary</h3>
-            <p>In this topic, we covered:</p>
-            <ul>
-                <li>Index laws and their application</li>
-                <li>Expanding and factorising expressions</li>
-                <li>Working with negative and fractional indices</li>
-                <li>Simplifying surds</li>
-                <li>Rationalising denominators</li>
-            </ul>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Rationalised Expression: sqrt(2)/2`} language="text" />
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

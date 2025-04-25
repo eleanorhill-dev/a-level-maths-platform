@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function Integration() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Integration</h2>
 
             <h4>Integrating xⁿ</h4>
@@ -38,9 +39,10 @@ plt.show()` }
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`x**4/4`} language="text" />
-            <p><img src="/images/integration1.png" alt="Integration"></img></p>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`x**4/4`} language="text" />
+                <p><img src="/images/integration1.png" alt="Integration"></img></p>
+            </div>
 
 
             <h4>Finding Functions</h4>
@@ -63,9 +65,10 @@ plt.show()` }
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`x**2`} language="text" />
-            <p><img src="/images/integration2.png" alt="Integration"></img></p>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`x**2`} language="text" />
+                <p><img src="/images/integration2.png" alt="Integration"></img></p>
+            </div>
 
             <h4>Definite Integrals</h4>
             <p>You can calculate an integral between two limits. This is called a definite integral. A definite integral usually produces a value whereas an indefinite integral always produces a function.</p>
@@ -76,8 +79,9 @@ print(definite_integral)` }
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`8/3`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`8/3`} language="text" />
+            </div>
 
             <h4>Areas Under Curves</h4>
             <p>The area under the curve is found using a definite integral. For example, the area under f(x) = x^2 from 0 to 2 is:</p>
@@ -118,9 +122,10 @@ plt.show()` }
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Area under the cubic curve is: 4`} language="text" />
-            <p><img src="/images/integration3.png" alt="Integration"></img></p>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Area under the cubic curve is: 4`} language="text" />
+                <p><img src="/images/integration3.png" alt="Integration"></img></p>
+            </div>
 
 
             <h4>Areas Under the X-Axis</h4>
@@ -162,9 +167,10 @@ plt.show()` }
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Area under the curve (absolute value) from -2 to 0 is: 4`} language="text" />
-            <p><img src="/images/integration4.png" alt="Integration"></img></p>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Area under the curve (absolute value) from -2 to 0 is: 4`} language="text" />
+                <p><img src="/images/integration4.png" alt="Integration"></img></p>
+            </div>
 
             <h4>Areas Between Curves and Lines</h4>
             <p>To calculate the area between curves and lines, integrate the difference between the functions over a given range.</p>
@@ -186,9 +192,10 @@ plt.show()` }
             />
             
     
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Area between the curve and line is: 2/3`} language="text" />
-            <p><img src="/images/integration5.png" alt="Integration"></img></p>
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Area between the curve and line is: 2/3`} language="text" />
+                <p><img src="/images/integration5.png" alt="Integration"></img></p>
+            </div>
 
 
             <div className="mt-4">

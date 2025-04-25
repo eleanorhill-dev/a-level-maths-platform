@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function AlgebraicMethods() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Algebraic Methods</h2>
 
             <h4>Algebraic Fractions</h4>
@@ -19,8 +20,9 @@ print(factor(expr))`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`(x - 1)/(x - 2)`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`(x - 1)/(x - 2)`} language="text" />
+            </div>
 
 
             <h4>Dividing Polynomials</h4>
@@ -38,9 +40,10 @@ print("Remainder:", remainder)`}
             />
 
         
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Quotient: x**2 - 2*x - 2
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Quotient: x**2 - 2*x - 2
 Remainder: 2`} language="text" />
+            </div>
 
 
             <h4>The Factor Theorem</h4>
@@ -55,8 +58,10 @@ print("Factors are:", solution)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Factors are: [1, 2, 3]`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Factors are: [1, 2, 3]`} language="text" />
+            </div>
+
 
             <h4>Mathematical Proof</h4>
             <p>Proofs can be structured using direct, contradiction, or induction methods:</p>
@@ -74,9 +79,11 @@ print("Induction Step:", induction_step)`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Base Case: 1
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Base Case: 1
 Induction Step: (n + 1)*(n + 2)/2`} language="text" />
+            </div>
+
 
             <h4>Methods of Proof</h4>
             <p>Use various proof techniques such as exhaustion, contradiction, and counterexample:</p>
@@ -100,8 +107,9 @@ assert not all(x % 2 == 0 for x in [2, 4, 6, 7])  # 7 is odd`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`# No output is printed, as all assertions pass successfully.`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`# No output is printed, as all assertions pass successfully.`} language="text" />
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

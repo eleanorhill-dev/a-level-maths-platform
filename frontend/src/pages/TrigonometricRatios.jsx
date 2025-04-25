@@ -1,12 +1,14 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
+
 
 
 export default function TrigonometricRatios() {
 
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Trigonometric Ratios</h2>
 
             <h4>The Cosine Rule</h4>
@@ -19,9 +21,9 @@ export default function TrigonometricRatios() {
                 language="python"
             />
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/cosinerule.png" alt="Cosine Rule Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/cosinerule.png" alt="Cosine Rule Graph"></img></p>
+            </div>
 
             <h4>The Sine Rule</h4>
             <p>The sine rule can be used to work out missing angles or sides in triangles. This version of the sine rule is used to find the length of a missing side:</p>
@@ -33,9 +35,9 @@ export default function TrigonometricRatios() {
                 language="python"
             />
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/sinerule.png" alt="Sine Rule Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/sinerule.png" alt="Sine Rule Graph"></img></p>
+            </div>
 
             <h4>Areas of Triangles</h4>
             <p>The area of a triangle can be calculated using the formula:</p>
@@ -45,9 +47,9 @@ export default function TrigonometricRatios() {
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/trianglearea.png" alt="Triangle Area Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/trianglearea.png" alt="Triangle Area Graph"></img></p>
+            </div>
 
             <h4>Solving Triangle Problems</h4>
             <p>You can solve a triangle using either the Sine or Cosine rule depending on the given information.</p>
@@ -57,10 +59,10 @@ export default function TrigonometricRatios() {
             />
 
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Angle B: 22.02°
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Angle B: 22.02°
 Angle C: 127.98°`} language="text" />
-
+            </div>
 
 
             <h4>Graphs of Sine, Cosine, and Tangent</h4>
@@ -71,9 +73,9 @@ Angle C: 127.98°`} language="text" />
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/sinecosinetangent.png" alt="Sine Cosine Tangent Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/sinecosinetangent.png" alt="Sine Cosine Tangent Graph"></img></p>
+            </div>
 
 
 
@@ -85,9 +87,9 @@ Angle C: 127.98°`} language="text" />
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/trigtransformation.png" alt="Trig Transformation Graph"></img></p>
-
+            <div className="CodeSnippet-output">
+                <p><img src="/images/trigtransformation.png" alt="Trig Transformation Graph"></img></p>
+            </div>
 
 
             <div className="mt-4">

@@ -74,7 +74,7 @@ const BaseLayout = ({ children }) => {
       </nav>
 
       {/* Page Content */}
-      <div className="container-fluid">{children}</div>
+      <div className="content-container">{children}</div>
 
       {/* Bootstrap JS */}
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

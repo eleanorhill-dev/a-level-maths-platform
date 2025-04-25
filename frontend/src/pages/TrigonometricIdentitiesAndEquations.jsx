@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 
 export default function TrigonometricIdentitiesAndEquations() {
     
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Trigonometric Identities and Equations</h2>
 
             <h4>Unit Circle</h4>
@@ -59,8 +60,9 @@ plt.show()`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/castdiagram.png" alt="Cast Diagram"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/castdiagram.png" alt="Cast Diagram"></img></p>
+            </div>
 
 
             <h4>Exact Values of Trigonometrical Ratios</h4>
@@ -74,10 +76,11 @@ print(sin(pi/4)) `}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`1/2
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`1/2
 1/2
 sqrt(2)/2`} language="text" />
+            </div>
 
 
             <h4>Trigonometric Identities</h4>
@@ -91,8 +94,9 @@ print(simplify(identity))`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`1`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`1`} language="text" />
+            </div>
 
 
             <div className="mt-4">

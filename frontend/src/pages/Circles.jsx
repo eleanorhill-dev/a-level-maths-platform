@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function Circles() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Circles</h2>
 
             <h4>Midpoints and Perpendicular Bisectors</h4>
@@ -27,8 +28,9 @@ plt.show()`}
             />
 
             
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/circles1.png" alt="Circle Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/circles1.png" alt="Circle Graph"></img></p>
+            </div>
 
 
             <h4>Equation of a Circle</h4>
@@ -52,8 +54,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/circles2.png" alt="Circle Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/circles2.png" alt="Circle Graph"></img></p>
+            </div>
 
             <h4>Intersections of Straight Lines and Circles</h4>
             <p>To find intersection points, substitute the line equation into the circle’s equation and solve:</p>
@@ -92,8 +95,9 @@ print("Intersection Points:", points)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/circles3.png" alt="Circle Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/circles3.png" alt="Circle Graph"></img></p>
+            </div>
 
             <h4>Use Tangent and Chord Properties</h4>
             <p>For a circle, a tangent touches the circle at exactly one point, while a chord intersects the circle at two points.</p>
@@ -131,8 +135,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/circles4.png" alt="Circle Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/circles4.png" alt="Circle Graph"></img></p>
+            </div>
 
             <h4>Circles and Triangles</h4>
             <p>Using circle properties to solve triangle problems, e.g., using the circumcircle or inscribed circle.</p>
@@ -153,8 +158,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/circles5.png" alt="Circle Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/circles5.png" alt="Circle Graph"></img></p>
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

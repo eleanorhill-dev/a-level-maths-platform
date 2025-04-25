@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function ExponentialsAndLogarithms() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Exponentials and Logarithms</h2>
 
             <h4>Exponential Functions</h4>
@@ -27,8 +28,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/exponentials1.png" alt="Exponential Function Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/exponentials1.png" alt="Exponential Function Graph"></img></p>
+            </div>
 
             <h4>y = e^x</h4>
             <p>The function y = e^x is the simplest exponential function where the base is Euler's number (e).</p>
@@ -46,8 +48,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/exponentials2.png" alt="y = e^x Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/exponentials2.png" alt="y = e^x Graph"></img></p>
+            </div>
 
             <h4>Exponential Modelling</h4>
             <p>Exponential functions can be used to model growth or decay, such as population growth, radioactive decay, and compound interest.</p>
@@ -68,8 +71,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/exponentials3.png" alt="Exponential Growth Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/exponentials3.png" alt="Exponential Growth Graph"></img></p>
+            </div>
 
             <h4>Logarithms</h4>
             <p>Logarithms are the inverse functions of exponentials. The logarithm of a number is the exponent to which the base must be raised to produce that number.</p>
@@ -88,8 +92,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/logarithms1.png" alt="Logarithm Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/logarithms1.png" alt="Logarithm Graph"></img></p>
+            </div>
 
             <h4>Laws of Logarithms</h4>
             <p>The laws of logarithms include the product, quotient, and power rules.</p>
@@ -115,10 +120,11 @@ print("Power Rule:", power_rule)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Product Rule: -log(x) + log(x*(x + 1)) - log(x + 1)
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Product Rule: -log(x) + log(x*(x + 1)) - log(x + 1)
 Quotient Rule: -log(x) + log(x/(x + 1)) + log(x + 1)
 Power Rule: -2*log(x) + log(x**2)`} language="text" />
+            </div>
 
             
 
@@ -132,11 +138,13 @@ print("Solution to e^x = 5:", solution)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet
-                code={`Solution to e^x = 5: [log(5)]`}
-                language="python"
-            />
+            <div className="CodeSnippet-output">
+                <CodeSnippet
+                    code={`Solution to e^x = 5: [log(5)]`}
+                    language="python"
+                />
+            </div>
+
 
             <h4>Working with Natural Logarithms</h4>
             <p>The natural logarithm (ln) is a logarithm with base e. It is frequently used in calculus and natural sciences.</p>
@@ -147,11 +155,12 @@ print("Natural logarithm of 5:", ln_val)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet
-                code={`Natural logarithm of 5: 1.6094379124341003`}
-                language="python"
-            />
+            <div className="CodeSnippet-output">
+                <CodeSnippet
+                    code={`Natural logarithm of 5: 1.6094379124341003`}
+                    language="python"
+                />
+            </div>
 
             <h4>Logarithms and Non-linear Data</h4>
             <p>Logarithms can be used to linearize non-linear data for easier analysis, such as in exponential decay or growth models.</p>
@@ -171,8 +180,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/logarithms2.png" alt="Logarithmic Transformation"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/logarithms2.png" alt="Logarithmic Transformation"></img></p>
+            </div>
 
             <div className="mt-4">
                 <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import CodeSnippet from '../components/CodeSnippet';
+import '../styles/TopicDetailsPage.css';
 
 export default function StraightLineGraphs() {
     return (
-        <div className="container mt-4">
+        <div className="topic-container mt-4">
             <h2>Straight Line Graphs</h2>
 
             <h4>y = mx + c</h4>
@@ -27,8 +28,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/straightlinegraphs1.png" alt="Straight Line Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/straightlinegraphs1.png" alt="Straight Line Graph"></img></p>
+            </div>
 
             <h4>Equations of Straight Lines</h4>
             <p>The equation of a straight line can also be written as ax + by + c = 0. It can be rearranged to y = mx + c.</p>
@@ -45,8 +47,9 @@ print("Equation in y = mx + c form:", rearranged_eq[0])`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Equation in y = mx + c form: 3*x/2 + 3`} language="text" />
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Equation in y = mx + c form: 3*x/2 + 3`} language="text" />
+            </div>
 
 
             <h4>Parallel and Perpendicular Lines</h4>
@@ -69,10 +72,11 @@ print("Perpendicular:", perpendicular)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Parallel: False
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Parallel: False
 Perpendicular: True`} 
-            language="text" />
+                language="text" />
+            </div>
 
             <CodeSnippet
                 code={`# Plotting parallel and perpendicular lines
@@ -95,8 +99,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/straightlinegraphs2.png" alt="Straight Line Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/straightlinegraphs2.png" alt="Straight Line Graph"></img></p>
+            </div>
 
 
 
@@ -121,10 +126,11 @@ print("Area of triangle:", area)`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <CodeSnippet code={`Distance between points: 5.0
+            <div className="CodeSnippet-output">
+                <CodeSnippet code={`Distance between points: 5.0
 Area of triangle: 1.0`} 
-            language="text" />
+                language="text" />
+            </div>
 
 
             <h4>Modelling with Straight Lines</h4>
@@ -147,8 +153,9 @@ plt.show()`}
                 language="python"
             />
 
-            <p><strong>Output:</strong></p>
-            <p><img src="/images/straightlinegraphs3.png" alt="Straight Line Graph"></img></p>
+            <div className="CodeSnippet-output">
+                <p><img src="/images/straightlinegraphs3.png" alt="Straight Line Graph"></img></p>
+            </div>
 
 
             <div className="mt-4">
