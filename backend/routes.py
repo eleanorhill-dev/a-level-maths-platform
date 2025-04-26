@@ -113,15 +113,28 @@ def get_analytics_data(user_id):
     current_streak = len(streak_dates)
     print("Current streak:", current_streak)
 
-    # Areas to focus
-    areas_raw = db.session.query(Topic.name) \
-        .join(QuizScore, QuizScore.topic_id == Topic.id) \
-        .filter(QuizScore.user_id == user_id, QuizScore.average_score < 50) \
-        .group_by(Topic.name).having(func.max(QuizScore.average_score) < 50) \
-        .all()
+    # Score history for progress chart
+    score_history_raw = db.session.query(
+        func.date(ScoreHistory.date_attempted),
+        ScoreHistory.score
+    ).filter_by(user_id=user_id).order_by(ScoreHistory.date_attempted.asc()).all()
 
-    areas_to_focus = [a.name for a in areas_raw]
-    print("Areas to focus on:", areas_to_focus)
+    score_history = [
+        {'date_attempted': date, 'score': round(score, 2)}
+        for date, score in score_history_raw
+    ]
+
+    # Activity heatmap data
+    activity_raw = db.session.query(
+        func.date(ScoreHistory.date_attempted),
+        func.count(ScoreHistory.id)
+    ).filter_by(user_id=user_id).group_by(func.date(ScoreHistory.date_attempted)).all()
+
+    activity_data = [
+        {'date': date, 'count': count}
+        for date, count in activity_raw
+    ]
+
 
     return {
         'total_quizzes_taken': total_quizzes_taken,
@@ -131,7 +144,8 @@ def get_analytics_data(user_id):
         'most_attempted_topic': most_attempted_topic,
         'achievements': achievement_list,
         'current_streak': current_streak,
-        'areas_to_focus': areas_to_focus
+        'score_history': score_history,        
+        'activity_data': activity_data
     }
 
 
