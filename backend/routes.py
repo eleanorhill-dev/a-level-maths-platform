@@ -632,7 +632,6 @@ def register_routes(app, db, bcrypt):
             award("First Improvement", "Improved your score on a topic quiz!")
 
 
-
     
     app.register_blueprint(quiz_bp, url_prefix='/quiz')
     app.register_blueprint(analytics_bp, url_prefix='/analytics')
