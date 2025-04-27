@@ -9,7 +9,7 @@
   }
   
   .quiz-container {
-    padding: 1.5rem;
+    padding: 1.5rem;align-self: start;                                                      
     background-color: var(--earth-bg);
     color: var(--earth-deep);
     max-width: 1000px;

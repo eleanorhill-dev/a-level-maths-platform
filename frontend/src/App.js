@@ -23,6 +23,12 @@ import ExponentialsAndLogarithms from './pages/ExponentialsAndLogarithms';
 import RequireAuthentication from "./RequireAuthentication";
 import QuizPage from "./pages/QuizPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import DataCollection from "./pages/DataCollection";
+import MeasuresOfLocationAndSpread from "./pages/MeasuresOfLocationAndSpread";
+import RepresentationsOfData from "./pages/RepresentationsOfData";
+import Correlation from "./pages/Correlation";
+import Probability from "./pages/Probability";
+import StatisticalDistributions from "./pages/StatisticalDistributions";
 import { Toaster } from "sonner";
 
 
@@ -53,6 +59,12 @@ const App = () => {
           <Route path="/topics/differentiation" element={<RequireAuthentication><Differentiation /></RequireAuthentication>} />
           <Route path="/topics/integration" element={<RequireAuthentication><Integration /></RequireAuthentication>} />
           <Route path="/topics/exponentials-and-logarithms" element={<RequireAuthentication><ExponentialsAndLogarithms /></RequireAuthentication>} />
+          <Route path="/topics/data-collection" element={<RequireAuthentication><DataCollection /></RequireAuthentication>} />
+          <Route path="/topics/measures-of-location-and-spread" element={<RequireAuthentication><MeasuresOfLocationAndSpread /></RequireAuthentication>} />
+          <Route path="/topics/representations-of-data" element={<RequireAuthentication><RepresentationsOfData /></RequireAuthentication>} />
+          <Route path="/topics/correlation" element={<RequireAuthentication><Correlation /></RequireAuthentication>} />
+          <Route path="/topics/probability" element={<RequireAuthentication><Probability /></RequireAuthentication>} />
+          <Route path="/topics/statistical-distributions" element={<RequireAuthentication><StatisticalDistributions /></RequireAuthentication>} />
         </Routes>
       </BaseLayout>
     </Router>

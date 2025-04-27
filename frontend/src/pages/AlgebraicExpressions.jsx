@@ -78,7 +78,7 @@ print("Factorised Expression:", factorised_expression)`}
             <p>Negative and fractional indices are another way of expressing powers and roots:</p>
             <ul>
                 <li><strong>Negative Index:</strong> <em>a<sup>-n</sup> = 1 / a<sup>n</sup></em></li>
-                <li><strong>Fractional Index:</strong> <em>a<sup>1/n</sup> = <em>n-th</em> root of a</em></li>
+                <li><strong>Fractional Index:</strong> <em>a<sup>1/n</sup> = the <em>n<sup>th</sup></em> root of a</em></li>
             </ul>
 
             <CodeSnippet
@@ -98,7 +98,7 @@ print("Fractional Index result:", fractional_index)`}
             </div>
 
             <h4>Surds</h4>
-            <p>A surd is an expression involving a square root, cube root, etc., that cannot be simplified to a rational number. Simplifying surds involves extracting perfect squares or cubes when possible.</p>
+            <p>A surd is an expression involving a square root, cube root, etc., that cannot be simplified to a rational number. Simplifying surds involves factoring the number under the root to extract perfect squares or cubes when possible.</p>
             
             <CodeSnippet
                 code={`# Example of Simplifying Surds

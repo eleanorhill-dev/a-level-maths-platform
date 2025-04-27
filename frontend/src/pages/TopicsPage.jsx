@@ -22,7 +22,7 @@ const AS_Pure = [
 
 const AS_StatisticsMechanics = [
   'Data Collection',
-  'Measures of Location and Speed',
+  'Measures of Location and Spread',
   'Representations of Data',
   'Correlation',
   'Probability',
