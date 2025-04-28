@@ -29,6 +29,11 @@ import RepresentationsOfData from "./pages/RepresentationsOfData";
 import Correlation from "./pages/Correlation";
 import Probability from "./pages/Probability";
 import StatisticalDistributions from "./pages/StatisticalDistributions";
+import HypothesisTesting from "./pages/HypothesisTesting";
+import ModellingInMechanics from "./pages/ModellingInMechanics";
+import ConstantAcceleration from "./pages/ConstantAcceleration";
+import ForcesAndMotion from "./pages/ForcesAndMotion";
+import VariableAcceleration from "./pages/VariableAcceleration";
 import { Toaster } from "sonner";
 
 
@@ -65,6 +70,11 @@ const App = () => {
           <Route path="/topics/correlation" element={<RequireAuthentication><Correlation /></RequireAuthentication>} />
           <Route path="/topics/probability" element={<RequireAuthentication><Probability /></RequireAuthentication>} />
           <Route path="/topics/statistical-distributions" element={<RequireAuthentication><StatisticalDistributions /></RequireAuthentication>} />
+          <Route path="/topics/hypothesis-testing" element={<RequireAuthentication><HypothesisTesting /></RequireAuthentication>} />
+          <Route path="/topics/modelling-in-mechanics" element={<RequireAuthentication><ModellingInMechanics /></RequireAuthentication>} />
+          <Route path="/topics/constant-acceleration" element={<RequireAuthentication><ConstantAcceleration /></RequireAuthentication>} />
+          <Route path="/topics/forces-and-motion" element={<RequireAuthentication><ForcesAndMotion /></RequireAuthentication>} />
+          <Route path="/topics/variable-acceleration" element={<RequireAuthentication><VariableAcceleration /></RequireAuthentication>} />
         </Routes>
       </BaseLayout>
     </Router>
