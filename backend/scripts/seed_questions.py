@@ -10,93 +10,107 @@ app = create_app()
 
 def seed_questions():
     with app.app_context():
-        topic = Topic.query.filter_by(name="Exponentials and Logarithms").first()
+        topic = Topic.query.filter_by(name="Statistical Distributions").first()
         if not topic:
-            print("Topic 'Exponentials and Logarithms' not found. Make sure it exists in the database.")
+            print("Topic 'Statistical Distributions' not found. Make sure it exists in the database.")
             return
         
         print(f"Topic found: {topic.name} (ID: {topic.id})")
 
         questions = [
             {
-                "question_text": "What is the output of the following code?",
-                "code_snippet": "import numpy as np\nprint(np.exp(0))",
-                "question_type": "multiple_choice",
-                "options": ["0", "1", "e", "Error"],
-                "correct_answer": "1",
-                "explanation": "Any number to the power of 0 is equal to 1. In this example, e⁰ = 1."
-            },
-            {
-                "question_text": "Which of the following functions grows faster as x → ∞?",
-                "code_snippet": "f = lamba x: 2**x\ng = lamba x: x**5",
-                "question_type": "multiple_choice",
-                "options": ["f(x)", "g(x)", "They grow at the same rate", "It depends on x"],
-                "correct_answer": "f(x)",
-                "explanation": "Exponential functions always outgrow polynomials for large x."
-            },
-            {
-                "question_text": "Which of the following graphs represents the function y = eˣ?",
+                "question_text": "What does the cumulative probability represent for a binomial distribution?",
                 "code_snippet": None,
                 "question_type": "multiple_choice",
-                "options": ["exponentials1.png", "exponentials2.png", "exponentials3.png", "exponentials4.png"],
-                "correct_answer": "exponentials1.png",
-                "explanation": "The graph of y = eˣ increases rapidly and has a horizontal asymptote at y = 0."
+                "options": [
+                    "The probability of getting exactly k successes",
+                    "The probability of getting k or fewer successes",
+                    "The probability of getting more than k successes",
+                    "The probability of getting k successes or greater"
+                ],
+                "correct_answer": "The probability of getting k or fewer successes",
+                "explanation": "Cumulative probability gives the likelihood of getting k or fewer successes in a binomial distribution."
             },
             {
-                "question_text": "Which of the following is true for all x > 0?",
-                "code_snippet": "import numpy as np\nx = 5",
-                "question_type": "multiple_choice",
-                "options": ["np.log(np.exp(x)) == x", "np.exp(np.log(x)) == x", "Both A and B", "Neither A nor B"],
-                "correct_answer": "Both A and B",
-                "explanation": "Logs and exponentials are inverse functions."
-            },
-            {
-                "question_text": "Which of the following models exponential decay?",
-                "code_snippet": "import numpy as np\nt = np.linspace(0, 10, 100)\nA = 1000",
-                "question_type": "multiple_choice",
-                "options": ["A * np.exp(0.3 * t)", "A * np.exp(-0.3 * t)", "A * t**2", "A * np.log(t + 1)"],
-                "correct_answer": "A * np.exp(-0.3 * t)",
-                "explanation": "Negative exponent = decay."
-            },
-            {
-                "question_text": "What does applying np.log() to a set of exponential data achieve?",
+                "question_text": "Which of the following represents the binomial distribution's probability mass function (PMF)?",
                 "code_snippet": None,
                 "question_type": "multiple_choice",
-                "options": ["Makes it grow faster", "Makes it decrease", "Linearises it", "It has no effect"],
-                "correct_answer": "Linearises it",
-                "explanation": "Exponential trends become linear in a log plot."
+                "options": [
+                    "P(X = k) = nCk * p^k * (1-p)^(n-k)",
+                    "P(X = k) = (1 - p) * k^n",
+                    "P(X = k) = n * p * (1 - p)",
+                    "None of the above"
+                ],
+                "correct_answer": "P(X = k) = nCk * p^k * (1-p)^(n-k)",
+                "explanation": "The binomial distribution is defined by the PMF formula P(X = k) = nCk * p^k * (1-p)^(n-k)."
             },
             {
-                "question_text": "Which value is closest to the natural logarithm of 1?",
-                "code_snippet": "print(np.log(1))",
+                "question_text": "What is the probability of getting exactly 3 heads in 5 flips of a fair coin (p = 0.5)?",
+                "code_snippet": "from scipy.stats import binom\nprob_3_heads = binom.pmf(3, 5, 0.5)\nprint(prob_3_heads)",
                 "question_type": "multiple_choice",
-                "options": ["1", "2.71", "Undefined", "0"],
-                "correct_answer": "0",
-                "explanation": "ln(1) = 0, since e⁰ = 1 and they are inverse functions."
+                "options": [
+                    "0.5",
+                    "0.3125",
+                    "0.25",
+                    "0.375"
+                ],
+                "correct_answer": "0.3125",
+                "explanation": "The probability is calculated using the binomial PMF function. In this case, P(X = 3) for n = 5 and p = 0.5."
             },
             {
-                "question_text": "Complete the code to print the value of e² using NumPy:",
-                "code_snippet": "import numpy as np\nprint(np.________(2))",
-                "question_type": "fill_in_the_blank",
-                "options": None,
-                "correct_answer": "exp",
-                "explanation": "np.exp(2) computes e²."
+                "question_text": "What is the probability of getting 4 or fewer heads in 5 flips of a fair coin (p = 0.5)?",
+                "code_snippet": "cumulative_prob = binom.cdf(4, 5, 0.5)\nprint(cumulative_prob)",
+                "question_type": "multiple_choice",
+                "options": [
+                    "0.5",
+                    "0.8",
+                    "0.8125",
+                    "0.96875"
+                ],
+                "correct_answer": "0.96875",
+                "explanation": "The cumulative probability for 4 or fewer heads in 5 flips is calculated using binom.cdf."
             },
             {
-                "question_text": "Fill in the blank to calculate the value of eˣ, given that x = ln(9):",
-                "code_snippet": "from sympy import symbols, Eq, solve, exp, log\n\nx = symbols('x')\nequation = Eq(exp(x), ___________)\nsolution = solve(equation, x)\nprint(solution[0])",
-                "question_type": "fill_in_the_blank",
-                "options": None,
-                "correct_answer": "log(9)",
-                "explanation": "eˣ = eˡᵒᵍ⁽⁹⁾ = log(2log(3)) when computed."
+                "question_text": "Which of the following is a correct statement about a binomial distribution?",
+                "code_snippet": None,
+                "question_type": "multiple_choice",
+                "options": [
+                    "The probability of success changes with each trial.",
+                    "The trials are independent and there are only two possible outcomes (success or failure).",
+                    "The number of trials is not fixed.",
+                    "None of the above"
+                ],
+                "correct_answer": "The trials are independent and there are only two possible outcomes (success or failure).",
+                "explanation": "In a binomial distribution, the trials are independent and there are two possible outcomes: success or failure."
             },
             {
-                "question_text": "Fill in the blank to calculate the natural logarithm of the value 1000 using NumPy and print the result:",
-                "code_snippet": "import numpy as np\nvalue = 1000\nlog_value = np._____________(value)\nprint(log_value)",
+                "question_text": "Which of the following is true for the probability of getting exactly k successes in n trials of a binomial distribution?",
+                "code_snippet": None,
+                "question_type": "multiple_choice",
+                "options": [
+                    "It is calculated using the normal distribution formula.",
+                    "It is calculated using the binomial probability mass function.",
+                    "It is calculated using the Poisson distribution formula.",
+                    "None of the above"
+                ],
+                "correct_answer": "It is calculated using the binomial probability mass function.",
+                "explanation": "The probability of exactly k successes in n trials in a binomial distribution is calculated using the PMF formula."
+            },
+            {
+                "question_text": "Complete the code to calculate the cumulative probability of getting 3 or fewer heads in 10 flips of a coin with p = 0.5:",
+                "code_snippet": "from scipy.stats import binom\nprob_3_or_fewer = binom.cdf(3, 10, ________)\nprint(prob_3_or_fewer)",
                 "question_type": "fill_in_the_blank",
                 "options": None,
-                "correct_answer": "log",
-                "explanation": "The correct NumPy function to compute the natural logarithm of a number is log()."
+                "correct_answer": "0.5",
+                "explanation": "The cumulative probability is calculated using binom.cdf with n = 10 and p = 0.5."
+            },
+            {
+                "question_text": "Fill in the blank to calculate the probability of getting exactly 2 successes in 8 trials with p = 0.4 using the binomial distribution:",
+                "code_snippet": "from scipy.stats import binom\npmf_2_successes = binom.pmf(2, ___________, 0.4)\nprint(pmf_2_successes)",
+                "question_type": "fill_in_the_blank",
+                "options": None,
+                "correct_answer": "8",
+                "explanation": "The probability of exactly 2 successes is calculated using binom.pmf with n = 8 and p = 0.4."
             }
         ]
 
@@ -115,7 +129,7 @@ def seed_questions():
 
         try:
             db.session.commit()
-            print(f"{len(questions)} questions added to the 'Exponentials and Logarithms' topic.")
+            print(f"{len(questions)} questions added to the 'StatisticalDistributions' topic.")
         except Exception as e:
             db.session.rollback()
             print(f"Error during commit: {e}")
