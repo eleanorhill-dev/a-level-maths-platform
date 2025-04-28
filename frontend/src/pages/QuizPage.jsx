@@ -135,7 +135,7 @@ const QuizPage = () => {
       <div className="quiz-container quiz-complete">
         <div className="quiz-summary-header">
           <h2 className="quiz-complete-title">Quiz Complete!</h2>
-          <p className="quiz-score">Score: {score}%</p>
+          <p className="quiz-score">Score: {score !== null ? score.toFixed(1) : 0}%</p>
           <button onClick={() => navigate('/topics')} className="quiz-nav-btn">
             Return to Topics
           </button>

@@ -338,7 +338,7 @@ const ProfilePage = () => {
                     cy="75"
                     r="60"
                     strokeDasharray={376}
-                    strokeDashoffset={learningGoal ? 376 - (progress / learningGoal) * 376 : 376}
+                    strokeDashoffset={learningGoal ? 376 - (Math.min(progress / learningGoal, 1) * 376) : 376}
                   />
                 </svg>
                 <div className="progress-text">{`${progress} / ${learningGoal}`}</div>

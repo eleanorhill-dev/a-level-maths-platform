@@ -10,9 +10,9 @@ from models import Topic, QuizQuestion, QuizScore, ScoreHistory, UserAchievement
 app = create_app()
 
 with app.app_context():
-    quiz_question = QuizQuestion.query.get(152)
+    quiz_question = QuizQuestion.query.get(216)
     
-    quiz_question.question_text = "Which of the following is true when data values are coded using:"
+    quiz_question.explanation = "This formula links s, u, a, and t directly: s = ut + 1/2at²."
 
     db.session.commit()
     

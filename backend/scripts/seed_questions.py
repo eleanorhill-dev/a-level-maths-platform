@@ -10,107 +10,74 @@ app = create_app()
 
 def seed_questions():
     with app.app_context():
-        topic = Topic.query.filter_by(name="Statistical Distributions").first()
+        topic = Topic.query.filter_by(name="Variable Acceleration").first()
         if not topic:
-            print("Topic 'Statistical Distributions' not found. Make sure it exists in the database.")
+            print("Topic 'Variable Acceleration' not found. Make sure it exists in the database.")
             return
         
         print(f"Topic found: {topic.name} (ID: {topic.id})")
 
         questions = [
             {
-                "question_text": "What does the cumulative probability represent for a binomial distribution?",
+                "question_text": "A particle has velocity v(t) = 3t² - 2t + 5. What is the particle's velocity at t = 2 seconds?",
+                "code_snippet": "import sympy as sp\n\nt = sp.symbols('t')\nv = 3*t**2 - 2*t + 5\nvelocity_at_2 = v.subs(t, 2)\nprint(velocity_at_2)",
+                "question_type": "multiple_choice",
+                "options": ["13", "17", "11", "9"],
+                "correct_answer": "13",
+                "explanation": "Substituting t = 2 into v(t) = 3t² - 2t + 5 gives v(2) = 13 m/s."
+            },
+            {
+                "question_text": "What does differentiating displacement with respect to time give you?",
+                "code_snippet": None,
+                "question_type": "multiple_choice",
+                "options": ["Acceleration", "Displacement", "Velocity", "Speed"],
+                "correct_answer": "Velocity",
+                "explanation": "Differentiating displacement s(t) gives velocity v(t)."
+            },
+            {
+                "question_text": "A particle has velocity v(t) = -t² + 4t. Find the time when the velocity is maximum.",
+                "code_snippet": "import sympy as sp\n\nt = sp.symbols('t')\nv = -t**2 + 4*t\ncritical_time = sp.solve(sp.diff(v, t), t)\nprint(critical_time)",
+                "question_type": "multiple_choice",
+                "options": ["t = 1", "t = 2", "t = 3", "t = 4"],
+                "correct_answer": "t = 2",
+                "explanation": "The maximum velocity occurs when the derivative of v(t) equals 0; solving -2t + 4 = 0 gives t = 2."
+            },
+            {
+                "question_text": "The velocity of a particle is v(t) = 2t + 3. Find the displacement from t = 0 to t = 2 seconds.",
+                "code_snippet": "import sympy as sp\n\nt = sp.symbols('t')\nv = 2*t + 3\ndisplacement = sp.integrate(v, (t, 0, 2))\nprint(displacement)",
+                "question_type": "multiple_choice",
+                "options": ["10", "12", "14", "16"],
+                "correct_answer": "10",
+                "explanation": "Integrating v(t) from 0 to 2 gives the displacement: ∫(2t + 3) dt from 0 to 2 equals 10 m."
+            },
+            {
+                "question_text": "Which constant acceleration formula links displacement, initial velocity, time, and acceleration?",
                 "code_snippet": None,
                 "question_type": "multiple_choice",
                 "options": [
-                    "The probability of getting exactly k successes",
-                    "The probability of getting k or fewer successes",
-                    "The probability of getting more than k successes",
-                    "The probability of getting k successes or greater"
+                    "s = ut + 0.5at²",
+                    "v = u + at",
+                    "v² = u² + 2as",
+                    "s = (u + v)t"
                 ],
-                "correct_answer": "The probability of getting k or fewer successes",
-                "explanation": "Cumulative probability gives the likelihood of getting k or fewer successes in a binomial distribution."
+                "correct_answer": "s = ut + 0.5at²",
+                "explanation": "This formula links s, u, a, and t directly: s = ut + 1/2at²."
             },
             {
-                "question_text": "Which of the following represents the binomial distribution's probability mass function (PMF)?",
-                "code_snippet": None,
-                "question_type": "multiple_choice",
-                "options": [
-                    "P(X = k) = nCk * p^k * (1-p)^(n-k)",
-                    "P(X = k) = (1 - p) * k^n",
-                    "P(X = k) = n * p * (1 - p)",
-                    "None of the above"
-                ],
-                "correct_answer": "P(X = k) = nCk * p^k * (1-p)^(n-k)",
-                "explanation": "The binomial distribution is defined by the PMF formula P(X = k) = nCk * p^k * (1-p)^(n-k)."
-            },
-            {
-                "question_text": "What is the probability of getting exactly 3 heads in 5 flips of a fair coin (p = 0.5)?",
-                "code_snippet": "from scipy.stats import binom\nprob_3_heads = binom.pmf(3, 5, 0.5)\nprint(prob_3_heads)",
-                "question_type": "multiple_choice",
-                "options": [
-                    "0.5",
-                    "0.3125",
-                    "0.25",
-                    "0.375"
-                ],
-                "correct_answer": "0.3125",
-                "explanation": "The probability is calculated using the binomial PMF function. In this case, P(X = 3) for n = 5 and p = 0.5."
-            },
-            {
-                "question_text": "What is the probability of getting 4 or fewer heads in 5 flips of a fair coin (p = 0.5)?",
-                "code_snippet": "cumulative_prob = binom.cdf(4, 5, 0.5)\nprint(cumulative_prob)",
-                "question_type": "multiple_choice",
-                "options": [
-                    "0.5",
-                    "0.8",
-                    "0.8125",
-                    "0.96875"
-                ],
-                "correct_answer": "0.96875",
-                "explanation": "The cumulative probability for 4 or fewer heads in 5 flips is calculated using binom.cdf."
-            },
-            {
-                "question_text": "Which of the following is a correct statement about a binomial distribution?",
-                "code_snippet": None,
-                "question_type": "multiple_choice",
-                "options": [
-                    "The probability of success changes with each trial.",
-                    "The trials are independent and there are only two possible outcomes (success or failure).",
-                    "The number of trials is not fixed.",
-                    "None of the above"
-                ],
-                "correct_answer": "The trials are independent and there are only two possible outcomes (success or failure).",
-                "explanation": "In a binomial distribution, the trials are independent and there are two possible outcomes: success or failure."
-            },
-            {
-                "question_text": "Which of the following is true for the probability of getting exactly k successes in n trials of a binomial distribution?",
-                "code_snippet": None,
-                "question_type": "multiple_choice",
-                "options": [
-                    "It is calculated using the normal distribution formula.",
-                    "It is calculated using the binomial probability mass function.",
-                    "It is calculated using the Poisson distribution formula.",
-                    "None of the above"
-                ],
-                "correct_answer": "It is calculated using the binomial probability mass function.",
-                "explanation": "The probability of exactly k successes in n trials in a binomial distribution is calculated using the PMF formula."
-            },
-            {
-                "question_text": "Complete the code to calculate the cumulative probability of getting 3 or fewer heads in 10 flips of a coin with p = 0.5:",
-                "code_snippet": "from scipy.stats import binom\nprob_3_or_fewer = binom.cdf(3, 10, ________)\nprint(prob_3_or_fewer)",
+                "question_text": "Fill in the blank to define acceleration by differentiating velocity:",
+                "code_snippet": "import sympy as sp\n\nt = sp.symbols('t')\nv = 5*t**2 - 3*t + 7\na = sp.diff(v, ________)\nprint(a)",
                 "question_type": "fill_in_the_blank",
                 "options": None,
-                "correct_answer": "0.5",
-                "explanation": "The cumulative probability is calculated using binom.cdf with n = 10 and p = 0.5."
+                "correct_answer": "t",
+                "explanation": "Acceleration is the derivative of velocity with respect to time t."
             },
             {
-                "question_text": "Fill in the blank to calculate the probability of getting exactly 2 successes in 8 trials with p = 0.4 using the binomial distribution:",
-                "code_snippet": "from scipy.stats import binom\npmf_2_successes = binom.pmf(2, ___________, 0.4)\nprint(pmf_2_successes)",
+                "question_text": "Fill in the blank: Displacement can be found by integrating ________ with respect to time.",
+                "code_snippet": "s = sp.integrate(_________, t)",
                 "question_type": "fill_in_the_blank",
                 "options": None,
-                "correct_answer": "8",
-                "explanation": "The probability of exactly 2 successes is calculated using binom.pmf with n = 8 and p = 0.4."
+                "correct_answer": "velocity",
+                "explanation": "Displacement is the integral of velocity over time."
             }
         ]
 
@@ -129,7 +96,7 @@ def seed_questions():
 
         try:
             db.session.commit()
-            print(f"{len(questions)} questions added to the 'StatisticalDistributions' topic.")
+            print(f"{len(questions)} questions added to the 'VariableAcceleration' topic.")
         except Exception as e:
             db.session.rollback()
             print(f"Error during commit: {e}")
