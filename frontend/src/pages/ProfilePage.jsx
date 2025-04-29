@@ -18,6 +18,13 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
   const defaultProfileImage = '/main_images/default_avatar.webp';
+  const [accountError, setAccountError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [quizStats, setQuizStats] = useState({
+    totalQuizzesTaken: 0,
+    highestScore: 0,
+    mostImprovedTopic: "N/A"
+  });
 
   const avatarOptions = [
     '/avatars/avatar1.webp',
@@ -110,20 +117,39 @@ const ProfilePage = () => {
 
   const handleInputChange = (field, value) => {
     setUserInfo(prev => ({ ...prev, [field]: value }));
+    setAccountError("");
   };
 
   const saveField = async (field) => {
+    const value = userInfo[field];
+
+    if (field === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        setAccountError("Please enter a valid email address.");
+        return;
+      }
+    }
+
+    if (field === "username" && value.trim() === "") {
+      setAccountError("Username cannot be empty.");
+      return;
+    }
+
     try {
       const response = await fetch("http://localhost:5000/update-profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ [field]: userInfo[field] }),
+        body: JSON.stringify({ [field]: value }),
       });
+
+      const result = await response.json();
+
       if (response.ok) {
         setEditingField(null);
       } else {
-        alert("Error saving field");
+        setAccountError(result.error || "Error saving field");
       }
     } catch (error) {
       console.error("Save field error:", error);
@@ -152,27 +178,62 @@ const ProfilePage = () => {
   };
 
   const handlePasswordChange = async () => {
-    if (newPassword !== confirmNewPassword) {
-      alert("New passwords do not match");
+  
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  
+    if (!currentPassword || !newPassword || !confirmNewPassword) {
+      setPasswordError("All fields are required.");
       return;
     }
+  
+    if (!passwordRegex.test(newPassword)) {
+      setPasswordError("New password must be at least 8 characters with uppercase, lowercase, number, and symbol.");
+      return;
+    }
+  
+    if (newPassword !== confirmNewPassword) {
+      setPasswordError("New password and confirm password do not match.");
+      return;
+    }
+  
+    if (newPassword === currentPassword) {
+      setPasswordError("New password cannot be the same as the current password.");
+      return;
+    }
+  
     try {
       const response = await fetch("http://localhost:5000/change-password", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         credentials: "include",
-        body: JSON.stringify({ currentPassword, newPassword }),
+        body: JSON.stringify({
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+          confirmNewPassword: confirmNewPassword
+        }),
+        
       });
+  
+      console.log("Password change request sent");
+      console.log("Response:", response);
+  
+      const result = await response.json();
+  
       if (response.ok) {
         alert("Password changed successfully");
         setIsPasswordChanging(false);
+        setPasswordError("");
       } else {
-        alert("Error changing password");
+        setPasswordError(result.error || "Error changing password");
       }
     } catch (error) {
-      console.error("Password change error:", error);
+      console.error("Password change request failed:", error);
+      setPasswordError("Network error or server not responding.");
     }
   };
+  
 
   const handleAccountDeletion = async () => {
     if (window.confirm("Are you sure you want to delete your account? This action is permanent.")) {
@@ -237,6 +298,9 @@ const ProfilePage = () => {
           {/* Account Info */}
           <div className="section-card profile-info">
             <h3>Account Info</h3>
+
+            {accountError && <div className="alert alert-danger">{accountError}</div>}
+                
             {['First Name', 'Surname', 'Email', 'Username'].map((label, i) => {
               const fieldKey = ['fname', 'sname', 'email', 'uname'][i];
               return (
@@ -272,35 +336,63 @@ const ProfilePage = () => {
           {/* Change Password Section */}
           <div className="section-card change-password">
             <h3>Change Password</h3>
-            <button onClick={() => setIsPasswordChanging(!isPasswordChanging)} className="btn btn-primary">
-              {isPasswordChanging ? 'Cancel' : 'Change Password'}
-            </button>
-  
-            {isPasswordChanging && (
+
+            {isPasswordChanging ? (
               <div className="change-password-inputs">
+
+                {passwordError && <div className="alert alert-danger">{passwordError}</div>}
+                
                 <input
                   type="password"
                   placeholder="Current password"
                   value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPasswordError("");
+                    setCurrentPassword(e.target.value);
+                  }}
                 />
                 <input
                   type="password"
                   placeholder="New password"
                   value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPasswordError("");
+                    setNewPassword(e.target.value);
+                  }}
                 />
                 <input
                   type="password"
                   placeholder="Confirm new password"
                   value={confirmNewPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPasswordError("");
+                    setConfirmNewPassword(e.target.value);
+                  }}
                 />
-                <button onClick={handlePasswordChange} class = "btn btn-primary">Update Password</button>
+
+                <div className="button-row">
+                  <button onClick={handlePasswordChange} className="btn btn-primary">Save Changes</button>
+                  <button
+                    onClick={() => {
+                      setIsPasswordChanging(false);
+                      setCurrentPassword("");
+                      setNewPassword("");
+                      setConfirmNewPassword("");
+                      setPasswordError("");
+                    }}
+                    className="btn btn-primary"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
+            ) : (
+              <button onClick={() => setIsPasswordChanging(true)} className="btn btn-primary">
+                Change Password
+              </button>
             )}
           </div>
-  
+
         </div>
   
         {/* Right Column */}

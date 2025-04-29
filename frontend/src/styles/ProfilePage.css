@@ -184,6 +184,20 @@
   border-color: #FF4A3B;
 }
 
+.change-password-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+}
+
 
 .progress-ring {
   position: relative;

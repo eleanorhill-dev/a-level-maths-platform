@@ -28,6 +28,19 @@ const RegisterForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage("Please enter a valid email address.");
+      return;
+    }
+
+    if (!passwordRegex.test(formData.pword)) {
+      setErrorMessage("Password must be at least 8 characters, with uppercase, lowercase, number, and symbol.");
+      return;
+    }
+
     if (formData.pword !== formData.confirmPword) {
       setErrorMessage("Passwords do not match.");
       return;

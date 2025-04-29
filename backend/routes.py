@@ -176,7 +176,7 @@ def register_routes(app, db, bcrypt):
             return jsonify({"id": user.id, "message": "Login successful"}), 200
 
         return jsonify({"message": "Invalid credentials"}), 401
-
+    
 
     @app.route('/register', methods=['POST'])
     def register():
@@ -192,6 +192,16 @@ def register_routes(app, db, bcrypt):
 
         if not all([fname, sname, email, uname, pword]):
             return jsonify({"message": "All fields are required"}), 400
+        
+        if User.query.filter_by(email=email).first():
+            return "Email already in use", 400
+        if User.query.filter_by(uname=uname).first():
+            return "Username already in use", 400
+
+        password_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$'
+        if not re.match(password_pattern, pword):
+            return "Password does not meet complexity requirements", 400
+
 
         hashed_password = bcrypt.generate_password_hash(pword).decode('utf-8')
         new_user = User(fname=fname, sname=sname, email=email, uname=uname, pword=hashed_password)
@@ -203,6 +213,8 @@ def register_routes(app, db, bcrypt):
         except Exception as e:
             db.session.rollback()
             return jsonify({"message": "Error occurred while registering user", "error": str(e)}), 500
+
+
 
     @app.route("/logout", methods=["POST"])
     @login_required
@@ -277,11 +289,31 @@ def register_routes(app, db, bcrypt):
             return jsonify({"error": "User not found"}), 404
 
         data = request.get_json()
-
         allowed_fields = ['fname', 'sname', 'email', 'uname']
         updated = False
 
-        for field in allowed_fields:
+        new_email = data.get("email")
+        if new_email:
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", new_email):
+                return jsonify({"error": "Invalid email format"}), 400
+
+            existing_email = User.query.filter(User.email == new_email, User.id != user_id).first()
+            if existing_email:
+                return jsonify({"error": "Email is already in use"}), 400
+
+            user.email = new_email
+            updated = True
+
+        new_uname = data.get("uname")
+        if new_uname:
+            existing_uname = User.query.filter(User.uname == new_uname, User.id != user_id).first()
+            if existing_uname:
+                return jsonify({"error": "Username is already taken"}), 400
+
+            user.uname = new_uname
+            updated = True
+
+        for field in ['fname', 'sname']:
             if field in data:
                 setattr(user, field, data[field])
                 updated = True
@@ -291,6 +323,7 @@ def register_routes(app, db, bcrypt):
             return jsonify({"message": "Profile updated successfully!"}), 200
         else:
             return jsonify({"error": "No valid fields to update"}), 400
+
 
 
 
@@ -314,7 +347,6 @@ def register_routes(app, db, bcrypt):
         return jsonify({'message': 'Learning goal updated successfully'}), 200
 
 
-
     @app.route('/change-password', methods=['POST'])
     @cross_origin(origins='http://localhost:3000', supports_credentials=True)
     @login_required
@@ -325,17 +357,32 @@ def register_routes(app, db, bcrypt):
         data = request.get_json()
         current_password = data.get('currentPassword')
         new_password = data.get('newPassword')
+        confirm_new_password = data.get('confirmNewPassword')
 
-        if not current_password or not new_password:
-            return jsonify({'error': 'Please provide both current and new password'}), 400
+        if not current_password or not new_password or not confirm_new_password:
+            return jsonify({'error': 'Please provide both current and new passwords'}), 400
+
+        if new_password != confirm_new_password:
+            return jsonify({'error': 'New password and confirmation do not match'}), 400
+
+        if current_password == new_password:
+            return jsonify({'error': 'New password cannot be the same as the current password'}), 400
+
+        password_pattern = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$'
+        if not re.match(password_pattern, new_password):
+            return jsonify({'error': 'New password must be at least 8 characters with uppercase, lowercase, number, and symbol'}), 400
 
         user = User.query.get(session['user_id'])
         
-        if not check_password_hash(user.password, current_password):
-            return jsonify({'error': 'Current password is incorrect'}), 400
-        
-        user.password = generate_password_hash(new_password)
+        if not bcrypt.check_password_hash(user.pword, current_password):
+             return jsonify({'error': 'Current password is incorrect'}), 400
+
+        print("Old hash:", user.pword)
+        user.pword = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        print("New hash:", user.pword)
         db.session.commit()
+        updated_user = User.query.get(session['user_id'])
+        print("DB hash after commit:", updated_user.pword)
 
         return jsonify({'message': 'Password changed successfully'}), 200
 

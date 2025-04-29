@@ -10,6 +10,7 @@ const LoginPage = () => {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const LoginPage = () => {
       ...prevData,
       [name]: value,
     }));
+    setErrorMessage("");
   };
 
   const handleShowPassword = () => {
@@ -28,6 +30,11 @@ const LoginPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!username || !password) {
+      setErrorMessage("You must enter all details.");
+      return;
+    }
 
     const userData = {
       uname: formData.username,
@@ -54,10 +61,10 @@ const LoginPage = () => {
         }
       } else {
         const errorText = await response.text();
-        console.error("Unexpected response:", errorText);
+        setErrorMessage(errorText.message || "Invalid Credentials");
       }
     } catch (error) {
-      console.error("Error:", error);
+      setErrorMessage("Error:", error);
     }
   };
 
@@ -73,6 +80,9 @@ const LoginPage = () => {
         <div className="text-center mb-3">
           <h4 className="login-form-title">Login</h4>
         </div>
+
+        {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
             <input
@@ -112,7 +122,7 @@ const LoginPage = () => {
               Show password
             </label>
           </div>
-  
+
           <div className="centered-button">
           <button
             type="submit"
