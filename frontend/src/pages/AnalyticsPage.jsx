@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Spinner, Card, Container, Row, Col, Button } from 'react-bootstrap';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, BarChart, Bar, CartesianGrid } from 'recharts';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
 import { motion } from 'framer-motion';
@@ -35,6 +35,7 @@ const AnalyticsPage = () => {
   const [activityData, setActivityData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [xpData, setXpData] = useState([]);
 
   useEffect(() => {
     const fetchAnalyticsData = async () => {
@@ -48,6 +49,7 @@ const AnalyticsPage = () => {
 
         setScoreHistory(data.score_history || []);
         setActivityData(data.activity_data || []);
+        setXpData(data.xp_by_day || []);
 
         setLoading(false);
       } catch (err) {
@@ -168,6 +170,21 @@ const AnalyticsPage = () => {
                 </p>
               </Card.Body>
             </Card>
+          </Col>
+        </Row>
+
+        <Row className="analytics-row">
+          <Col md={12}>
+            <h3>XP Earned Over the Past 7 Days</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={analyticsData.xp_by_day}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="date" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="xp" fill="#6b8e23" />
+              </BarChart>
+            </ResponsiveContainer>
           </Col>
         </Row>
 

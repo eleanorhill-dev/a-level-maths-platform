@@ -1,14 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../index";
 import { useAuth } from "../AuthContext";
 
-const BaseLayout = ({ children }) => {
+const BaseLayout = ({ children, xp }) => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
-
+  
   const isActive = (path) => location.pathname === path;
+
+  const [totalXP, setTotalXP] = useState(0);
+
+  const fetchUserXP = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/get_user_xp", {
+        credentials: "include",
+      });
+  
+      console.log("Response status:", response.status);
+  
+      if (!response.ok) {
+        const errData = await response.text();
+        console.error("Failed to fetch XP:", errData);
+        return;
+      }
+  
+      const data = await response.json();
+      console.log("Fetched XP:", data);
+      setTotalXP(data.total_xp);
+    } catch (error) {
+      console.error("Error fetching XP:", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("Auth status:", isAuthenticated); 
+    if (isAuthenticated) {
+      fetchUserXP();
+    }
+  }, [isAuthenticated]);
 
   return (
     <div>
@@ -69,6 +100,11 @@ const BaseLayout = ({ children }) => {
                 </Link>
               </li>
             </ul>
+            {isAuthenticated && (
+              <span className="navbar-text ms-auto">
+                XP: {xp}
+              </span>
+            )}
           </div>
         </div>
       </nav>

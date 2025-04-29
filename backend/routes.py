@@ -38,10 +38,19 @@ def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         if not session.get("user_id") and request.endpoint not in ['login', 'register', 'static']:
+            if request.accept_mimetypes.accept_json or request.path.startswith("/api") or request.headers.get("X-Requested-With") == "XMLHttpRequest":
+                return jsonify({"error": "Unauthorized"}), 401
             return redirect(url_for('login'))
         return func(*args, **kwargs)
     wrapper.__name__ = func.__name__
     return wrapper
+
+
+# XP calculation function
+def calculate_xp(score_percentage):
+    if score_percentage == 100:
+        return 15
+    return max(1, min(10, score_percentage // 10))
 
 
 
@@ -417,7 +426,23 @@ def register_routes(app, db, bcrypt):
             db.session.rollback()
             print(f"Error deleting account: {e}")
             return jsonify({"error": "Error deleting account"}), 500
+        
 
+    @app.route("/get_user_xp", methods=["GET"])
+    @login_required
+    def get_user_xp():
+        if 'user_id' not in session:
+            return jsonify({"error": "Unauthorized"}), 401
+
+        user_id = session['user_id']
+
+        total_xp = db.session.query(
+            db.func.coalesce(db.func.sum(QuizScore.total_xp_earned), 0)
+        ).filter_by(user_id=user_id).scalar()
+
+        response = jsonify({"total_xp": total_xp})
+        response.headers["Cache-Control"] = "no-store"
+        return response
 
 
     @quiz_bp.route('/<int:topic_id>', methods=['GET'])
@@ -444,7 +469,6 @@ def register_routes(app, db, bcrypt):
     @login_required
     def submit_quiz():
         data = request.get_json()
-        print("Received payload:", data)
 
         user_id = data['user_id']
         topic_id = data['topic_id']
@@ -480,22 +504,28 @@ def register_routes(app, db, bcrypt):
 
         score = (correct_answers / total_questions) * 100
 
+        xp_earned = calculate_xp(score)
+
         quiz_score = QuizScore.query.filter_by(user_id=user_id, topic_id=topic_id).first()
         if quiz_score:
             quiz_score.most_recent_score = score
+            quiz_score.xp_earned = xp_earned
             quiz_score.highest_score = max(score, quiz_score.highest_score)
             quiz_score.lowest_score = min(score, quiz_score.lowest_score)
             quiz_score.average_score = (quiz_score.average_score * quiz_score.total_attempts + score) / (quiz_score.total_attempts + 1)
             quiz_score.total_attempts += 1
+            quiz_score.total_xp_earned += xp_earned
         else:
             quiz_score = QuizScore(
                 user_id=user_id,
                 topic_id=topic_id,
                 most_recent_score=score,
+                xp_earned=xp_earned,
                 highest_score=score,
                 lowest_score=score,
                 average_score=score,
-                total_attempts=1
+                total_attempts=1,
+                total_xp_earned=xp_earned
             )
             db.session.add(quiz_score)
 
@@ -508,12 +538,16 @@ def register_routes(app, db, bcrypt):
         db.session.add(score_history)
 
         db.session.commit()
+
         award_details = []
-        check_and_award_achievements(user_id, topic_id, score, award_details)
+        total_xp_earned = quiz_score.total_xp_earned
+
+        check_and_award_achievements(user_id, topic_id, score, total_xp_earned, award_details)
 
         return jsonify({
             "message": "Quiz submitted successfully",
             "score": score,
+            "xp_earned": xp_earned,
             "explanations": wrong_explanations,
             "awarded_achievements": award_details
         })
@@ -546,14 +580,47 @@ def register_routes(app, db, bcrypt):
 
     @app.route('/api/analytics', methods=['GET'])
     def get_analytics():
-        user_id = session.get('user_id') 
+        user_id = session.get('user_id')
         if not user_id:
             return jsonify({'error': 'User not authenticated'}), 401
 
         analytics_data = get_analytics_data(user_id)
-        
         if not analytics_data:
             return jsonify({'error': 'No analytics data found for this user'}), 404
+
+        today = datetime.utcnow().date()
+        seven_days_ago = today - timedelta(days=6)
+
+        xp_results = (
+            db.session.query(
+                func.date(ScoreHistory.date_attempted).label('date'),
+                func.sum(QuizScore.xp_earned).label('total_xp')
+            )
+            .join(
+                QuizScore,
+                (QuizScore.user_id == ScoreHistory.user_id) & 
+                (QuizScore.topic_id == ScoreHistory.topic_id)
+            )
+            .filter(
+                ScoreHistory.user_id == user_id,
+                ScoreHistory.date_attempted >= seven_days_ago
+            )
+            .group_by(func.date(ScoreHistory.date_attempted))
+            .all()
+        )
+
+        xp_dict = {str(row.date): int(row.total_xp or 0) for row in xp_results}
+
+        xp_by_day = []
+        for i in range(7):
+            day = seven_days_ago + timedelta(days=i)
+            day_str = day.isoformat() 
+            xp_by_day.append({
+                "date": day_str,
+                "xp": xp_dict.get(day_str, 0)
+            })
+
+        analytics_data["xp_by_day"] = xp_by_day
 
         return jsonify(analytics_data)
 
@@ -575,7 +642,7 @@ def register_routes(app, db, bcrypt):
 
 
 
-    def check_and_award_achievements(user_id, topic_id, score, award_details):
+    def check_and_award_achievements(user_id, topic_id, score, total_xp_earned, award_details):
 
         def award(name, description):
             exists = UserAchievement.query.filter_by(user_id=user_id, name=name).first()
@@ -678,6 +745,17 @@ def register_routes(app, db, bcrypt):
         if len(topic_scores) >= 2 and topic_scores[-1] > topic_scores[-2]:
             award("First Improvement", "Improved your score on a topic quiz!")
 
+        # XP Earned
+        if total_xp_earned >= 1000:
+            award("Quiz Champion", "Gained a total of 1000 XP")
+        elif total_xp_earned >= 500:
+            award("Master of the Basics", "Gained a total of 500 XP")
+        elif total_xp_earned >= 250:
+            award("Rising Star", "Gained a total of 250 XP")
+        elif total_xp_earned >= 100:
+            award("Aspiring Scholar", "Gained a total of 100 XP")
+        elif total_xp_earned >= 50:
+            award("Novice Learner", "Gained a total of 50 XP")
 
     
     app.register_blueprint(quiz_bp, url_prefix='/quiz')

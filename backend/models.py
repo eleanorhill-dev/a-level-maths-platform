@@ -78,10 +78,12 @@ class QuizScore(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     most_recent_score = db.Column(db.Integer, nullable=False)
+    xp_earned = db.Column(db.Integer)
     highest_score = db.Column(db.Integer, nullable=False)
     lowest_score = db.Column(db.Integer, nullable=False)
     average_score = db.Column(db.Float, nullable=False)
     total_attempts = db.Column(db.Integer, nullable=False, default=1)
+    total_xp_earned = db.Column(db.Integer)
 
     def to_dict(self):
         return {
@@ -89,10 +91,12 @@ class QuizScore(db.Model):
             'user_id': self.user_id,
             'topic_id': self.topic_id,
             'most_recent_score': self.most_recent_score,
+            'xp_earned': self.xp_earned,
             'highest_score': self.highest_score,
             'lowest_score': self.lowest_score,
             'average_score': self.average_score,
-            'total_attempts': self.total_attempts
+            'total_attempts': self.total_attempts,
+            'total_xp_earned': self.total_xp_earned
         }
 
     user = db.relationship('User', backref='quiz_scores')

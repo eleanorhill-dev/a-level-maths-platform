@@ -164,6 +164,12 @@
   button.quiz-nav-btn:hover {
     background-color: #3d5c3d;
   }
+
+  .quiz-xp {
+    font-size: 1.2rem;
+    color: #4caf50;
+    margin-top: 0.5rem;
+  }
   
   @media (min-width: 640px) {
     .quiz-options {

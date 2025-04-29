@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import BaseLayout from "./components/BaseLayout";
 import HomePage from "./pages/HomePage";
@@ -37,10 +37,28 @@ import VariableAcceleration from "./pages/VariableAcceleration";
 import { Toaster } from "sonner";
 
 
-const App = () => {
+function App() {
+  const [xp, setXp] = useState(0);
+
+  const fetchXp = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/get_user_xp", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      setXp(data.total_xp);
+    } catch (err) {
+      console.error("Failed to fetch XP:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchXp();
+  }, []);
+
   return (
     <Router>
-      <BaseLayout>
+      <BaseLayout xp={xp}>
       <Toaster richColors />
         <Routes>
           <Route path="/" element={<RequireAuthentication><HomePage /></RequireAuthentication>} />
@@ -49,7 +67,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
-          <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage /></RequireAuthentication>} />
+          <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage onXpUpdate={fetchXp}/></RequireAuthentication>} />
           <Route path="/topics/algebraic-expressions" element={<RequireAuthentication><AlgebraicExpressions /></RequireAuthentication>} />
           <Route path="/topics/quadratics" element={<RequireAuthentication><Quadratics /></RequireAuthentication>} />
           <Route path="/topics/equations-and-inequalities" element={<RequireAuthentication><EquationsAndInequalities /></RequireAuthentication>} />

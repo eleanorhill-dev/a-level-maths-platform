@@ -7,7 +7,7 @@ import confetti from "canvas-confetti";
 import "../styles/QuizPage.css";
 
 
-const QuizPage = () => {
+const QuizPage = ({ onXpUpdate }) => {
   const { topicId } = useParams();
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,6 +15,7 @@ const QuizPage = () => {
   const [loading, setLoading] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [score, setScore] = useState(null);
+  const [xpEarned, setXpEarned] = useState(null);
   const [explanations, setExplanations] = useState([]);
   const [awardedAchievements, setAwardedAchievements] = useState([]);
   const [showPopUp, setShowPopUp] = useState(false);
@@ -120,8 +121,12 @@ const QuizPage = () => {
       }      
 
       setScore(data.score);
+      setXpEarned(data.xp_earned);
       setExplanations(data.explanations || []);
       setQuizCompleted(true);
+
+      if (onXpUpdate) onXpUpdate();
+      
     } catch (error) {
       console.error("Error submitting quiz:", error);
     }
@@ -136,6 +141,9 @@ const QuizPage = () => {
         <div className="quiz-summary-header">
           <h2 className="quiz-complete-title">Quiz Complete!</h2>
           <p className="quiz-score">Score: {score !== null ? score.toFixed(1) : 0}%</p>
+          {xpEarned !== null && (
+            <p className="quiz-xp">XP Earned: {xpEarned}</p>
+          )}
           <button onClick={() => navigate('/topics')} className="quiz-nav-btn">
             Return to Topics
           </button>
