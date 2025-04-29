@@ -4,60 +4,60 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/TopicsPage.css';
 
 const AS_Pure = [
-  'Algebraic Expressions',
-  'Quadratics',
-  'Equations and Inequalities',
-  'Graphs and Transformations',
-  'Straight Line Graphs',
-  'Circles',
-  'Algebraic Methods',
-  'The Binomial Expansion',
-  'Trigonometric Ratios',
-  'Trigonometric Identities and Equations',
-  'Vectors',
-  'Differentiation',
-  'Integration',
-  'Exponentials and Logarithms'
+  { name: 'Algebraic Expressions', route: 'algebraic-expressions' },
+  { name: 'Quadratics', route: 'quadratics' },
+  { name: 'Equations and Inequalities', route: 'equations-and-inequalities' },
+  { name: 'Graphs and Transformations', route: 'graphs-and-transformations' },
+  { name: 'Straight Line Graphs', route: 'straight-line-graphs' },
+  { name: 'Circles', route: 'circles' },
+  { name: 'Algebraic Methods', route: 'algebraic-methods' },
+  { name: 'The Binomial Expansion', route: 'the-binomial-expansion' },
+  { name: 'Trigonometric Ratios', route: 'trigonometric-ratios' },
+  { name: 'Trigonometric Identities and Equations', route: 'trigonometric-identities-and-equations' },
+  { name: 'Vectors', route: 'vectors' },
+  { name: 'Differentiation', route: 'differentiation' },
+  { name: 'Integration', route: 'integration' },
+  { name: 'Exponentials and Logarithms', route: 'exponentials-and-logarithms' }
 ];
 
 const AS_StatisticsMechanics = [
-  'Data Collection',
-  'Measures of Location and Spread',
-  'Representations of Data',
-  'Correlation',
-  'Probability',
-  'Statistical Distributions',
-  'Hypothesis Testing',
-  'Modelling in Mechanics',
-  'Constant Acceleration',
-  'Forces and Motion',
-  'Variable Acceleration'
+  { name: 'Data Collection', route: 'data-collection' },
+  { name: 'Measures of Location and Spread', route: 'measures-of-location-and-spread' },
+  { name: 'Representations of Data', route: 'representations-of-data' },
+  { name: 'Correlation', route: 'correlation' },
+  { name: 'Probability', route: 'probability' },
+  { name: 'Statistical Distributions', route: 'statistical-distributions' },
+  { name: 'Hypothesis Testing', route: 'hypothesis-testing' },
+  { name: 'Modelling in Mechanics', route: 'modelling-in-mechanics' },
+  { name: 'Constant Acceleration', route: 'constant-acceleration' },
+  { name: 'Forces and Motion', route: 'forces-and-motion' },
+  { name: 'Variable Acceleration', route: 'variable-acceleration' }
 ];
 
 const A_Level_Pure = [
-  'Algebraic Methods',
-  'Functions and Graphs',
-  'Sequences and Series',
-  'Binomial Expansion',
-  'Radians',
-  'Trigonometric Functions',
-  'Trigonometry and Modelling',
-  'Parametric Equations',
-  'Differentiation',
-  'Numerical Methods',
-  'Integration',
-  'Vectors'
+  { name: 'Algebraic Methods', route: 'algebraic-methods-2' },
+  { name: 'Functions and Graphs', route: 'functions-and-graphs' },
+  { name: 'Sequences and Series', route: 'sequences-and-series' },
+  { name: 'The Binomial Expansion', route: 'the-binomial-expansion-2' },
+  { name: 'Radians', route: 'radians' },
+  { name: 'Trigonometric Functions', route: 'trigonometric-functions' },
+  { name: 'Trigonometry and Modelling', route: 'trigonometry-and-modelling' },
+  { name: 'Parametric Equations', route: 'parametric-equations' },
+  { name: 'Differentiation', route: 'differentiation-2' },
+  { name: 'Numerical Methods', route: 'numerical-methods' },
+  { name: 'Integration', route: 'integration-2' },
+  { name: 'Vectors', route: 'vectors-2' }
 ];
 
 const A_Level_StatisticsMechanics = [
-  'Regression, Correlation, and Hypothesis Testing',
-  'Conditional Probability',
-  'The Normal Distribution',
-  'Moments',
-  'Forces and Friction',
-  'Projectiles',
-  'Applications of Forces',
-  'Further Kinematics'
+  { name: 'Regression, Correlation, and Hypothesis Testing', route: 'regression-correlation-hypothesis-testing' },
+  { name: 'Conditional Probability', route: 'conditional-probability' },
+  { name: 'The Normal Distribution', route: 'the-normal-distribution' },
+  { name: 'Moments', route: 'moments' },
+  { name: 'Forces and Friction', route: 'forces-and-friction' },
+  { name: 'Projectiles', route: 'projectiles' },
+  { name: 'Applications of Forces', route: 'applications-of-forces' },
+  { name: 'Further Kinematics', route: 'further-kinematics' }
 ];
 
 export default function TopicsPage() {
@@ -71,23 +71,23 @@ export default function TopicsPage() {
     }
   }, [navigate]);
 
-  const handleTopicClick = (topic) => {
-    navigate(`/topics/${topic.toLowerCase().replace(/\s+/g, '-')}`);
+  const handleTopicClick = (route) => {
+    navigate(`/topics/${route}`);
   };
 
   const renderTopicCards = (topics, categoryTitle, className) => {
-    const filteredTopics = topics.filter((topic) => 
-      topic.toLowerCase().includes(searchQuery.toLowerCase())
+    const filteredTopics = topics.filter((topic) =>
+      topic.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     return (
       <div className={`container mt-5 ${className}`}>
         <h2 className="section-title">{categoryTitle}</h2>
         <div className="row">
-          {filteredTopics.map((topic) => (
-            <div key={topic} className="col-md-4 mb-4">
+          {filteredTopics.map(({ name, route }) => (
+            <div key={name} className="col-md-4 mb-4">
               <Card className="topic-card">
-                <Card.Body onClick={() => handleTopicClick(topic)}>
-                  <h5>{topic}</h5>
+                <Card.Body onClick={() => handleTopicClick(route)}>
+                  <h5>{name}</h5>
                 </Card.Body>
               </Card>
             </div>

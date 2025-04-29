@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import CodeSnippet from '../components/CodeSnippet'; 
-import '../styles/TopicDetailsPage.css';
+import CodeSnippet from '../../components/CodeSnippet'; 
+import '../../styles/TopicDetailsPage.css';
 
 export default function StatisticalDistributions() {
     return (

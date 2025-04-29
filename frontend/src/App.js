@@ -1,40 +1,57 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import RequireAuthentication from "./RequireAuthentication";
+import { Toaster } from "sonner";
+
+// Import Main Pages
 import BaseLayout from "./components/BaseLayout";
 import HomePage from "./pages/HomePage";
 import TopicsPage from "./pages/TopicsPage";
 import ProfilePage from "./pages/ProfilePage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from './pages/RegisterPage';
-import AlgebraicExpressions from './pages/AlgebraicExpressions';
-import Quadratics from './pages/Quadratics';
-import EquationsAndInequalities from './pages/EquationsAndInequalities';
-import GraphsAndTransformations from './pages/GraphsAndTransformations';
-import StraightLineGraphs from './pages/StraightLineGraphs';
-import Circles from './pages/Circles';
-import AlgebraicMethods from './pages/AlgebraicMethods';
-import BinomialExpansion from './pages/BinomialExpansion';
-import TrigonometricRatios from './pages/TrigonometricRatios';
-import TrigonometricIdentitiesAndEquations from './pages/TrigonometricIdentitiesAndEquations';
-import Vectors from './pages/Vectors';
-import Differentiation from './pages/Differentiation';
-import Integration from './pages/Integration';
-import ExponentialsAndLogarithms from './pages/ExponentialsAndLogarithms';
-import RequireAuthentication from "./RequireAuthentication";
 import QuizPage from "./pages/QuizPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
-import DataCollection from "./pages/DataCollection";
-import MeasuresOfLocationAndSpread from "./pages/MeasuresOfLocationAndSpread";
-import RepresentationsOfData from "./pages/RepresentationsOfData";
-import Correlation from "./pages/Correlation";
-import Probability from "./pages/Probability";
-import StatisticalDistributions from "./pages/StatisticalDistributions";
-import HypothesisTesting from "./pages/HypothesisTesting";
-import ModellingInMechanics from "./pages/ModellingInMechanics";
-import ConstantAcceleration from "./pages/ConstantAcceleration";
-import ForcesAndMotion from "./pages/ForcesAndMotion";
-import VariableAcceleration from "./pages/VariableAcceleration";
-import { Toaster } from "sonner";
+
+// Import AS Pure Topics
+import AlgebraicExpressions from './pages/AS-Pure/AlgebraicExpressions';
+import Quadratics from './pages/AS-Pure/Quadratics';
+import EquationsAndInequalities from './pages/AS-Pure/EquationsAndInequalities';
+import GraphsAndTransformations from './pages/AS-Pure/GraphsAndTransformations';
+import StraightLineGraphs from './pages/AS-Pure/StraightLineGraphs';
+import Circles from './pages/AS-Pure/Circles';
+import AlgebraicMethods from './pages/AS-Pure/AlgebraicMethods';
+import BinomialExpansion from './pages/AS-Pure/BinomialExpansion';
+import TrigonometricRatios from './pages/AS-Pure/TrigonometricRatios';
+import TrigonometricIdentitiesAndEquations from './pages/AS-Pure/TrigonometricIdentitiesAndEquations';
+import Vectors from './pages/AS-Pure/Vectors';
+import Differentiation from './pages/AS-Pure/Differentiation';
+import Integration from './pages/AS-Pure/Integration';
+import ExponentialsAndLogarithms from './pages/AS-Pure/ExponentialsAndLogarithms';
+
+// Import AS Stats and Mechanics Topics
+import DataCollection from "./pages/AS-StatsMechanics/DataCollection";
+import MeasuresOfLocationAndSpread from "./pages/AS-StatsMechanics/MeasuresOfLocationAndSpread";
+import RepresentationsOfData from "./pages/AS-StatsMechanics/RepresentationsOfData";
+import Correlation from "./pages/AS-StatsMechanics/Correlation";
+import Probability from "./pages/AS-StatsMechanics/Probability";
+import StatisticalDistributions from "./pages/AS-StatsMechanics/StatisticalDistributions";
+import HypothesisTesting from "./pages/AS-StatsMechanics/HypothesisTesting";
+import ModellingInMechanics from "./pages/AS-StatsMechanics/ModellingInMechanics";
+import ConstantAcceleration from "./pages/AS-StatsMechanics/ConstantAcceleration";
+import ForcesAndMotion from "./pages/AS-StatsMechanics/ForcesAndMotion";
+import VariableAcceleration from "./pages/AS-StatsMechanics/VariableAcceleration";
+
+// Import A-Level Pure Topics
+import AlgebraicMethods2 from "./pages/A-Pure/AlgebraicMethods2";
+import FunctionsAndGraphs from "./pages/A-Pure/FunctionsAndGraphs";
+import SequencesAndSeries from "./pages/A-Pure/SequencesAndSeries";
+import TheBinomialExpansion2 from "./pages/A-Pure/TheBinomialExpansion2";
+import Radians from "./pages/A-Pure/Radians";
+import TrigonometricFunctions from "./pages/A-Pure/TrigonometricFunctions";
+
+// Import A-Level Stats and Mechanics Topics
+
 
 
 function App() {
@@ -68,6 +85,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage onXpUpdate={fetchXp}/></RequireAuthentication>} />
+
           <Route path="/topics/algebraic-expressions" element={<RequireAuthentication><AlgebraicExpressions /></RequireAuthentication>} />
           <Route path="/topics/quadratics" element={<RequireAuthentication><Quadratics /></RequireAuthentication>} />
           <Route path="/topics/equations-and-inequalities" element={<RequireAuthentication><EquationsAndInequalities /></RequireAuthentication>} />
@@ -82,6 +100,7 @@ function App() {
           <Route path="/topics/differentiation" element={<RequireAuthentication><Differentiation /></RequireAuthentication>} />
           <Route path="/topics/integration" element={<RequireAuthentication><Integration /></RequireAuthentication>} />
           <Route path="/topics/exponentials-and-logarithms" element={<RequireAuthentication><ExponentialsAndLogarithms /></RequireAuthentication>} />
+
           <Route path="/topics/data-collection" element={<RequireAuthentication><DataCollection /></RequireAuthentication>} />
           <Route path="/topics/measures-of-location-and-spread" element={<RequireAuthentication><MeasuresOfLocationAndSpread /></RequireAuthentication>} />
           <Route path="/topics/representations-of-data" element={<RequireAuthentication><RepresentationsOfData /></RequireAuthentication>} />
@@ -93,6 +112,13 @@ function App() {
           <Route path="/topics/constant-acceleration" element={<RequireAuthentication><ConstantAcceleration /></RequireAuthentication>} />
           <Route path="/topics/forces-and-motion" element={<RequireAuthentication><ForcesAndMotion /></RequireAuthentication>} />
           <Route path="/topics/variable-acceleration" element={<RequireAuthentication><VariableAcceleration /></RequireAuthentication>} />
+
+          <Route path="/topics/algebraic-methods-2" element={<RequireAuthentication><AlgebraicMethods2 /></RequireAuthentication>} />
+          <Route path="/topics/functions-and-graphs" element={<RequireAuthentication><FunctionsAndGraphs /></RequireAuthentication>} />
+          <Route path="/topics/sequences-and-series" element={<RequireAuthentication><SequencesAndSeries /></RequireAuthentication>} />
+          <Route path="/topics/the-binomial-expansion-2" element={<RequireAuthentication><TheBinomialExpansion2 /></RequireAuthentication>} />
+          <Route path="/topics/radians" element={<RequireAuthentication><Radians /></RequireAuthentication>} />
+          <Route path="/topics/trigonometric-functions" element={<RequireAuthentication><TrigonometricFunctions /></RequireAuthentication>} />
         </Routes>
       </BaseLayout>
     </Router>
