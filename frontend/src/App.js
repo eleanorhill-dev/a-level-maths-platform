@@ -57,8 +57,14 @@ import Integration2 from "./pages/A-Pure/Integration2";
 import Vectors2 from "./pages/A-Pure/Vectors2";
 
 // Import A-Level Stats and Mechanics Topics
-
-
+import RegressionCorrelationHypothesisTesting from "./pages/A-StatsMechanics/RegressionCorrelationHypothesisTesting";
+import ConditionalProbability from "./pages/A-StatsMechanics/ConditionalProbability";
+import TheNormalDistribution from "./pages/A-StatsMechanics/TheNormalDistribution";
+import Moments from "./pages/A-StatsMechanics/Moments";
+import ForcesAndFriction from "./pages/A-StatsMechanics/ForcesAndFriction";
+import Projectiles from "./pages/A-StatsMechanics/Projectiles";
+import ApplicationsOfForces from "./pages/A-StatsMechanics/ApplicationsOfForces";
+import FurtherKinematics from "./pages/A-StatsMechanics/FurtherKinematics";
 
 function App() {
   const [xp, setXp] = useState(0);
@@ -131,6 +137,15 @@ function App() {
           <Route path="/topics/numerical-methods" element={<RequireAuthentication><NumericalMethods /></RequireAuthentication>} />
           <Route path="/topics/integration-2" element={<RequireAuthentication><Integration2 /></RequireAuthentication>} />
           <Route path="/topics/vectors-2" element={<RequireAuthentication><Vectors2 /></RequireAuthentication>} />
+
+          <Route path="/topics/regression-correlation-hypothesis-testing" element={<RequireAuthentication><RegressionCorrelationHypothesisTesting /></RequireAuthentication>} />
+          <Route path="/topics/conditional-probability" element={<RequireAuthentication><ConditionalProbability /></RequireAuthentication>} />
+          <Route path="/topics/the-normal-distribution" element={<RequireAuthentication><TheNormalDistribution /></RequireAuthentication>} />
+          <Route path="/topics/moments" element={<RequireAuthentication><Moments /></RequireAuthentication>} />
+          <Route path="/topics/forces-and-friction" element={<RequireAuthentication><ForcesAndFriction /></RequireAuthentication>} />
+          <Route path="/topics/projectiles" element={<RequireAuthentication><Projectiles /></RequireAuthentication>} />
+          <Route path="/topics/applications-of-forces" element={<RequireAuthentication><ApplicationsOfForces /></RequireAuthentication>} />
+          <Route path="/topics/further-kinematics" element={<RequireAuthentication><FurtherKinematics /></RequireAuthentication>} />
         </Routes>
       </BaseLayout>
     </Router>
