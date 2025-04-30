@@ -10,17 +10,18 @@ from models import Topic
 app = create_app()
 
 topics = [
-    "Data Collection",
-    "Measures of Location and Spread",
-    "Representations of Data",
-    "Correlation",
-    "Probability",
-    "Statistical Distributions",
-    "Hypothesis Testing",
-    "Modelling in Mechanics",
-    "Constant Acceleration",
-    "Forces and Motion",
-    "Variable Acceleration"
+    "Algebraic Methods 2",
+    "Functions and Graphs",
+    "Sequences and Series",
+    "The Binomial Expansion 2",
+    "Radians",
+    "Trigonometric Functions",
+    "Trigonometry and Modelling",
+    "Parametric Equations",
+    "Differentiation 2",
+    "Numerical Methods",
+    "Integration 2",
+    "Vectors 2"
 ]
 
 with app.app_context():

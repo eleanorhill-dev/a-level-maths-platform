@@ -96,7 +96,7 @@ print("Estimated time to fall:", t_n)`}
 
       <div className="mt-4">
         <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-        <Button href="/quiz/34" variant="success">Take Quiz</Button>
+        <Button href="/quiz/35" variant="success">Take Quiz</Button>
       </div>
     </div>
   );

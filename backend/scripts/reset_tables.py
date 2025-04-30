@@ -10,9 +10,12 @@ from models import Topic, QuizQuestion, QuizScore, ScoreHistory, UserAchievement
 app = create_app()
 
 with app.app_context():
-    quiz_question = QuizQuestion.query.get(216)
-    
-    quiz_question.explanation = "This formula links s, u, a, and t directly: s = ut + 1/2at²."
-
-    db.session.commit()
-    
+    ids_to_delete = [327, 326, 325, 324, 323, 322, 321]
+    try:
+        # Delete questions with the given IDs
+        QuizQuestion.query.filter(QuizQuestion.id.in_(ids_to_delete)).delete(synchronize_session=False)
+        db.session.commit()
+        print(f"Deleted questions with IDs: {ids_to_delete}")
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error during delete: {e}")
