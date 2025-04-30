@@ -49,6 +49,12 @@ import SequencesAndSeries from "./pages/A-Pure/SequencesAndSeries";
 import TheBinomialExpansion2 from "./pages/A-Pure/TheBinomialExpansion2";
 import Radians from "./pages/A-Pure/Radians";
 import TrigonometricFunctions from "./pages/A-Pure/TrigonometricFunctions";
+import TrigonometryAndModelling from "./pages/A-Pure/TrigonometryAndModelling";
+import ParametricEquations from "./pages/A-Pure/ParametricEquations";
+import Differentiation2 from "./pages/A-Pure/Differentiation2";
+import NumericalMethods from "./pages/A-Pure/NumericalMethods";
+import Integration2 from "./pages/A-Pure/Integration2";
+import Vectors2 from "./pages/A-Pure/Vectors2";
 
 // Import A-Level Stats and Mechanics Topics
 
@@ -119,6 +125,12 @@ function App() {
           <Route path="/topics/the-binomial-expansion-2" element={<RequireAuthentication><TheBinomialExpansion2 /></RequireAuthentication>} />
           <Route path="/topics/radians" element={<RequireAuthentication><Radians /></RequireAuthentication>} />
           <Route path="/topics/trigonometric-functions" element={<RequireAuthentication><TrigonometricFunctions /></RequireAuthentication>} />
+          <Route path="/topics/trigonometry-and-modelling" element={<RequireAuthentication><TrigonometryAndModelling /></RequireAuthentication>} />
+          <Route path="/topics/parametric-equations" element={<RequireAuthentication><ParametricEquations /></RequireAuthentication>} />
+          <Route path="/topics/differentiation-2" element={<RequireAuthentication><Differentiation2 /></RequireAuthentication>} />
+          <Route path="/topics/numerical-methods" element={<RequireAuthentication><NumericalMethods /></RequireAuthentication>} />
+          <Route path="/topics/integration-2" element={<RequireAuthentication><Integration2 /></RequireAuthentication>} />
+          <Route path="/topics/vectors-2" element={<RequireAuthentication><Vectors2 /></RequireAuthentication>} />
         </Routes>
       </BaseLayout>
     </Router>
