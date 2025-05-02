@@ -621,6 +621,7 @@ def register_routes(app, db, bcrypt):
             })
 
         analytics_data["xp_by_day"] = xp_by_day
+        print(analytics_data["xp_by_day"]);
 
         return jsonify(analytics_data)
 

@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../index";
 import { useAuth } from "../AuthContext";
 
-const BaseLayout = ({ children, xp }) => {
+const BaseLayout = ({ children }) => {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
   
@@ -34,10 +34,13 @@ const BaseLayout = ({ children, xp }) => {
     }
   };
 
+  // Fetch XP whenever the authentication status changes
   useEffect(() => {
     console.log("Auth status:", isAuthenticated); 
     if (isAuthenticated) {
       fetchUserXP();
+    } else {
+      setTotalXP(0);  // Reset XP when logging out
     }
   }, [isAuthenticated]);
 
@@ -100,17 +103,19 @@ const BaseLayout = ({ children, xp }) => {
                 </Link>
               </li>
             </ul>
-            {isAuthenticated && (
-              <span className="navbar-text ms-auto">
-                XP: {xp}
-              </span>
-            )}
           </div>
         </div>
       </nav>
 
       {/* Page Content */}
       <div className="content-container">{children}</div>
+
+      {/* Floating XP Box */}
+      {isAuthenticated && (
+        <div className="floating-xp">
+          XP: {totalXP}
+        </div>
+      )}
 
       {/* Bootstrap JS */}
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

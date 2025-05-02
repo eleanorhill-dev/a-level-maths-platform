@@ -1,4 +1,3 @@
-
 .topic-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -12,7 +11,7 @@
     text-align: center;
     margin-bottom: 30px;
     font-size: 2.25rem;
-    color: #2c3e50;
+    color: #129EBA; /* Blue title */
     font-weight: 600;
     letter-spacing: -0.5px;
 }
@@ -21,10 +20,10 @@
     margin-top: 50px;
     font-size: 1.5rem;
     color: #ffffff;
-    border-left: 4px solid #6c5d42;
+    border-left: 4px solid #EA86B8; /* Pink border */
     padding-left: 10px;
     font-weight: 500;
-    background-color: #8e735b;
+    background-color: #EA86B8; /* Pink background */
     padding: 10px;
     border-radius: 4px;
 }
@@ -60,7 +59,7 @@
 }
 
 .CodeSnippet-output {
-    background-color: #f5f9f6; 
+    background-color: #f6f0f0; 
     color: #2c3e50;
     padding: 18px 20px;
     border-radius: 8px;
@@ -68,7 +67,7 @@
     font-size: 1.05rem;
     font-family: 'Fira Code', 'Courier New', Courier, monospace;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-    border-left: 5px solid #6abf69; 
+    border-left: 5px solid #EA86B8;
     position: relative;
 }
 
@@ -77,8 +76,8 @@
     position: absolute;
     top: -14px;
     left: 12px;
-    background-color: #f5f9f6;
-    color: #388e3c;
+    background-color: #f8e9e7;
+    color: #EA86B8; /* Pink text */
     font-size: 0.85rem;
     font-weight: bold;
     padding: 2px 6px;
@@ -113,23 +112,23 @@
 }
 
 .topic-container button.secondary {
-    background-color: #95a5a6;
+    background-color: #129EBA; /* Blue button */
     color: #fff;
     border: none;
 }
 
 .topic-container button.secondary:hover {
-    background-color: #7f8c8d;
+    background-color: #0e7a92; /* Darker blue */
 }
 
 .topic-container button.success {
-    background-color: #27ae60;
+    background-color: #EA86B8; /* Pink button */
     color: #fff;
     border: none;
 }
 
 .topic-container button.success:hover {
-    background-color: #2ecc71;
+    background-color: #F168B3; /* Lighter pink */
 }
 
 .mt-4 {

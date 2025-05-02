@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import CodeSnippet from '../../components/CodeSnippet';
 import '../../styles/TopicDetailsPage.css';
 
 export default function ConditionalProbability() {
+    const navigate = useNavigate();
     return (
         <div className="topic-container mt-4">
             <h2>Conditional Probability</h2>
@@ -143,8 +144,8 @@ P(Blue then Blue): 0.1`} language="text" />
             </div>
 
             <div className="mt-4">
-                <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/quiz/39" variant="success">Take Quiz</Button>
+            <button className="me-2 secondary" onClick={() => navigate("/topics")}>Return to Topics</button>
+            <button className="me-2 success" onClick={() => navigate("/quiz/39")}>Take Quiz</button>
             </div>
         </div>
     );

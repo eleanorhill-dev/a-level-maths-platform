@@ -1,12 +1,12 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import CodeSnippet from '../../components/CodeSnippet';
 import '../../styles/TopicDetailsPage.css';
 
 
 
 export default function TrigonometricRatios() {
-
+    const navigate = useNavigate();
     return (
         <div className="topic-container mt-4">
             <h2>Trigonometric Ratios</h2>
@@ -93,8 +93,8 @@ Angle C: 127.98°`} language="text" />
 
 
             <div className="mt-4">
-                <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/quiz/9" variant="success">Take Quiz</Button>
+            <button className="me-2 secondary" onClick={() => navigate("/topics")}>Return to Topics</button>
+            <button className="me-2 success" onClick={() => navigate("/quiz/9")}>Take Quiz</button>
             </div>
         </div>
     );

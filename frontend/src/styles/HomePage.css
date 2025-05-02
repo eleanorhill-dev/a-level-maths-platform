@@ -1,20 +1,20 @@
 .hero-section {
   padding-top: 100px;
   padding-bottom: 40px;
-  background: #F4F1DE;
+  background: #EFF7F6;
   text-align: center;
 }
 
 .hero-title {
   font-size: 3rem;
   font-weight: 800;
-  color: #6F826A;
+  color: #129EBA;
   margin-bottom: 20px;
 }
 
 .hero-description {
   font-size: 1.25rem;
-  color: #6F826A;
+  color: #129EBA;
   max-width: 650px;
   margin: 0 auto 40px;
 }
@@ -26,7 +26,7 @@
 }
 
 .hero-buttons button {
-  background-color: #BF9264;
+  background-color: #EA86B8;
   color: white;
   font-weight: 600;
   border: none;
@@ -39,12 +39,12 @@
 }
 
 .hero-buttons button:hover {
-  background-color: #6F826A;
+  background-color: #129EBA;
 }
 
 .features-section {
   padding: 60px 0;
-  background-color: #F4F1DE;
+  background-color: #EFF7F6;
 }
 
 .feature-cards {
@@ -71,7 +71,7 @@
 }
 
 .feature-icon {
-  color: #6F826A;
+  color: #EA86B8;
   margin-bottom: 15px;
 }
 
@@ -79,7 +79,7 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #6F826A;
+  color: #129EBA;
 }
 
 .feature-description {
@@ -88,7 +88,7 @@
 }
 
 .quote-section {
-  background-color: #BF9264;
+  background-color: #EA86B8;
   padding: 60px 20px;
   text-align: center;
 }
@@ -96,7 +96,7 @@
 .quote-text {
   font-size: 1.25rem;
   font-style: italic;
-  color: #F0F1C5;
+  color: #FDFCDC;
   max-width: 800px;
   margin: 0 auto;
 }

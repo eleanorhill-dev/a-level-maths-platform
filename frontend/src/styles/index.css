@@ -1,133 +1,146 @@
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #F4F1DE;
-  }
-  
-  .min-h-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding-bottom: 70px;
-  }
-  
-  .sticky-navbar {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #F0F1C5;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
-  }
-  
-  .flex {
-    display: flex;
-  }
-  
-  .items-center {
-    align-items: center;
-  }
-  
-  .justify-center {
-    justify-content: center;
-  }
-  
-  .w-full {
-    width: 100%;
-  }
-  
-  .max-w-md {
-    max-width: 400px;
-  }
-  
-  .bg-white {
-    background-color: #ffffff;
-  }
-  
-  .rounded-2xl {
-    border-radius: 1rem;
-  }
-  
-  .shadow-xl {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .p-8 {
-    padding: 2rem;
-  }
-  
-  .text-3xl {
-    font-size: 1.875rem;
-  }
-  
-  .font-semibold {
-    font-weight: 600;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
-  .mb-6 {
-    margin-bottom: 1.5rem;
-  }
-  
-  .forgot-register {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    font-size: 0.9rem;
-    width: 100%;
-  }
-  
-  .forgot-register button {
-    background: none;
-    border: none;
-    color: #6F826A;
-    cursor: pointer;
-    text-decoration: none;
-    padding: 0;
-  }
-  
-  .forgot-register button:hover {
-    text-decoration: underline;
-  }
-  
-  button[type="submit"] {
-    background-color: #BF9264;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    width: 100%;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    border: none;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #a97650;
-  }
-  
-  input[type="text"], input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 1rem;
-    background-color: #ffffff;
-  }
-  
-  input:focus {
-    outline: none;
-    border: 1px solid #BBD8A3;
-    box-shadow: 0 0 8px rgba(187, 216, 163, 0.6);
-  }
-  
-  .form-check {
-    margin-bottom: 1rem;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #EFF7F6;
+}
+
+.min-h-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-bottom: 70px;
+}
+
+.sticky-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #91F3E7;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.max-w-md {
+  max-width: 400px;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.shadow-xl {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.p-8 {
+  padding: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.forgot-register {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.forgot-register button {
+  background: none;
+  border: none;
+  color: #129EBA;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.forgot-register button:hover {
+  text-decoration: underline;
+}
+
+button[type="submit"] {
+  background-color: #EA86B8;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  border: none;
+}
+
+button[type="submit"]:hover {
+  background-color: #c66898;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1rem;
+  background-color: #ffffff;
+}
+
+.floating-xp {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #91F3E7; /* Ice Blue */
+  color: #129EBA; /* Blue Green */
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+input:focus {
+  outline: none;
+  border: 1px solid #129EBA;
+  box-shadow: 0 0 8px rgba(18, 158, 186, 0.4);
+}
+
+.form-check {
+  margin-bottom: 1rem;
+}

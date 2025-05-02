@@ -1,18 +1,18 @@
 :root {
-  --bg-color: #F4F1DE; 
-  --profile-bg: #4F5F4C; 
-  --text-color: #ffffff; 
+  --bg-color: #EFF7F6; /* Mint Cream */
+  --profile-bg: #129EBA; /* Blue Green */
+  --text-color: #ffffff;
   --muted-text: #A8A88D;
-  --accent-color: #8A9A5B;
-  --highlight-color: #E7CBA7;
-  --button-bg: #A8B88D;
-  --button-hover-bg: #8A9A5B;
+  --accent-color: #EA86B8; /* Persian Pink */
+  --highlight-color: #F7D6E0; /* Mimi Pink */
+  --button-bg: #91F3E7; /* Ice Blue */
+  --button-hover-bg: #EA86B8; /* Persian Pink */
   --border-color: #D1D1B8;
   --input-bg: #F4F4F4;
-  --input-focus-bg: #ffffff; 
-  --font-stack: 'Inter', 'Segoe UI', sans-serif; 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05); 
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08); 
+  --input-focus-bg: #ffffff;
+  --font-stack: 'Inter', 'Segoe UI', sans-serif;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .profile-container {
@@ -24,7 +24,7 @@
   font-size: 1.2rem;
   color: var(--profile-bg);
   justify-content: center;
-  align-items: center; 
+  align-items: center;
   height: 100%;
 }
 
@@ -32,7 +32,7 @@
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  flex-wrap: wrap; 
+  flex-wrap: wrap;
 }
 
 .profile-column {
@@ -56,7 +56,6 @@
   color: var(--profile-bg);
 }
 
-
 .profile-header {
   display: flex;
   justify-content: center;
@@ -64,11 +63,11 @@
 }
 
 .profile-img-wrapper {
-  width: 300px; 
-  height: 300px; 
+  width: 300px;
+  height: 300px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid var(--accent-color); 
+  border: 4px solid var(--accent-color);
 }
 
 .profile-img {
@@ -106,12 +105,12 @@
   gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 15px; 
+  margin-top: 15px;
 }
 
 .avatar-option {
   width: 80px;
-  height: 80px; 
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
@@ -155,26 +154,27 @@
   color: white;
   width: 100%;
   height: 40px;
-  font-size: 1em; 
+  font-size: 1em;
   border-radius: 6px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-secondary {
-  background-color: var(--accent-color); 
+  background-color: var(--accent-color);
   border: 1px solid var(--accent-color);
   color: white;
 }
 
-.btn-secondary:hover, .btn-primary:hover {
-  background-color: var(--highlight-color); 
+.btn-secondary:hover,
+.btn-primary:hover {
+  background-color: var(--highlight-color);
   border-color: var(--highlight-color);
 }
 
 .btn-danger {
-  background-color: #FF6F61; 
+  background-color: #FF6F61;
   color: white;
   border: 1px solid #FF6F61;
 }
@@ -198,7 +198,6 @@
   margin-top: 10px;
 }
 
-
 .progress-ring {
   position: relative;
   display: flex;
@@ -221,7 +220,7 @@
 
 .circle {
   fill: none;
-  stroke: #81B29A;
+  stroke: #129EBA; /* Blue Green */
   stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.3s ease;
@@ -253,7 +252,6 @@
 .goal-progress input:focus {
   border-color: var(--accent-color);
 }
-
 
 .goal-container {
   display: flex;

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import { useNavigate } from "react-router-dom";
 import CodeSnippet from '../../components/CodeSnippet';
 import '../../styles/TopicDetailsPage.css';
 
 export default function Vectors() {
+    const navigate = useNavigate();
     return (
         <div className="topic-container mt-4">
             <h2>Vectors</h2>
@@ -125,8 +126,8 @@ print("Resultant Vector (Force + Velocity):", resultant)`}
             </div>
 
             <div className="mt-4">
-                <Button href="/topics" variant="secondary" className="me-2">Return to Topics</Button>
-                <Button href="/quiz/11" variant="success">Take Quiz</Button>
+            <button className="me-2 secondary" onClick={() => navigate("/topics")}>Return to Topics</button>
+            <button className="me-2 success" onClick={() => navigate("/quiz/11")}>Take Quiz</button>
             </div>
         </div>
     );

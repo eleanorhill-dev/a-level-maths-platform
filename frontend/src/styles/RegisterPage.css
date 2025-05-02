@@ -1,98 +1,97 @@
 .min-h-screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding-bottom: 70px;
-  }
-  
-  .card {
-    padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 450px;
-    width: 100%;
-    background-color: #fff;
-    border-radius: 1rem;
-  }
-  
-  .card .text-center img {
-    max-height: 60px;
-    width: auto;
-    margin-bottom: 1rem;
-  }
-  
-  .card .text-center h4 {
-    font-weight: bold;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #e1e1e1;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  input:focus {
-    outline: none;
-    border: 1px solid #81b29a;
-    box-shadow: 0 0 8px rgba(129, 178, 154, 0.4);
-  }
-  
-  button[type="submit"] {
-    background-color: #e07a5f;
-    color: white;
-    font-weight: bold;
-    padding: 12px;
-    width: 100%;
-    border-radius: 8px;
-    transition: background-color 0.3s;
-    box-sizing: border-box;
-  }
-  
-  button[type="submit"]:hover {
-    background-color: #d16c56;
-  }
-  
-  .centered-button {
-    display: flex;
-    justify-content: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding-bottom: 70px;
+}
 
-  .form-check {
-    margin-bottom: 1rem;
-  }
-  
-  .forgot-register {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    font-size: 0.9rem;
-    width: 100%;
-  }
-  
-  .forgot-register button {
-    background: none;
-    border: none;
-    color: #81b29a;
-    cursor: pointer;
-    text-decoration: none;
-    padding: 0;
-  }
-  
-  .forgot-register button:hover {
-    text-decoration: underline;
-  }
-  
-  .alert-danger {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
+.card {
+  padding: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 450px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 1rem;
+}
+
+.card .text-center img {
+  max-height: 60px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+.card .text-center h4 {
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #129EBA;
+  box-shadow: 0 0 8px rgba(18, 158, 186, 0.4);
+}
+
+button[type="submit"] {
+  background-color: #EA86B8;
+  color: white;
+  font-weight: bold;
+  padding: 12px;
+  width: 100%;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+}
+
+button[type="submit"]:hover {
+  background-color: #c66898;
+}
+
+.centered-button {
+  display: flex;
+  justify-content: center;
+}
+
+.form-check {
+  margin-bottom: 1rem;
+}
+
+.forgot-register {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.forgot-register button {
+  background: none;
+  border: none;
+  color: #129EBA;
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0;
+}
+
+.forgot-register button:hover {
+  text-decoration: underline;
+}
+
+.alert-danger {
+  background-color: #F7D6E0;
+  color: #721c24;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
