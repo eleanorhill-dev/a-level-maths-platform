@@ -311,24 +311,20 @@ const ProfilePage = () => {
                 <div key={fieldKey} className="editable-field">
                   {editingField === fieldKey ? (
                     <>
-                      <div className="input-container">
-                        <input
-                          type="text"
-                          value={userInfo[fieldKey] || ''}
-                          onChange={e => handleInputChange(fieldKey, e.target.value)}
-                          className="input-field"
-                        />
-                        <button onClick={() => saveField(fieldKey)} className="edit-icon-button save-btn">
-                          💾
-                        </button>
-                      </div>
+                      <div className="field-label">{label}:</div>
+                      <input
+                        type="text"
+                        value={userInfo[fieldKey] || ''}
+                        onChange={e => handleInputChange(fieldKey, e.target.value)}
+                        className="input-field"
+                      />
+                      <button onClick={() => saveField(fieldKey)} className="edit-icon-button save-btn">💾</button>
                     </>
                   ) : (
                     <>
-                      <p><strong>{label}:</strong> {userInfo[fieldKey]}</p>
-                      <button onClick={() => setEditingField(fieldKey)} className="edit-icon-button edit-btn">
-                        ✏️
-                      </button>
+                      <div className="field-label">{label}:</div>
+                      <div className="field-value">{userInfo[fieldKey]}</div>
+                      <button onClick={() => setEditingField(fieldKey)} className="edit-icon-button edit-btn">✏️</button>
                     </>
                   )}
                 </div>

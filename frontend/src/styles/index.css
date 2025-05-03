@@ -144,3 +144,70 @@ input:focus {
 .form-check {
   margin-bottom: 1rem;
 }
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .min-h-screen {
+    padding-bottom: 50px; 
+  }
+
+  .sticky-navbar {
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .p-8 {
+    padding: 1rem; 
+  }
+
+  button[type="submit"],
+  input[type="text"],
+  input[type="password"] {
+    font-size: 0.9rem; 
+    padding: 10px;
+  }
+
+  .floating-xp {
+    top: 120px;
+    right: 10px;
+    font-size: 14px;  
+  }
+
+  .max-w-md {
+    max-width: 100%;
+  }
+
+  .forgot-register {
+    font-size: 0.8rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 10px; 
+  }
+
+  .text-3xl {
+    font-size: 1.5rem; 
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-xp {
+    padding: 10px 15px; 
+    font-size: 12px;
+  }
+
+  button[type="submit"],
+  input[type="text"],
+  input[type="password"] {
+    font-size: 0.8rem; 
+    padding: 8px; 
+  }
+
+  .text-3xl {
+    font-size: 1.3rem; 
+  }
+}

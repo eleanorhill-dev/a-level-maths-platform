@@ -137,23 +137,40 @@
 
 @media (max-width: 768px) {
     .topic-container {
-        padding: 20px 10px;
+      padding: 20px 12px;
     }
-
-    h2 {
-        font-size: 1.6rem;
+  
+    .topic-container h2 {
+      font-size: 1.6rem;
     }
-
-    h4 {
-        font-size: 1.25rem;
+  
+    .topic-container h4 {
+      font-size: 1.2rem;
+      padding: 8px;
     }
-
-    p, .CodeSnippet, .CodeSnippet-output {
-        font-size: 0.95rem;
+  
+    .topic-container p {
+      font-size: 0.95rem;
     }
-
-    button {
-        width: 100%;
-        font-size: 1rem;
+  
+    .CodeSnippet, .CodeSnippet-output {
+      font-size: 0.9rem;
+      padding: 14px;
     }
-}
+  
+    .CodeSnippet-output::before {
+      font-size: 0.75rem;
+      top: -12px;
+    }
+  
+    .topic-container button {
+      width: 100%;
+      font-size: 0.95rem;
+      padding: 10px;
+    }
+  
+    .topic-container img {
+      margin: 20px 0;
+    }
+  }
+  

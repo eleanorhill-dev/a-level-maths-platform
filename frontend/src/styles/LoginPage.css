@@ -1,3 +1,4 @@
+/* General Styles */
 .login-logo {
   max-height: 250px;
   width: auto;
@@ -78,4 +79,71 @@
 
 .register-link:hover {
   text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .login-form-container {
+    padding: 1.5rem;
+  }
+
+  .login-form-title {
+    font-size: 1rem;
+  }
+
+  .input-field {
+    padding: 10px;
+    font-size: 0.9rem; 
+  }
+
+  .submit-button {
+    height: 45px;
+    font-size: 0.9rem;
+  }
+
+  .forgot-password {
+    font-size: 0.8rem; 
+  }
+
+  .register-link {
+    font-size: 0.9rem;
+  }
+
+  .login-logo {
+    max-height: 200px; 
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-container {
+    padding: 1rem;
+  }
+
+  .login-form-title {
+    font-size: 1rem;
+  }
+
+  .input-field {
+    padding: 8px;
+    font-size: 0.8rem; 
+  }
+
+  .submit-button {
+    height: 40px;  
+    font-size: 0.85rem;
+  }
+
+  .forgot-password {
+    font-size: 0.8rem; 
+  }
+
+  .register-link {
+    font-size: 0.85rem; 
+  }
+
+  .login-logo {
+    max-height: 180px; 
+    margin-bottom: 0.8rem;
+  }
 }

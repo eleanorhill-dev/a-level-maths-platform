@@ -71,27 +71,40 @@
 }
 
 .editable-field {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 25% 65% 10%;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-.input-container {
-  display: flex;
-  align-items: center;
+.field-label {
+  font-weight: bold;
+  text-align: right;
+}
+
+.field-value {
+  text-align: left; 
 }
 
 .input-field {
-  padding: 5px;
-  margin-right: 10px;
+  width: 100%;
+  padding: 0.4rem;
+  font-size: 1rem;
+  text-align: left; 
+}
+
+.edit-icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
 }
 
 .save-btn,
 .edit-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2em;
+  padding: 0.4rem;
+  border-radius: 4px;
 }
 
 .avatar-options-container {
@@ -214,7 +227,7 @@
 
 .circle {
   fill: none;
-  stroke: var(--primary-blue); /* Blue Green */
+  stroke: var(--primary-blue);
   stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.3s ease;
@@ -281,4 +294,98 @@
 .goal-btn {
   width: 100%;
   min-width: 120px;
+}
+
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .profile-dashboard {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .profile-column {
+    max-width: 100%;
+  }
+
+  .profile-img-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .section-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .editable-field {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .input-field {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .button-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .goal-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .progress-ring {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto; /* Center it */
+  }
+  
+  .circular-progress {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .circle-bg {
+    fill: none;
+    stroke: #eee;
+    stroke-width: 10;
+  }
+  
+  .circle {
+    fill: none;
+    stroke-width: 10;
+    transition: stroke-dashoffset 0.5s ease;
+  }
+  
+  .progress-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    font-size: 1.2rem;
+  }  
+
+  .btn,
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    width: 100%;
+    font-size: 1em;
+  }
+
+  .avatar-option {
+    width: 60px;
+    height: 60px;
+  }
 }

@@ -209,3 +209,164 @@
     display: block;
     margin-top: 5px;
 }
+
+
+
+@media (max-width: 1000px) and (min-width: 640px) {
+    .analytics-container {
+        padding: 30px 15px;
+    }
+
+    .analytics-heading {
+        font-size: 2.2rem;
+    }
+
+    .analytics-subheading {
+        font-size: 1rem;
+    }
+
+    .analytics-card {
+        max-width: 100%;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .analytics-card-body {
+        padding: 20px;
+    }
+
+    .large-number {
+        font-size: 3.5rem;
+    }
+
+    .analytics-button {
+        padding: 10px 30px;
+        font-size: 1rem;
+    }
+
+    .timeline-item {
+        padding: 12px 16px;
+    }
+
+    .timeline-content h4 {
+        font-size: 1.1rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .analytics-container {
+        padding: 20px;
+    }
+
+    .analytics-heading {
+        font-size: 1.8rem;
+    }
+
+    .analytics-subheading {
+        font-size: 0.9rem;
+    }
+
+    .analytics-row {
+        margin-bottom: 5px;
+    }
+
+    .analytics-col-md-4, .analytics-col-md-6 {
+        justify-content: center;
+    }
+
+    .analytics-card {
+        max-width: 100%;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
+    .analytics-card-body {
+        padding: 15px;
+    }
+
+    .analytics-card-title {
+        font-size: 1.3rem;
+    }
+
+    .analytics-card-text {
+        font-size: 1.2rem;
+    }
+
+    .analytics-topic-score {
+        font-size: 0.9rem;
+    }
+
+    .large-number {
+        font-size: 3rem;
+    }
+
+    .analytics-button {
+        width: 100%;
+        padding: 12px 0;
+        font-size: 1rem;
+    }
+
+    .timeline-item {
+        padding: 10px 12px;
+    }
+
+    .timeline-content h4 {
+        font-size: 1rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.9rem;
+    }
+
+    .timeline-content span {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .analytics-heading {
+        font-size: 1.6rem;
+    }
+
+    .analytics-subheading {
+        font-size: 0.8rem;
+    }
+
+    .large-number {
+        font-size: 2.5rem;
+    }
+
+    .analytics-card-title {
+        font-size: 1.2rem;
+    }
+
+    .analytics-card-text {
+        font-size: 1.1rem;
+    }
+
+    .analytics-button {
+        padding: 10px 0;
+        font-size: 1rem;
+    }
+
+    .timeline-item {
+        padding: 8px 10px;
+    }
+
+    .timeline-content h4 {
+        font-size: 1rem;
+    }
+
+    .timeline-content p {
+        font-size: 0.85rem;
+    }
+
+    .timeline-content span {
+        font-size: 0.75rem;
+    }
+}
+
