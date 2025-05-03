@@ -1,12 +1,12 @@
 :root {
-    --background-light: #EFF7F6;
-    --primary-blue: #129EBA;
-    --secondary-blue: #91F3E7;
+    --background-light: #F7F7F7; 
+    --primary-blue: #4A90E2;
     --accent-pink: #EA86B8;
-    --text-dark: #2f4f4f;
+    --text-dark: #4a5568;
     --text-muted: #5a5a5a;
     --card-bg: #ffffff;
     --highlight: #F7D6E0;
+    --deep-teal: #006F70;
 }
 
 .analytics-container {
@@ -145,7 +145,7 @@
 }
 
 .color-scale-4 {
-    fill: #129EBA;
+    fill: var(--primary-blue);
 }
 
 #my-tooltip {

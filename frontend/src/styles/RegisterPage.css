@@ -39,7 +39,7 @@ input[type="password"] {
 
 input:focus {
   outline: none;
-  border: 1px solid #129EBA;
+  border: 1px solid #4A90E2;
   box-shadow: 0 0 8px rgba(18, 158, 186, 0.4);
 }
 
@@ -78,7 +78,7 @@ button[type="submit"]:hover {
 .forgot-register button {
   background: none;
   border: none;
-  color: #129EBA;
+  color: #4A90E2;
   cursor: pointer;
   text-decoration: none;
   padding: 0;

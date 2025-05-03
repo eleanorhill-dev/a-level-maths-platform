@@ -108,10 +108,10 @@ const AnalyticsPage = () => {
                     value={analyticsData.average_score}
                     text={`${analyticsData.average_score.toFixed(0)}%`}
                     styles={buildStyles({
-                      textSize: '18px',
-                      pathColor: '#d96aa5',
-                      textColor: '#129EBA',
-                      trailColor: '#ffe9f0',
+                      textSize: '20px',
+                      pathColor: '#EA86B8',
+                      textColor: '#4A90E2',
+                      trailColor: '#F7F7F7',
                     })}
                   />
                 </div>
@@ -182,7 +182,7 @@ const AnalyticsPage = () => {
                 <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="xp" fill="#d96aa5" />
+                <Bar dataKey="xp" fill="#EA86B8" />
               </BarChart>
             </ResponsiveContainer>
           </Col>
@@ -193,7 +193,7 @@ const AnalyticsPage = () => {
             <h3>Progress Over Time</h3>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={scoreHistory}>
-                <Line type="monotone" dataKey="score" stroke="#d96aa5" strokeWidth={3} />
+                <Line type="monotone" dataKey="score" stroke="#EA86B8" strokeWidth={3} />
                 <XAxis dataKey="date_attempted" />
                 <YAxis />
                 <Tooltip />

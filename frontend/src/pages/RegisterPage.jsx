@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "sonner"; 
 import '../styles/RegisterPage.css';
 
 const RegisterForm = () => {
@@ -60,6 +61,7 @@ const RegisterForm = () => {
       });
 
       if (response.ok) {
+        toast.success("Successfully registered! You can now log in."); // Success message
         navigate("/login");
       } else {
         const errorText = await response.text();
@@ -166,7 +168,7 @@ const RegisterForm = () => {
             </label>
           </div>
   
-          <div className = "centered-button">
+          <div className="centered-button">
             <button type="submit">Register</button>
           </div>
         </form>
@@ -179,8 +181,6 @@ const RegisterForm = () => {
       </div>
     </div>
   );
-  
-  
 };
 
 export default RegisterForm;

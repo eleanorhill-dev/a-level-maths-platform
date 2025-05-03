@@ -1,5 +1,5 @@
 body, .topics-page {
-  background-color: #EFF7F6;
+  background-color: #F7F7F7; 
   min-height: 100vh;
 }
 
@@ -17,7 +17,7 @@ body, .topics-page {
 }
 
 .section-title {
-  color: #129EBA;
+  color: #4A90E2;
   text-align: center;
   font-weight: 600;
   margin-bottom: 30px;
@@ -44,9 +44,8 @@ body, .topics-page {
   text-align: center;
 }
 
-/* Topic colours with blues and pinks */
 .as-pure .topic-card {
-  background-color: #129EBA;
+  background-color: #4A90E2;
   color: white;
 }
 

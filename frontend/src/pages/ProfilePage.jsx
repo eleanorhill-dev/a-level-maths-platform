@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
+import { toast } from "sonner"; 
+import Modal from 'react-modal';
 import '../styles/ProfilePage.css';
 
 const ProfilePage = () => {
@@ -40,6 +42,8 @@ const ProfilePage = () => {
     '/avatars/avatar11.webp',
     '/avatars/avatar12.webp'
   ];
+
+  Modal.setAppElement('#root'); 
 
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
@@ -167,40 +171,40 @@ const ProfilePage = () => {
   
       const data = await response.json();
       if (response.ok) {
-        alert(data.message);
+        toast.success(data.message || "Learning goal updated successfully");
       } else {
-        alert(data.error || "Error updating goal");
+        toast.error(data.error || "Error updating goal");
       }
     } catch (err) {
       console.error("Error:", err);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     }
   };
 
+
   const handlePasswordChange = async () => {
-  
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-  
+
     if (!currentPassword || !newPassword || !confirmNewPassword) {
-      setPasswordError("All fields are required.");
+      toast.error("All fields are required.");
       return;
     }
-  
+
     if (!passwordRegex.test(newPassword)) {
-      setPasswordError("New password must be at least 8 characters with uppercase, lowercase, number, and symbol.");
+      toast.error("New password must be at least 8 characters with uppercase, lowercase, number, and symbol.");
       return;
     }
-  
+
     if (newPassword !== confirmNewPassword) {
-      setPasswordError("New password and confirm password do not match.");
+      toast.error("New password and confirm password do not match.");
       return;
     }
-  
+
     if (newPassword === currentPassword) {
-      setPasswordError("New password cannot be the same as the current password.");
+      toast.error("New password cannot be the same as the current password.");
       return;
     }
-  
+
     try {
       const response = await fetch("http://localhost:5000/change-password", {
         method: "POST",
@@ -213,26 +217,26 @@ const ProfilePage = () => {
           newPassword: newPassword,
           confirmNewPassword: confirmNewPassword
         }),
-        
       });
-  
+
       console.log("Password change request sent");
       console.log("Response:", response);
-  
+
       const result = await response.json();
-  
+
       if (response.ok) {
-        alert("Password changed successfully");
+        toast.success("Password changed successfully");
         setIsPasswordChanging(false);
         setPasswordError("");
       } else {
-        setPasswordError(result.error || "Error changing password");
+        toast.error(result.error || "Error changing password");
       }
     } catch (error) {
       console.error("Password change request failed:", error);
-      setPasswordError("Network error or server not responding.");
+      toast.error("Network error or server not responding.");
     }
   };
+
   
 
   const handleAccountDeletion = async () => {
@@ -243,7 +247,7 @@ const ProfilePage = () => {
           credentials: "include",
         });
         if (response.ok) {
-          alert("Account deleted successfully");
+          toast.success("Account deleted successfully");
           sessionStorage.removeItem("authToken");
           logout(false);
           navigate("/login");

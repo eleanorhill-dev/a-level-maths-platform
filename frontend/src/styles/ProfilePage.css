@@ -1,18 +1,12 @@
 :root {
-  --bg-color: #EFF7F6; /* Mint Cream */
-  --profile-bg: #129EBA; /* Blue Green */
-  --text-color: #ffffff;
-  --muted-text: #A8A88D;
-  --accent-color: #EA86B8; /* Persian Pink */
-  --highlight-color: #F7D6E0; /* Mimi Pink */
-  --button-bg: #91F3E7; /* Ice Blue */
-  --button-hover-bg: #EA86B8; /* Persian Pink */
-  --border-color: #D1D1B8;
-  --input-bg: #F4F4F4;
-  --input-focus-bg: #ffffff;
-  --font-stack: 'Inter', 'Segoe UI', sans-serif;
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --background-light: #F7F7F7; 
+  --primary-blue: #4A90E2;
+  --accent-pink: #EA86B8;
+  --text-dark: #4a5568;
+  --text-muted: #5a5a5a;
+  --card-bg: #ffffff;
+  --highlight: #F7D6E0;
+  --deep-teal: #006F70;
 }
 
 .profile-container {
@@ -22,7 +16,7 @@
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.2rem;
-  color: var(--profile-bg);
+  color: var(--primary-blue);
   justify-content: center;
   align-items: center;
   height: 100%;
@@ -42,7 +36,7 @@
 }
 
 .section-card {
-  background: #f9f9f9;
+  background: var(--card-bg);
   padding: 20px;
   margin-bottom: 20px;
   border-radius: 8px;
@@ -53,7 +47,7 @@
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  color: var(--profile-bg);
+  color: var(--primary-blue);
 }
 
 .profile-header {
@@ -67,7 +61,7 @@
   height: 300px;
   border-radius: 50%;
   overflow: hidden;
-  border: 4px solid var(--accent-color);
+  border: 4px solid var(--accent-pink);
 }
 
 .profile-img {
@@ -119,7 +113,7 @@
 }
 
 .avatar-option:hover {
-  border-color: var(--accent-color);
+  border-color: var(--accent-pink);
 }
 
 .change-password-inputs input {
@@ -128,7 +122,7 @@
   margin-bottom: 10px;
   padding: 12px;
   border-radius: 6px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--text-muted);
   font-size: 1rem;
 }
 
@@ -149,8 +143,8 @@
 }
 
 .btn-primary {
-  background-color: var(--accent-color);
-  border: 0.5px solid var(--accent-color);
+  background-color: var(--accent-pink);
+  border: 0.5px solid var(--accent-pink);
   color: white;
   width: 100%;
   height: 40px;
@@ -162,15 +156,15 @@
 }
 
 .btn-secondary {
-  background-color: var(--accent-color);
-  border: 1px solid var(--accent-color);
+  background-color: var(--accent-pink);
+  border: 1px solid var(--accent-pink);
   color: white;
 }
 
 .btn-secondary:hover,
 .btn-primary:hover {
-  background-color: var(--highlight-color);
-  border-color: var(--highlight-color);
+  background-color: var(--highlight);
+  border-color: var(--highlight);
 }
 
 .btn-danger {
@@ -220,7 +214,7 @@
 
 .circle {
   fill: none;
-  stroke: #129EBA; /* Blue Green */
+  stroke: var(--primary-blue); /* Blue Green */
   stroke-width: 12;
   stroke-linecap: round;
   transition: stroke-dashoffset 0.3s ease;
@@ -235,7 +229,7 @@
   transform: translate(-50%, -50%);
   font-weight: 600;
   font-size: 1.4rem;
-  color: black;
+  color: var(--text-dark);
   z-index: 1;
 }
 
@@ -243,14 +237,14 @@
   width: 120px;
   padding: 0.75rem;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--text-muted);
   text-align: center;
   font-size: 1.1rem;
   transition: border 0.3s ease;
 }
 
 .goal-progress input:focus {
-  border-color: var(--accent-color);
+  border-color: var(--accent-pink);
 }
 
 .goal-container {
@@ -271,9 +265,9 @@
 .goal-input {
   padding: 10px 16px;
   border-radius: 6px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--text-muted);
   font-size: 1.1rem;
-  background-color: var(--input-bg);
+  background-color: var(--background-light);
   text-align: center;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
@@ -281,7 +275,7 @@
 .goal-input:focus {
   outline: none;
   background-color: var(--input-focus-bg);
-  border-color: var(--accent-color);
+  border-color: var(--accent-pink);
 }
 
 .goal-btn {

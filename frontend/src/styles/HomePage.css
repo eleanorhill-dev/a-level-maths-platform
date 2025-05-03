@@ -1,20 +1,20 @@
 .hero-section {
   padding-top: 100px;
   padding-bottom: 40px;
-  background: #EFF7F6;
+  background: #F7F7F7;
   text-align: center;
 }
 
 .hero-title {
   font-size: 3rem;
   font-weight: 800;
-  color: #129EBA;
+  color: #4A90E2;
   margin-bottom: 20px;
 }
 
 .hero-description {
   font-size: 1.25rem;
-  color: #129EBA;
+  color: #006F70;
   max-width: 650px;
   margin: 0 auto 40px;
 }
@@ -39,12 +39,12 @@
 }
 
 .hero-buttons button:hover {
-  background-color: #129EBA;
+  background-color: #d674a0;
 }
 
 .features-section {
   padding: 60px 0;
-  background-color: #EFF7F6;
+  background-color: #F7F7F7; 
 }
 
 .feature-cards {
@@ -71,7 +71,7 @@
 }
 
 .feature-icon {
-  color: #EA86B8;
+  color: #EA86B8; 
   margin-bottom: 15px;
 }
 
@@ -79,7 +79,7 @@
   font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #129EBA;
+  color: #4A90E2;
 }
 
 .feature-description {

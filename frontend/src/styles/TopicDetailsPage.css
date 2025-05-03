@@ -4,14 +4,14 @@
     padding: 40px 20px;
     font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     -webkit-font-smoothing: antialiased;
-    background-color: #fefefe;
+    background-color: #F7F7F7;
 }
 
 .topic-container h2 {
     text-align: center;
     margin-bottom: 30px;
     font-size: 2.25rem;
-    color: #129EBA; /* Blue title */
+    color: #4A90E2;
     font-weight: 600;
     letter-spacing: -0.5px;
 }
@@ -20,10 +20,10 @@
     margin-top: 50px;
     font-size: 1.5rem;
     color: #ffffff;
-    border-left: 4px solid #EA86B8; /* Pink border */
+    border-left: 4px solid #4A90E2; 
     padding-left: 10px;
     font-weight: 500;
-    background-color: #EA86B8; /* Pink background */
+    background-color: #225fa4;
     padding: 10px;
     border-radius: 4px;
 }
@@ -31,13 +31,13 @@
 .topic-container p {
     font-size: 1.05rem;
     line-height: 1.75;
-    color: #34495e;
+    color: #4A5568; 
     margin-bottom: 16px;
 }
 
 .topic-container strong {
     font-weight: 600;
-    color: #16a085;
+    color: #006F70;
 }
 
 .CodeSnippet {
@@ -59,7 +59,7 @@
 }
 
 .CodeSnippet-output {
-    background-color: #f6f0f0; 
+    background-color: #edf6ff;
     color: #2c3e50;
     padding: 18px 20px;
     border-radius: 8px;
@@ -67,7 +67,7 @@
     font-size: 1.05rem;
     font-family: 'Fira Code', 'Courier New', Courier, monospace;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-    border-left: 5px solid #EA86B8;
+    border-left: 5px solid #4A90E2; 
     position: relative;
 }
 
@@ -76,8 +76,8 @@
     position: absolute;
     top: -14px;
     left: 12px;
-    background-color: #f8e9e7;
-    color: #EA86B8; /* Pink text */
+    background-color: #c5e0ff;
+    color: #4A90E2; 
     font-size: 0.85rem;
     font-weight: bold;
     padding: 2px 6px;
@@ -112,23 +112,23 @@
 }
 
 .topic-container button.secondary {
-    background-color: #129EBA; /* Blue button */
+    background-color: #4A90E2;
     color: #fff;
     border: none;
 }
 
 .topic-container button.secondary:hover {
-    background-color: #0e7a92; /* Darker blue */
+    background-color: #006F70;
 }
 
 .topic-container button.success {
-    background-color: #EA86B8; /* Pink button */
+    background-color: #EA86B8;
     color: #fff;
     border: none;
 }
 
 .topic-container button.success:hover {
-    background-color: #F168B3; /* Lighter pink */
+    background-color: #F168B3;
 }
 
 .mt-4 {

@@ -1,8 +1,9 @@
+/* General Styles */
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
-  background-color: #EFF7F6;
+  background-color: #F7F7F7;
 }
 
 .min-h-screen {
@@ -18,8 +19,8 @@ body, html {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background-color: #91F3E7;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #129EBA;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .flex {
@@ -85,7 +86,7 @@ body, html {
 .forgot-register button {
   background: none;
   border: none;
-  color: #129EBA;
+  color: #4A90E2;
   cursor: pointer;
   text-decoration: none;
   padding: 0;
@@ -107,7 +108,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #c66898;
+  background-color: #d275a4;
 }
 
 input[type="text"], input[type="password"] {
@@ -125,8 +126,8 @@ input[type="text"], input[type="password"] {
   position: fixed;
   top: 80px;
   right: 20px;
-  background-color: #91F3E7; /* Ice Blue */
-  color: #129EBA; /* Blue Green */
+  background-color: #4A90E2;
+  color: #f7f7f7;
   padding: 15px 25px;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -134,10 +135,9 @@ input[type="text"], input[type="password"] {
   font-size: 16px;
 }
 
-
 input:focus {
   outline: none;
-  border: 1px solid #129EBA;
+  border: 1px solid #4A90E2;
   box-shadow: 0 0 8px rgba(18, 158, 186, 0.4);
 }
 
