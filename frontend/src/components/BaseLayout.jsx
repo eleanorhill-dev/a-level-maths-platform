@@ -5,44 +5,10 @@ import "../index";
 import { useAuth } from "../AuthContext";
 
 const BaseLayout = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, xp } = useAuth();
   const location = useLocation();
   
   const isActive = (path) => location.pathname === path;
-
-  const [totalXP, setTotalXP] = useState(0);
-
-  const fetchUserXP = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/get_user_xp", {
-        credentials: "include",
-      });
-  
-      console.log("Response status:", response.status);
-  
-      if (!response.ok) {
-        const errData = await response.text();
-        console.error("Failed to fetch XP:", errData);
-        return;
-      }
-  
-      const data = await response.json();
-      console.log("Fetched XP:", data);
-      setTotalXP(data.total_xp);
-    } catch (error) {
-      console.error("Error fetching XP:", error);
-    }
-  };
-
-  // Fetch XP whenever the authentication status changes
-  useEffect(() => {
-    console.log("Auth status:", isAuthenticated); 
-    if (isAuthenticated) {
-      fetchUserXP();
-    } else {
-      setTotalXP(0);  // Reset XP when logging out
-    }
-  }, [isAuthenticated]);
 
   return (
     <div>
@@ -113,7 +79,7 @@ const BaseLayout = ({ children }) => {
       {/* Floating XP Box */}
       {isAuthenticated && (
         <div className="floating-xp">
-          XP: {totalXP}
+          XP: {xp}
         </div>
       )}
 

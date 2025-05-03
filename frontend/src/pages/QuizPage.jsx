@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CodeSnippet from "../components/CodeSnippet";
+import { useAuth } from "../AuthContext";
 import { toast } from "sonner";
 import confetti from "canvas-confetti";
 import "../styles/QuizPage.css";
@@ -21,6 +22,7 @@ const QuizPage = ({ onXpUpdate }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { fetchXp } = useAuth();
 
   const userId = sessionStorage.getItem("userId");
 
@@ -124,6 +126,7 @@ const QuizPage = ({ onXpUpdate }) => {
       setXpEarned(data.xp_earned);
       setExplanations(data.explanations || []);
       setQuizCompleted(true);
+      fetchXp();
 
       if (onXpUpdate) onXpUpdate();
       

@@ -533,6 +533,7 @@ def register_routes(app, db, bcrypt):
             user_id=user_id,
             topic_id=topic_id,
             score=score,
+            xp_earned=xp_earned,
             date_attempted=datetime.utcnow()
         )
         db.session.add(score_history)
@@ -594,12 +595,7 @@ def register_routes(app, db, bcrypt):
         xp_results = (
             db.session.query(
                 func.date(ScoreHistory.date_attempted).label('date'),
-                func.sum(QuizScore.xp_earned).label('total_xp')
-            )
-            .join(
-                QuizScore,
-                (QuizScore.user_id == ScoreHistory.user_id) & 
-                (QuizScore.topic_id == ScoreHistory.topic_id)
+                func.sum(ScoreHistory.xp_earned).label('total_xp')
             )
             .filter(
                 ScoreHistory.user_id == user_id,
@@ -614,11 +610,12 @@ def register_routes(app, db, bcrypt):
         xp_by_day = []
         for i in range(7):
             day = seven_days_ago + timedelta(days=i)
-            day_str = day.isoformat() 
+            day_str = day.isoformat()
             xp_by_day.append({
                 "date": day_str,
                 "xp": xp_dict.get(day_str, 0)
             })
+
 
         analytics_data["xp_by_day"] = xp_by_day
         print(analytics_data["xp_by_day"]);

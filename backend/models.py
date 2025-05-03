@@ -109,6 +109,7 @@ class ScoreHistory(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     topic_id = db.Column(db.Integer, db.ForeignKey('topics.id'), nullable=False)
     score = db.Column(db.Float, nullable=False)
+    xp_earned = db.Column(db.Integer)
     date_attempted = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):
@@ -117,6 +118,7 @@ class ScoreHistory(db.Model):
             'user_id': self.user_id,
             'topic_id': self.topic_id,
             'score': self.score,
+            'xp_earned': self.xp_earned,
             'date_attempted': self.date_attempted
         }
     
