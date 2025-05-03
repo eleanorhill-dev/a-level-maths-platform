@@ -65,10 +65,11 @@ def get_analytics_data(user_id):
     print("Average score:", average_score)
 
     # Highest scoring topic
-    highest = db.session.query(Topic.name, QuizScore.average_score) \
+    highest = db.session.query(Topic.name, db.func.max(QuizScore.highest_score)) \
         .join(QuizScore, QuizScore.topic_id == Topic.id) \
         .filter(QuizScore.user_id == user_id) \
-        .order_by(QuizScore.average_score.desc()).first()
+        .group_by(Topic.name) \
+        .order_by(db.func.max(QuizScore.highest_score).desc()).first()
 
     highest_scoring_topic = {
         'name': highest[0] if highest else 'N/A',
@@ -77,16 +78,18 @@ def get_analytics_data(user_id):
     print("Highest scoring topic:", highest_scoring_topic)
 
     # Lowest scoring topic
-    lowest = db.session.query(Topic.name, QuizScore.average_score) \
+    lowest = db.session.query(Topic.name, db.func.min(QuizScore.lowest_score)) \
         .join(QuizScore, QuizScore.topic_id == Topic.id) \
         .filter(QuizScore.user_id == user_id) \
-        .order_by(QuizScore.average_score.asc()).first()
+        .group_by(Topic.name) \
+        .order_by(db.func.min(QuizScore.lowest_score).asc()).first()
 
     lowest_scoring_topic = {
         'name': lowest[0] if lowest else 'N/A',
         'score': round(lowest[1], 2) if lowest else 'N/A'
     }
     print("Lowest scoring topic:", lowest_scoring_topic)
+
 
     # Most attempted topic
     most_attempted = db.session.query(Topic.name, func.count(ScoreHistory.id).label('attempts')) \
@@ -443,6 +446,34 @@ def register_routes(app, db, bcrypt):
         response = jsonify({"total_xp": total_xp})
         response.headers["Cache-Control"] = "no-store"
         return response
+
+
+    @app.route("/topic-progress", methods=["GET"])
+    def get_topic_progress():
+        user_id = session['user_id']
+
+        results = (
+            db.session.query(
+                Topic.name,
+                QuizScore.highest_score
+            )
+            .join(QuizScore, QuizScore.topic_id == Topic.id)
+            .filter(QuizScore.user_id == user_id)
+            .all()
+        )
+
+        progress = [
+            {
+                "topic_name": topic_name,
+                "highest_score": highest_score
+            }
+            for topic_name, highest_score in results
+        ]
+
+        return jsonify(progress), 200
+
+
+
 
 
     @quiz_bp.route('/<int:topic_id>', methods=['GET'])

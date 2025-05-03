@@ -44,6 +44,33 @@ body, .topics-page {
   text-align: center;
 }
 
+.topic-progress-container {
+  margin-top: 10px;
+  position: relative;
+  width: 100%;
+  height: 20px; 
+  border: 1px solid #000;
+  border-radius: 5px; 
+  background-color: #f0f0f0; 
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #db5497;
+  border-radius: 5px;
+}
+
+.topic-progress-text {
+  position: absolute; 
+  top: 0px;
+  left: 50%; 
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: rgb(0, 0, 0); 
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
 .as-pure .topic-card {
   background-color: #4A90E2;
   color: white;

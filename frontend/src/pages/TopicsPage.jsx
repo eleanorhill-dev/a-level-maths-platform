@@ -63,17 +63,30 @@ const A_Level_StatisticsMechanics = [
 export default function TopicsPage() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [userScores, setUserScores] = useState({}); 
 
   useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
-    if (!token) {
-      navigate("/login");
-    }
-  }, [navigate]);
+    const fetchScores = async () => {
+      const response = await fetch("http://localhost:5000/topic-progress", {
+        method: "GET",
+        credentials: "include",
+      });
+      const data = await response.json();
+      const scoresByName = {};
+      data.forEach(({ topic_name, highest_score }) => {
+        scoresByName[topic_name] = highest_score;
+      });
+      setUserScores(scoresByName);
+    };
+  
+    fetchScores();
+  }, []);
+
 
   const handleTopicClick = (route) => {
     navigate(`/topics/${route}`);
   };
+  
 
   const renderTopicCards = (topics, categoryTitle, className) => {
     const filteredTopics = topics.filter((topic) =>
@@ -83,20 +96,34 @@ export default function TopicsPage() {
       <div className={`container mt-5 ${className}`}>
         <h2 className="section-title">{categoryTitle}</h2>
         <div className="row">
-          {filteredTopics.map(({ name, route }) => (
-            <div key={name} className="col-md-4 mb-4">
-              <Card className="topic-card">
-                <Card.Body onClick={() => handleTopicClick(route)}>
-                  <h5>{name}</h5>
-                </Card.Body>
-              </Card>
-            </div>
-          ))}
+          {filteredTopics.map(({ name, route }) => {
+            const score = userScores[name] ?? null;
+            return (
+              <div key={name} className="col-md-4 mb-4">
+                <Card className="topic-card">
+                  <Card.Body onClick={() => handleTopicClick(route)}>
+                    <h5>{name}</h5>
+                    {typeof score === 'number' ? (
+                      <div className="topic-progress-container">
+                        <div
+                          className="progress-bar"
+                          style={{ width: `${score}%` }} 
+                        ></div>
+                        <span className="topic-progress-text">Highest Score: {score}%</span>
+                      </div>
+                    ) : (
+                      <p />
+                    )}
+                  </Card.Body>
+                </Card>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
   };
-
+  
   return (
     <div className="topics-page">
       <div className="container mt-4">
