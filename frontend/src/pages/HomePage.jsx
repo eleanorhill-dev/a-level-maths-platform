@@ -29,13 +29,6 @@ const features = [
 const HomePage = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("authToken");
-    if (!token) {
-      navigate("/login");
-    }
-  }, [navigate]);
-
   return (
     <div className="home-page">
       <section className="hero-section text-center">

@@ -90,12 +90,12 @@ function App() {
       <BaseLayout xp={xp}>
       <Toaster richColors />
         <Routes>
-          <Route path="/" element={<RequireAuthentication><HomePage /></RequireAuthentication>} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/topics" element={<RequireAuthentication><TopicsPage /></RequireAuthentication>} />
           <Route path="/profile" element={<RequireAuthentication><ProfilePage /></RequireAuthentication>} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/analytics" element={<RequireAuthentication><AnalyticsPage /></RequireAuthentication>} />
           <Route path="/quiz/:topicId" element={<RequireAuthentication><QuizPage onXpUpdate={fetchXp}/></RequireAuthentication>} />
 
           <Route path="/topics/algebraic-expressions" element={<RequireAuthentication><AlgebraicExpressions /></RequireAuthentication>} />

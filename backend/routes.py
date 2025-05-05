@@ -164,7 +164,6 @@ def get_analytics_data(user_id):
 def register_routes(app, db, bcrypt):
 
     @app.route('/')
-    @login_required
     def home():
         return app.send_static_file('index.html')
 
@@ -270,6 +269,7 @@ def register_routes(app, db, bcrypt):
 
     @app.route('/update-avatar', methods=['POST'])
     @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    @login_required
     def update_avatar():
         print("Session data:", session)
         if 'user_id' not in session:
@@ -291,6 +291,7 @@ def register_routes(app, db, bcrypt):
 
     @app.route('/update-profile', methods=['POST'])
     @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    @login_required
     def update_profile():
         user_id = session.get('user_id')
         if not user_id:
@@ -402,6 +403,7 @@ def register_routes(app, db, bcrypt):
 
     @app.route('/delete-account', methods=['DELETE'])
     @cross_origin(origins='http://localhost:3000', supports_credentials=True)
+    @login_required
     def delete_account():
         if 'user_id' not in session:
             return jsonify({"error": "Unauthorized"}), 401
@@ -449,6 +451,7 @@ def register_routes(app, db, bcrypt):
 
 
     @app.route("/topic-progress", methods=["GET"])
+    @login_required
     def get_topic_progress():
         user_id = session['user_id']
 
@@ -611,6 +614,7 @@ def register_routes(app, db, bcrypt):
 
 
     @app.route('/api/analytics', methods=['GET'])
+    @login_required
     def get_analytics():
         user_id = session.get('user_id')
         if not user_id:
@@ -656,6 +660,7 @@ def register_routes(app, db, bcrypt):
 
 
     @app.route('/api/achievements', methods=['GET'])
+    @login_required
     def get_user_achievements():
         user_id = session.get('user_id')
         if not user_id:
@@ -736,7 +741,7 @@ def register_routes(app, db, bcrypt):
 
         # Bounce Back (after two <50%)
         if len(scores) >= 3:
-            if scores[-3] < 50 and scores[-2] < 50 and scores[-1] > scores[-2]:
+            if scores[-3] < 50 and scores[-2] < 50 and scores[-1] > scores[-2] and scores[-1] > 50:
                 award("Bounce Back", "Improved after two tough quizzes!")
 
         # Topic variety

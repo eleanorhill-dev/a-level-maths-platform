@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
       if (res.ok) {
         setIsAuthenticated(true);
-        fetchXp(); // Fetch XP when user is authenticated
+        fetchXp(); 
       } else {
         setIsAuthenticated(false);
       }
@@ -50,13 +50,13 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     sessionStorage.setItem("authToken", token);
     setIsAuthenticated(true);
-    fetchXp(); // Optional: Fetch XP on manual login
+    fetchXp(); 
   };
 
   const logout = () => {
     sessionStorage.removeItem("authToken");
     setIsAuthenticated(false);
-    setXp(0); // Clear XP on logout
+    setXp(0);
   };
 
   return (

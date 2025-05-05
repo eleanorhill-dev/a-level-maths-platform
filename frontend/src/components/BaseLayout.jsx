@@ -39,7 +39,7 @@ const BaseLayout = ({ children }) => {
               <li className="nav-item">
                 <Link
                   className={`nav-link ${isActive("/") ? "active" : ""}`}
-                  to={isAuthenticated ? "/" : "/login"}
+                  to={"/"}
                 >
                   Home
                 </Link>
